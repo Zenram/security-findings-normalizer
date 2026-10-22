@@ -1,0 +1,52 @@
+[
+  {
+    "source": "oss_scanner",
+    "source_record_id": null,
+    "raw_reference": "09_input.txt#RECORD_A (linpeas data_image_rocky_1)",
+    "title": "Outdated system package flagged with CVE-2026-43284 (LinPEAS image scan)",
+    "description": "LinPEAS flags an outdated system package on image data_image_rocky_1; package-status indicates the vulnerable version is installed.",
+    "finding_type": "vulnerable_package",
+    "severity": "unknown",
+    "severity_raw": "vulnerable version installed",
+    "status": "open",
+    "status_raw": "vulnerable version installed",
+    "cve_ids": [
+      "CVE-2026-43284"
+    ],
+    "affected_assets": [
+      {
+        "asset": "data_image_rocky_1",
+        "repository": null,
+        "environment": null
+      }
+    ],
+    "team": "Data",
+    "evidence": "outdated system package flagged with CVE-2026-43284; ... vulnerable version is installed on the image",
+    "extraction_notes": "RECORD A. Same CVE as Record B and same related app (data_app_2), but a DIFFERENT source and a different object (image vs app). Keep SEPARATE. extraction only — correlation is a later stage. Team inferred as Data from related app data_app_2 (corpus convention data_app_* -> Data)."
+  },
+  {
+    "source": "aspm",
+    "source_record_id": "issue-7742",
+    "raw_reference": "ox_issues (data_app_2) #issue-7742",
+    "title": "Vulnerable OS package (CVE-2026-43284) in container base image",
+    "description": "ASPM flags CVE-2026-43284 in the base image of data_app_2.",
+    "finding_type": "vulnerable_base_image",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "open",
+    "cve_ids": [
+      "CVE-2026-43284"
+    ],
+    "affected_assets": [
+      {
+        "asset": "base image of data_app_2",
+        "repository": "data_app_2",
+        "environment": null
+      }
+    ],
+    "team": "Data",
+    "evidence": "ASPM flags CVE-2026-43284 in the base image of data_app_2",
+    "extraction_notes": "RECORD B. SHARED CVE with Record A is NOT proof of duplicate. Both kept; a later correlation stage may mark them related candidates. Stage 1 extraction must output BOTH, not one merged record."
+  }
+]

@@ -1,0 +1,12 @@
+SANITIZED SYNTHETIC TRAINING EXAMPLE
+Based on the September 10 DevOps code-repository security report. Speaker names are fictional and consistent by role across this corpus. Repository and file paths, alert IDs, URLs, account values, and exact identifiers are removed. Not a verbatim Slack export.
+
+#devops-security — Sep 10
+
+Alex (analyst): High-only scan found four alerts across two code repos, zero Critical. All are command-injection patterns from Python subprocess calls that invoke bash -c. There are three affected files; two alerts come from separate call sites in one file.
+
+Jordan (engineer): In the first repo, both findings are in a deployment helper that logs in to a container registry and pushes a package. In the second repo, two helpers build a cluster-configuration command. The values are Lambda environment variables set by infrastructure, not request parameters. True positive for the shell pattern, but no user-input taint path was found. Exploitability is low in this context; don't describe it as an active external attack.
+
+Sam (developer): No remediation branch was present in the reviewed snapshot. Best fix is remove bash -c and pass an argument array directly. For the registry login, capture the password command output in Python and pass it to the login process through stdin. That also fixes a separate interpolation bug: one account placeholder in the original command wasn't actually expanded.
+
+Alex (analyst): Keep the four alert count separate from the root-cause count: two call sites in repo A and two in repo B, all the same broad shell-injection pattern. No tickets or owner names included in this copy.

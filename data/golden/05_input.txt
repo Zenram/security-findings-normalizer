@@ -1,0 +1,31 @@
+SANITIZED LINPEAS TRAINING COPY (selected Rocky Linux 8.9 sections)
+Image alias: data_image_rocky_1
+Observed kernel: 7.0.12-linuxkit
+Related sanitized ASPM app: data_app_2
+Potential CVE overlap header (candidate references only): CVE-2026-23111, CVE-2026-31431, CVE-2026-43284, CVE-2026-43500
+The report ran inside a container. The observed LinuxKit kernel may be the Docker host kernel, not the Rocky image kernel.
+
+DiagSpill SCTP kernel exposure (CVE-2026-74469)
+Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)
+Local exploitation needs no capability or unprivileged user namespace; verify vendor backports
+Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused
+
+Open vSwitch forwarded-SKB page-cache LPE (CVE-2026-80977 / CVE-2026-89487 / CVE-2026-90049)
+Kernel 7.0.12-linuxkit is in an upstream affected range; vendor backports may override this result
+Open vSwitch kernel datapath: built-in and reachable
+OVS generic-netlink support: inferred enabled
+ESP in-place-decryption consumer: reachable (esp4: built-in; esp6: built-in)
+XFRM userspace state configuration: built-in and reachable
+Unprivileged user namespaces: enabled (namespace CAP_NET_ADMIN is obtainable)
+POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected
+Confirm the running distribution kernel contains all three vendor backports before treating as vulnerable
+Mitigation: update the vendor kernel; if unused, hard-disable openvswitch (or esp4/esp6) with an install /bin/false rule
+
+AF_ALG concurrent-writer LPE (CVE-2025-39964)
+Kernel: 7.0.12-linuxkit | build: #1 SMP PREEMPT Thu Aug 27 14:02:21 UTC 2026 | /proc osrelease: 7.0.12-linuxkit
+Distribution: rocky | running-kernel package: unknown | vendor evidence: unknown
+AF_ALG: user API enabled, skcipher enabled, algif_skcipher unknown; exposure: enabled by kernel configuration
+Container: detected (the host kernel is shared)
+At or beyond an upstream fixed release; vendor patch status still requires confirmation
+Container-to-host impact is possible if the host kernel is vulnerable and AF_ALG is reachable.
+This read-only check never confirms vulnerability; verify the host kernel's vendor advisory or patch commit 1b34cbbf4f01.

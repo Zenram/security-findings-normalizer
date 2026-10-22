@@ -1,0 +1,34 @@
+SANITIZED LINPEAS TRAINING COPY (excerpt — finding-bearing sections only)
+Base image: Ubuntu 24.04
+Image alias: data_image_ubuntu_1
+Related sanitized ASPM app: unknown
+Host/runtime identifiers and credential-shaped values are pseudonymized; public CVE references and scan output are retained.
+Potential CVE overlap: CVE-2026-23111, CVE-2026-27456, CVE-2026-31431, CVE-2026-43284, CVE-2026-43500, CVE-2026-53612, CVE-2026-53614
+Cross-source context: Exact CVE references occur in sanitized ASPM data_app_1 and data_app_4; repo ownership for this image is unknown.
+CVE references alone do not prove the image is vulnerable; scanner package-status details remain below.
+
+System Information
+Linux version 7.0.12-linuxkit ... #1 SMP PREEMPT Thu Aug 27 14:02:21 UTC 2026
+
+══╣ GNU C Library tunables package review (CVE-2023-4911) (T1068)
+Installed libc6: 2.39-0ubuntu8.9; vendor fixed threshold for ubuntu noble: 2.38-1ubuntu6
+Installed package meets this vendor's fixed threshold; confirm the running loader after package updates.
+
+╔═╣ Sudo version (T1548.003,T1068)
+sudo Not Found
+
+CPU vulnerabilities:
+Vulnerability Spec store bypass:         Vulnerable
+Vulnerability Spectre v1:                Mitigation; __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; CSV2, but not BHB
+(all others: Not affected)
+
+══╣ DiagSpill SCTP kernel exposure (CVE-2026-74469) (T1068)
+Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)
+Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused
+
+══╣ Checking for Copy Fail (CVE-2026-31431) (T1068)
+LIKELY NOT VULNERABLE for upstream kernel version: 7.0.12-linuxkit is at/after a fixed upstream release.
+
+══╣ Kernel Exploit Registry (T1068)
+CVE: CVE-2026-46331 | Name: pedit COW | Match data: pkg=linux-kernel,ver>=6.19,ver<7.0.13 | Tags: 1 | Rank: Fixed in stable 7.0.13 and mainline 7.1

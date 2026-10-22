@@ -1,0 +1,21 @@
+[
+  {
+    "source": "aspm",
+    "source_record_id": "issue-9804",
+    "raw_reference": "ox_issues_active_sanitized.csv#issue-9804",
+    "title": "Missing Antiforgery C# API Exposed",
+    "description": "Missing anti-forgery token on a state-changing HTTP POST MVC action, exposing the endpoint to CSRF. Without token validation, malicious sites could trick authenticated users into submitting unwanted requests. Fix: add [ValidateAntiForgeryToken] to the POST action.",
+    "finding_type": "csrf",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "active (Is Fix Available: false)",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "state-changing HTTP POST MVC action", "repository": "dev_app_1", "environment": null}
+    ],
+    "team": "Dev",
+    "evidence": "missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks",
+    "extraction_notes": "D4 DUAL-SEVERITY RULE (settled): severity_raw = the `Severity` column ('High'); `Original Severity` ('Medium') recorded here in notes. CWE-352 present. Count=22 is an instance count, not CVE count (no CVEs here). Owner=Sam; team=Dev from 'Dev / dev_app_1'."
+  }
+]

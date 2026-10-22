@@ -1,0 +1,18 @@
+SANITIZED CROSS-SOURCE OVERLAP CASE (two records from two different tools)
+Purpose: tests that the same underlying issue seen by two tools is kept as TWO
+findings (candidates for correlation), NOT auto-merged into one.
+
+--- RECORD A: LinPEAS (image scan) ---
+Image alias: data_image_rocky_1
+Related sanitized ASPM app: data_app_2
+Potential CVE overlap: CVE-2026-43284, CVE-2026-43500
+Finding: outdated system package flagged with CVE-2026-43284; package-status
+details indicate the vulnerable version is installed on the image.
+
+--- RECORD B: Ox ASPM (application alert) ---
+Application: Data / data_app_2
+Issue ID: issue-7742
+Severity: High
+Issue Name: Vulnerable OS package (CVE-2026-43284) in container base image
+Status: open
+Description: ASPM flags CVE-2026-43284 in the base image of data_app_2.

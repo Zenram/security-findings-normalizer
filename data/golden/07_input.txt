@@ -1,0 +1,19 @@
+SANITIZED TRAINING INPUT — single Ox ASPM CSV row (ox_issues_active_sanitized.csv)
+
+Application: Dev / dev_app_1
+Business Priority: 97
+Severity: High
+Original Severity: Medium
+Count: 22
+Category: Code Security
+Issue Name: Missing Antiforgery C# API Exposed
+Policy: SAST issue
+Issue Owner: Sam
+First Seen Date: Sun, 30 Aug 2026 21:14:08 GMT
+Issue ID: issue-9804
+Issue Description: The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.
+Recommendation: Adding the [ValidateAntiForgeryToken] attribute to the POST action enforces that requests must include a valid anti-forgery token, verified by the framework before executing the action.
+CWE: CWE-352: Cross-Site Request Forgery (CSRF)
+Severity Factors: Login Management:Damage, A01:2025 - Broken Access Control (OWASP):Exploitable, High Confidence Detection:Exploitable, Vulnerability in a Private Repo:Reachable, Exposed by API:Reachable
+Is Fix Available: false
+Source tools: ASPM scanner

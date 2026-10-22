@@ -1,0 +1,20 @@
+# Stage 1 — Security Findings Normalizer
+# Pinned for reproducibility (see .gitignore: .env stays out of VCS).
+
+# Canonical schema + validation
+# >=2.11 ships prebuilt wheels for Python 3.13/3.14 (pydantic-core); 2.9.x does
+# not and tries to compile Rust from source. Verified on 3.14 with 2.14.1.
+pydantic>=2.11,<3
+
+# Provider model (cloud): Google Gemini
+google-genai==1.14.0
+
+# Local model: Ollama HTTP client (we call the REST API via requests;
+# requests is also handy for timeouts/retries we control ourselves)
+requests==2.32.3
+
+# .env loading (keeps GEMINI_API_KEY out of source)
+python-dotenv==1.0.1
+
+# Tests
+pytest==8.3.3

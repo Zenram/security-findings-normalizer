@@ -1,0 +1,14 @@
+SANITIZED SYNTHETIC TRAINING EXAMPLE
+Based on the Dev team's September 14 cloud/SAST report. Speaker names are fictional and consistent by role across this corpus. Repository names, alert IDs, tickets, links, and credentials are removed or generalized. Not a verbatim Slack export.
+
+#dev-security — Sep 14
+
+Alex (analyst): Fresh baseline, High/Critical only. Seven High alerts across five code repos, zero Critical. Three root causes in the notes: command injection, raw SQL in test support, and stale repositories.
+
+Sam (developer): The command-injection pattern is in a helper that opens a workflow URL. That URL comes from an internal service response, not direct user text; the process launch still has a shell-enabled branch. Validate the scheme and use an explicit argument list. P2 hygiene, not an internet-facing incident.
+
+Alex (analyst): Two more alerts are the same raw-SQL pattern in test-support code. The interpolated value is a compile-time type name, not request input. They remain open in this snapshot; mark accept-risk with the taint rationale or parameterize them. Don't say fixed.
+
+Sam (developer): Four repo-maintenance alerts are also live. Archive confirmed-retired repos; check pipeline references with owners before removing the others. I don't have owner names in this export.
+
+Alex (analyst): No previous baseline to compare with. A couple of app/repo fields were missing in the handoff, so leave them unknown rather than filling them in.

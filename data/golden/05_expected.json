@@ -1,0 +1,79 @@
+[
+  {
+    "source": "oss_scanner",
+    "source_record_id": null,
+    "raw_reference": "linpeas_rocky_8.9_sanitized.txt",
+    "title": "DiagSpill SCTP kernel exposure (CVE-2026-74469)",
+    "description": "LinPEAS reports kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp loaded; sctp_diag built-in) and marks it potentially vulnerable. It says local exploitation needs no capability or unprivileged user namespace, but vendor backports must be verified. Suggested mitigation: update the kernel or disable sctp and sctp_diag if unused.",
+    "finding_type": "kernel_vulnerability",
+    "severity": "unknown",
+    "severity_raw": null,
+    "status": "open",
+    "status_raw": "Potentially vulnerable",
+    "cve_ids": [
+      "CVE-2026-74469"
+    ],
+    "affected_assets": [
+      {
+        "asset": "data_image_rocky_1 (container; observed kernel 7.0.12-linuxkit)",
+        "repository": null,
+        "environment": null
+      }
+    ],
+    "team": "Data",
+    "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
+    "extraction_notes": "Severity is not provided, so keep unknown. The report is from a container and says the host kernel is shared; do not assume the finding is in the Rocky base image itself. This CVE is not in the report-level candidate-overlap list. Team inferred as Data from 'Related sanitized ASPM app: data_app_2' (corpus convention data_app_* -> Data; LinPEAS is run against a known, owned image)."
+  },
+  {
+    "source": "oss_scanner",
+    "source_record_id": null,
+    "raw_reference": "linpeas_rocky_8.9_sanitized.txt",
+    "title": "Open vSwitch forwarded-SKB page-cache potential root LPE (CVE-2026-80977, CVE-2026-89487, CVE-2026-90049)",
+    "description": "LinPEAS reports kernel 7.0.12-linuxkit in an upstream affected range and detects the Open vSwitch datapath, ESP/XFRM paths, and unprivileged user namespaces as reachable prerequisites. It flags a potential root local privilege escalation, but warns vendor backports may override the result and requires confirmation before treating it as vulnerable.",
+    "finding_type": "kernel_vulnerability",
+    "severity": "unknown",
+    "severity_raw": null,
+    "status": "open",
+    "status_raw": "POTENTIAL ROOT LPE",
+    "cve_ids": [
+      "CVE-2026-80977",
+      "CVE-2026-89487",
+      "CVE-2026-90049"
+    ],
+    "affected_assets": [
+      {
+        "asset": "data_image_rocky_1 (container; observed kernel 7.0.12-linuxkit)",
+        "repository": null,
+        "environment": null
+      }
+    ],
+    "team": "Data",
+    "evidence": "POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected",
+    "extraction_notes": "Severity is not provided, so keep unknown. This is explicitly potential pending confirmation of vendor kernel backports. The LinuxKit kernel may be the Docker host kernel, not part of the Rocky image. Team inferred as Data from 'Related sanitized ASPM app: data_app_2' (corpus convention data_app_* -> Data; LinPEAS is run against a known, owned image)."
+  },
+  {
+    "source": "oss_scanner",
+    "source_record_id": null,
+    "raw_reference": "linpeas_rocky_8.9_sanitized.txt",
+    "title": "AF_ALG concurrent-writer LPE exposure (CVE-2025-39964)",
+    "description": "LinPEAS reports the AF_ALG user API and skcipher enabled, while algif_skcipher status and vendor patch evidence are unknown. The upstream kernel version is at or beyond a fixed release. Container-to-host impact is described as possible only if the host kernel is vulnerable and AF_ALG is reachable; the report says this read-only check does not confirm vulnerability.",
+    "finding_type": "kernel_vulnerability",
+    "severity": "unknown",
+    "severity_raw": null,
+    "status": "unknown",
+    "status_raw": "At or beyond an upstream fixed release; vendor patch status still requires confirmation",
+    "cve_ids": [
+      "CVE-2025-39964"
+    ],
+    "affected_assets": [
+      {
+        "asset": "data_image_rocky_1 (container; observed kernel 7.0.12-linuxkit)",
+        "repository": null,
+        "environment": null
+      }
+    ],
+    "team": "Data",
+    "evidence": "AF_ALG: user API enabled, skcipher enabled, algif_skcipher unknown; exposure: enabled by kernel configuration",
+    "extraction_notes": "Do not mark this confirmed vulnerable: upstream version is at or beyond a fixed release, vendor patch status is unknown, and the report makes impact conditional on host vulnerability and reachability. The shared-kernel note means this may describe the Docker host rather than the Rocky image. Team inferred as Data from 'Related sanitized ASPM app: data_app_2' (corpus convention data_app_* -> Data; LinPEAS is run against a known, owned image)."
+  }
+]

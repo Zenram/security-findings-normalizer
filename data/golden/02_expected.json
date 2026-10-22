@@ -1,0 +1,40 @@
+[
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_devops_2026-09-10.txt",
+    "title": "Command injection via bash -c in deployment helper (container registry login + package push)",
+    "description": "Two High alerts from two separate call sites in one deployment helper that logs into a container registry and pushes a package. Values come from Lambda environment variables set by infrastructure, not request input; no user-input taint path found. True positive for the shell pattern, exploitability low.",
+    "finding_type": "command_injection",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "no remediation branch present in reviewed snapshot",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": null, "repository": "repo A (unknown identifier)", "environment": null}
+    ],
+    "team": "DevOps",
+    "evidence": "both findings are in a deployment helper that logs in to a container registry and pushes a package ... values are Lambda environment variables set by infrastructure, not request parameters",
+    "extraction_notes": "2 alerts / 2 call sites but one root cause. Repo identifier removed in source -> repository kept as unknown. Also noted: separate interpolation bug (account placeholder not expanded)."
+  },
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_devops_2026-09-10.txt",
+    "title": "Command injection via bash -c in cluster-configuration command builders",
+    "description": "Two High alerts from two helpers in a second repo that build a cluster-configuration command using bash -c. Inputs are infrastructure-set Lambda environment variables, not request parameters. Same broad shell-injection root cause as repo A; low exploitability in context.",
+    "finding_type": "command_injection",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "no remediation branch present in reviewed snapshot",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": null, "repository": "repo B (unknown identifier)", "environment": null}
+    ],
+    "team": "DevOps",
+    "evidence": "In the second repo, two helpers build a cluster-configuration command. The values are Lambda environment variables set by infrastructure, not request parameters.",
+    "extraction_notes": "4 alerts total across 2 repos, all one shell-injection pattern. Labeled as 2 findings (one per repo/location) because asset context differs. Alternative valid labeling: 1 root-cause finding with 2 affected_assets — document whichever rule the golden set adopts and apply it consistently."
+  }
+]

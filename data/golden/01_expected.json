@@ -1,0 +1,59 @@
+[
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_dev_2026-09-14.txt",
+    "title": "Command injection in helper that opens a workflow URL (shell-enabled process launch)",
+    "description": "Command-injection pattern in a helper that opens a workflow URL. URL comes from an internal service response, not direct user text; process launch still has a shell-enabled branch. Recommend scheme validation + explicit argument list.",
+    "finding_type": "command_injection",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "live in this snapshot",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "workflow-URL helper", "repository": null, "environment": null}
+    ],
+    "team": "Dev",
+    "evidence": "command-injection pattern is in a helper that opens a workflow URL ... the process launch still has a shell-enabled branch",
+    "extraction_notes": "Sam labels this P2 hygiene, not internet-facing. No priority field in schema -> kept in notes. Repo identifier absent in source -> repository null."
+  },
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_dev_2026-09-14.txt",
+    "title": "Raw SQL interpolation in test-support code",
+    "description": "Raw-SQL pattern in test-support code (2 alerts, same root cause). Interpolated value is a compile-time type name, not request input. Remains open; recommended either accept-risk with taint rationale or parameterize. Explicitly 'don't say fixed'.",
+    "finding_type": "sql_injection",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "remain open in this snapshot; suggested accept-risk (not applied)",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "test-support code", "repository": null, "environment": null}
+    ],
+    "team": "Dev",
+    "evidence": "the same raw-SQL pattern in test-support code. The interpolated value is a compile-time type name, not request input.",
+    "extraction_notes": "D5: 2 alerts, one root cause, same asset context (test-support code) -> ONE finding. status=open because the accept-risk is only a suggestion, not applied; status_raw preserves that nuance."
+  },
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_dev_2026-09-14.txt",
+    "title": "Stale / unmaintained repositories",
+    "description": "Four repo-maintenance alerts live. Archive confirmed-retired repos; check pipeline references with owners before removing others. Owner names not available in export.",
+    "finding_type": "stale_repository",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "live",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "retired/unmaintained repositories (identifiers absent)", "repository": null, "environment": null}
+    ],
+    "team": "Dev",
+    "evidence": "Four repo-maintenance alerts are also live. Archive confirmed-retired repos",
+    "extraction_notes": "D5: governance/hygiene group reported as one maintenance issue -> one finding. 7 High total = 1 cmd-inj + 2 raw-SQL (1 finding) + 4 repo-maint (1 finding). Alert count (7) kept separate from finding count (3). Owner/repo absent -> null, not invented."
+  }
+]

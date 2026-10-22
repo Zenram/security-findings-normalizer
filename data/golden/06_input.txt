@@ -1,0 +1,20 @@
+SANITIZED TRAINING INPUT — single Ox ASPM CSV row (ox_issues_active_sanitized.csv)
+
+Application: DevOps / devops_app_1
+Business Priority: 87
+Severity: High
+Original Severity: Critical
+Count: 80
+Category: Open Source Security
+Issue Name: alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium
+Policy: Vulnerable base image (CVE) in DockerFile
+Issue Owner: Alex
+First Seen Date: Mon, 15 Dec 2025 21:00:10 GMT
+Issue ID: issue-3513
+Issue Description: alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities. Vulnerability Context Counts: Public Exploits: 3. Vulnerability Severity Counts (CVSS | scanner): Critical: 8 | 2  High: 33 | 6  Medium: 36 | 33  Low: 3 | 39. Impacted Dependencies: libcrypto3@3.5.4-r0 libssl3@3.5.4-r0 musl-utils@1.2.5-r10 +5 more
+Recommendation: Current Image: alpine@3.22.2  Recommended Upgrade: alpine@3.22.5
+CWE: CWE-787, CWE-416, CWE-125, CWE-476 (and others)
+Vulnerabilities: CVE-2026-31789, CVE-2026-34182, CVE-2025-15467, CVE-2026-45445, CVE-2026-45447, CVE-2026-40200 (and 34 more)
+Severity Factors: High Business Priority:Damage, Third-Party Public Image:Reachable, Public Exploit Exists:Exploitable, Network Attack Vector:Reachable, Dockerfile:Reachable, Base Image Layer:Reachable, Critical Vulnerability:Damage
+Is Fix Available: false
+Source tools: ASPM scanner

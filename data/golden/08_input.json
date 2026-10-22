@@ -1,0 +1,39 @@
+{
+  "SchemaVersion": 2,
+  "ArtifactName": "data_repo_3",
+  "ArtifactType": "repository",
+  "Metadata": {
+    "RepositoryAlias": "data_repo_3",
+    "RelatedASPMApplication": "data_app_4",
+    "CrossSourceNote": "R-family base-image alerts in ASPM; those alerts are marked resolved there, while these Trivy findings are separate Dockerfile checks.",
+    "Selection": "High-severity misconfigurations only; cross-source association is not a duplicate or CVE match."
+  },
+  "Results": [
+    {
+      "Target": "Dockerfile 1",
+      "Class": "config",
+      "Type": "dockerfile",
+      "Misconfigurations": [
+        {"Type": "Dockerfile Security Check", "ID": "DS-0002", "Title": "Image user should not be 'root'", "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument", "Severity": "HIGH", "Status": "FAIL"},
+        {"Type": "Dockerfile Security Check", "ID": "DS-0029", "Title": "'apt-get' missing '--no-install-recommends'", "Message": "'--no-install-recommends' flag is missed", "Severity": "HIGH", "Status": "FAIL"}
+      ]
+    },
+    {
+      "Target": "Dockerfile 2",
+      "Class": "config",
+      "Type": "dockerfile",
+      "Misconfigurations": [
+        {"Type": "Dockerfile Security Check", "ID": "DS-0002", "Title": "Image user should not be 'root'", "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument", "Severity": "HIGH", "Status": "FAIL"},
+        {"Type": "Dockerfile Security Check", "ID": "DS-0017", "Title": "'RUN <package-manager> update' instruction alone", "Message": "update should be followed by install in the same RUN", "Severity": "HIGH", "Status": "FAIL"}
+      ]
+    },
+    {
+      "Target": "Dockerfile 3",
+      "Class": "config",
+      "Type": "dockerfile",
+      "Misconfigurations": [
+        {"Type": "Dockerfile Security Check", "ID": "DS-0002", "Title": "Image user should not be 'root'", "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument", "Severity": "HIGH", "Status": "FAIL"}
+      ]
+    }
+  ]
+}

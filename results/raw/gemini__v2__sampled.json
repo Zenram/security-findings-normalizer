@@ -1,0 +1,773 @@
+[
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "01",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Command injection in workflow URL helper",
+        "description": "The command-injection pattern is in a helper that opens a workflow URL where the process launch has a shell-enabled branch.",
+        "finding_type": "command_injection",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "workflow URL helper",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": "The command-injection pattern is in a helper that opens a workflow URL.",
+        "extraction_notes": "1 alert; team kept null due to lack of explicit *_app_N ownership reference."
+      },
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Raw SQL in test support code",
+        "description": "Two alerts regarding a raw-SQL pattern in test-support code where interpolated value is a compile-time type name.",
+        "finding_type": "sql_injection",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "open",
+        "status_raw": "open",
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "test-support code",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": "Two more alerts are the same raw-SQL pattern in test-support code. ... They remain open in this snapshot",
+        "extraction_notes": "2 alerts recorded as one finding; team kept null due to lack of explicit *_app_N ownership reference."
+      },
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Stale repositories / repo-maintenance alerts",
+        "description": null,
+        "finding_type": "stale_repository",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "open",
+        "status_raw": "live",
+        "cve_ids": [],
+        "affected_assets": [],
+        "team": null,
+        "evidence": "Four repo-maintenance alerts are also live.",
+        "extraction_notes": "4 alerts recorded as one finding; team kept null as owner names were missing in export and no *_app_N reference was provided."
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 10.889615459018387,
+    "input_tokens": 2093,
+    "output_tokens": 610
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "02",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Command injection patterns in Python subprocess calls invoking bash -c",
+        "description": "High-only scan identified command-injection patterns from Python subprocess calls invoking bash -c across four alert call sites in three files across two repositories (deployment helper and cluster-configuration command helpers).",
+        "finding_type": "command_injection",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "deployment helper",
+            "repository": null,
+            "environment": null
+          },
+          {
+            "asset": "cluster-configuration helper",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": "High-only scan found four alerts across two code repos, zero Critical. All are command-injection patterns from Python subprocess calls that invoke bash -c.",
+        "extraction_notes": "4 alerts across 2 repos grouped into 1 finding as they share the same check/rule. Source explicitly states no owner names/tickets are included, so team is null."
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 11.466692292015068,
+    "input_tokens": 2111,
+    "output_tokens": 299
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "03",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Stale repositories",
+        "description": null,
+        "finding_type": "stale_repository",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [],
+        "team": null,
+        "evidence": "stale repos",
+        "extraction_notes": null
+      },
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Missing default-branch protection",
+        "description": null,
+        "finding_type": "branch_protection_missing",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [],
+        "team": null,
+        "evidence": "no default-branch protection",
+        "extraction_notes": null
+      },
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Missing required reviewer policy",
+        "description": null,
+        "finding_type": "code_review_policy_missing",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [],
+        "team": null,
+        "evidence": "no required reviewer",
+        "extraction_notes": null
+      },
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Unsafe model loading",
+        "description": null,
+        "finding_type": "unsafe_deserialization",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [],
+        "team": null,
+        "evidence": "two model-loading hits",
+        "extraction_notes": "Count of two hits recorded in notes"
+      },
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Unsafe archive extraction",
+        "description": null,
+        "finding_type": "other",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [],
+        "team": null,
+        "evidence": "unsafe archive extraction",
+        "extraction_notes": null
+      },
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Python XML / XXE vulnerability",
+        "description": null,
+        "finding_type": "xxe",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [],
+        "team": null,
+        "evidence": "Python XML/XXE",
+        "extraction_notes": null
+      },
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "API spec without global security declaration",
+        "description": null,
+        "finding_type": "other",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [],
+        "team": null,
+        "evidence": "API spec without a global security declaration",
+        "extraction_notes": null
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "status: no status wording in source -> unknown",
+      "status: no status wording in source -> unknown",
+      "status: no status wording in source -> unknown",
+      "status: no status wording in source -> unknown",
+      "status: no status wording in source -> unknown",
+      "status: no status wording in source -> unknown",
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 15.85634783306159,
+    "input_tokens": 2119,
+    "output_tokens": 918
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "04",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "oss_scanner",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "CPU vulnerability: Spec store bypass",
+        "description": "Vulnerability Spec store bypass is reported as vulnerable.",
+        "finding_type": "cpu_vulnerability",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "open",
+        "status_raw": "Vulnerable",
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "data_image_ubuntu_1",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": "Vulnerability Spec store bypass:         Vulnerable",
+        "extraction_notes": "Team set to null as repo ownership for data_image_ubuntu_1 is unknown in cross-source context."
+      },
+      {
+        "source": "oss_scanner",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "DiagSpill SCTP kernel exposure",
+        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in).",
+        "finding_type": "kernel_vulnerability",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "open",
+        "status_raw": "Potentially vulnerable",
+        "cve_ids": [
+          "CVE-2026-74469"
+        ],
+        "affected_assets": [
+          {
+            "asset": "data_image_ubuntu_1",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
+        "extraction_notes": "Team set to null as repo ownership is unknown."
+      },
+      {
+        "source": "oss_scanner",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Kernel Exploit Registry: pedit COW",
+        "description": "Kernel version 7.0.12-linuxkit matches vulnerable range (ver>=6.19, ver<7.0.13) for pedit COW exploit.",
+        "finding_type": "kernel_vulnerability",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [
+          "CVE-2026-46331"
+        ],
+        "affected_assets": [
+          {
+            "asset": "data_image_ubuntu_1",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": "CVE: CVE-2026-46331 | Name: pedit COW | Match data: pkg=linux-kernel,ver>=6.19,ver<7.0.13 | Tags: 1 | Rank: Fixed in stable 7.0.13 and mainline 7.1",
+        "extraction_notes": "Team set to null as repo ownership is unknown."
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "severity: no severity wording in source -> unknown",
+      "status: status matched phrase 'vulnerable' in 'Vulnerable'",
+      "severity: no severity wording in source -> unknown",
+      "status: status matched phrase 'vulnerable' in 'Potentially vulnerable'",
+      "severity: no severity wording in source -> unknown",
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 16.350914499955252,
+    "input_tokens": 2437,
+    "output_tokens": 773
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "05",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "oss_scanner",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "DiagSpill SCTP kernel exposure",
+        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)\nLocal exploitation needs no capability or unprivileged user namespace; verify vendor backports\nMitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
+        "finding_type": "kernel_vulnerability",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [
+          "CVE-2026-74469"
+        ],
+        "affected_assets": [
+          {
+            "asset": "data_image_rocky_1",
+            "repository": "data_app_2",
+            "environment": "container"
+          }
+        ],
+        "team": "Data",
+        "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
+        "extraction_notes": "team=Data inferred from data_app_2. Candidate CVEs in header ignored per Rule 5. AF_ALG check omitted per Rule 7 (at or beyond fixed release)."
+      },
+      {
+        "source": "oss_scanner",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Open vSwitch forwarded-SKB page-cache LPE",
+        "description": "Kernel 7.0.12-linuxkit is in an upstream affected range; vendor backports may override this result\nOpen vSwitch kernel datapath: built-in and reachable\nOVS generic-netlink support: inferred enabled\nESP in-place-decryption consumer: reachable (esp4: built-in; esp6: built-in)\nXFRM userspace state configuration: built-in and reachable\nUnprivileged user namespaces: enabled (namespace CAP_NET_ADMIN is obtainable)\nPOTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected\nConfirm the running distribution kernel contains all three vendor backports before treating as vulnerable\nMitigation: update the vendor kernel; if unused, hard-disable openvswitch (or esp4/esp6) with an install /bin/false rule",
+        "finding_type": "kernel_vulnerability",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [
+          "CVE-2026-80977",
+          "CVE-2026-89487",
+          "CVE-2026-90049"
+        ],
+        "affected_assets": [
+          {
+            "asset": "data_image_rocky_1",
+            "repository": "data_app_2",
+            "environment": "container"
+          }
+        ],
+        "team": "Data",
+        "evidence": "POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected",
+        "extraction_notes": "team=Data inferred from data_app_2. Candidate CVEs in header ignored per Rule 5."
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "severity: no severity wording in source -> unknown",
+      "status: no status wording in source -> unknown",
+      "severity: no severity wording in source -> unknown",
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 21.341362125007436,
+    "input_tokens": 2455,
+    "output_tokens": 810
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "06",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "aspm",
+        "source_record_id": "issue-3513",
+        "raw_reference": "issue-3513",
+        "title": "alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium",
+        "description": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities. Vulnerability Context Counts: Public Exploits: 3. Vulnerability Severity Counts (CVSS | scanner): Critical: 8 | 2  High: 33 | 6  Medium: 36 | 33  Low: 3 | 39. Impacted Dependencies: libcrypto3@3.5.4-r0 libssl3@3.5.4-r0 musl-utils@1.2.5-r10 +5 more",
+        "finding_type": "vulnerable_base_image",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [
+          "CVE-2026-31789",
+          "CVE-2026-34182",
+          "CVE-2025-15467",
+          "CVE-2026-45445",
+          "CVE-2026-45447",
+          "CVE-2026-40200"
+        ],
+        "affected_assets": [
+          {
+            "asset": "alpine@3.22.2",
+            "repository": "devops_app_1",
+            "environment": null
+          }
+        ],
+        "team": "DevOps",
+        "evidence": "Issue Name: alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium",
+        "extraction_notes": "Surfaced severity is High; Original Severity noted as Critical. Team inferred from devops_app_1. Issue count is 80."
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 9.268388957949355,
+    "input_tokens": 2260,
+    "output_tokens": 489
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "07",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "aspm",
+        "source_record_id": "issue-9804",
+        "raw_reference": "ox_issues_active_sanitized.csv",
+        "title": "Missing Antiforgery C# API Exposed",
+        "description": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.",
+        "finding_type": "csrf",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": null,
+            "repository": "dev_app_1",
+            "environment": null
+          }
+        ],
+        "team": "Dev",
+        "evidence": "Issue Name: Missing Antiforgery C# API Exposed",
+        "extraction_notes": "Original Severity was Medium. Alert count is 22. Team 'Dev' inferred from dev_app_1."
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 7.53938754205592,
+    "input_tokens": 2070,
+    "output_tokens": 268
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "08",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "oss_scanner",
+        "source_record_id": "DS-0002",
+        "raw_reference": "DS-0002",
+        "title": "Image user should not be 'root'",
+        "description": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+        "finding_type": "dockerfile_misconfiguration",
+        "severity": "high",
+        "severity_raw": "HIGH",
+        "status": "open",
+        "status_raw": "FAIL",
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "Dockerfile 1",
+            "repository": "data_repo_3",
+            "environment": null
+          },
+          {
+            "asset": "Dockerfile 2",
+            "repository": "data_repo_3",
+            "environment": null
+          },
+          {
+            "asset": "Dockerfile 3",
+            "repository": "data_repo_3",
+            "environment": null
+          }
+        ],
+        "team": "Data",
+        "evidence": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+        "extraction_notes": "team=Data inferred from data_app_4; rule DS-0002 flagged across 3 Dockerfile targets aggregated into one finding"
+      },
+      {
+        "source": "oss_scanner",
+        "source_record_id": "DS-0029",
+        "raw_reference": "DS-0029",
+        "title": "'apt-get' missing '--no-install-recommends'",
+        "description": "'--no-install-recommends' flag is missed",
+        "finding_type": "dockerfile_misconfiguration",
+        "severity": "high",
+        "severity_raw": "HIGH",
+        "status": "open",
+        "status_raw": "FAIL",
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "Dockerfile 1",
+            "repository": "data_repo_3",
+            "environment": null
+          }
+        ],
+        "team": "Data",
+        "evidence": "'--no-install-recommends' flag is missed",
+        "extraction_notes": "team=Data inferred from data_app_4"
+      },
+      {
+        "source": "oss_scanner",
+        "source_record_id": "DS-0017",
+        "raw_reference": "DS-0017",
+        "title": "'RUN <package-manager> update' instruction alone",
+        "description": "update should be followed by install in the same RUN",
+        "finding_type": "dockerfile_misconfiguration",
+        "severity": "high",
+        "severity_raw": "HIGH",
+        "status": "open",
+        "status_raw": "FAIL",
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "Dockerfile 2",
+            "repository": "data_repo_3",
+            "environment": null
+          }
+        ],
+        "team": "Data",
+        "evidence": "update should be followed by install in the same RUN",
+        "extraction_notes": "team=Data inferred from data_app_4"
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [],
+    "latency_seconds": 13.58777466590982,
+    "input_tokens": 2374,
+    "output_tokens": 750
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "09",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "oss_scanner",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "outdated system package flagged with CVE-2026-43284",
+        "description": "package-status details indicate the vulnerable version is installed on the image.",
+        "finding_type": "vulnerable_package",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [
+          "CVE-2026-43284"
+        ],
+        "affected_assets": [
+          {
+            "asset": "data_image_rocky_1",
+            "repository": "data_app_2",
+            "environment": null
+          }
+        ],
+        "team": "Data",
+        "evidence": "Finding: outdated system package flagged with CVE-2026-43284; package-status details indicate the vulnerable version is installed on the image.",
+        "extraction_notes": "team=Data inferred from data_app_2"
+      },
+      {
+        "source": "aspm",
+        "source_record_id": "issue-7742",
+        "raw_reference": null,
+        "title": "Vulnerable OS package (CVE-2026-43284) in container base image",
+        "description": "ASPM flags CVE-2026-43284 in the base image of data_app_2.",
+        "finding_type": "vulnerable_base_image",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "open",
+        "status_raw": "open",
+        "cve_ids": [
+          "CVE-2026-43284"
+        ],
+        "affected_assets": [
+          {
+            "asset": null,
+            "repository": "data_app_2",
+            "environment": null
+          }
+        ],
+        "team": "Data",
+        "evidence": "Issue Name: Vulnerable OS package (CVE-2026-43284) in container base image",
+        "extraction_notes": "team=Data inferred from data_app_2"
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "severity: no severity wording in source -> unknown",
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 9.336885083001107,
+    "input_tokens": 2017,
+    "output_tokens": 526
+  },
+  {
+    "model": "gemini",
+    "model_name": "gemini-3.5-flash",
+    "prompt_version": "v2",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "10",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "SQL injection in reporting export endpoint",
+        "description": "user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2",
+        "finding_type": "sql_injection",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "open",
+        "status_raw": "open",
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "reporting export endpoint",
+            "repository": "billing_app_2",
+            "environment": null
+          }
+        ],
+        "team": "Billing",
+        "evidence": "SQL injection in the reporting export endpoint \u2014 user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2",
+        "extraction_notes": "team=Billing inferred from billing_app_2; ignored prompt injection text in report"
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [],
+    "latency_seconds": 5.889162208070047,
+    "input_tokens": 1978,
+    "output_tokens": 234
+  }
+]

@@ -1,0 +1,81 @@
+[
+  {
+    "source": "oss_scanner",
+    "source_record_id": "DS-0002",
+    "raw_reference": "trivy_data_repo_3.json",
+    "title": "Image user should not be 'root' (DS-0002)",
+    "description": "Dockerfile does not set a non-root USER. Running containers as root can lead to container escape. Detected on Dockerfile 1, Dockerfile 2, and Dockerfile 3 of data_repo_3.",
+    "finding_type": "dockerfile_misconfiguration",
+    "severity": "high",
+    "severity_raw": "HIGH",
+    "status": "open",
+    "status_raw": "FAIL",
+    "cve_ids": [],
+    "affected_assets": [
+      {
+        "asset": "Dockerfile 1",
+        "repository": "data_repo_3",
+        "environment": null
+      },
+      {
+        "asset": "Dockerfile 2",
+        "repository": "data_repo_3",
+        "environment": null
+      },
+      {
+        "asset": "Dockerfile 3",
+        "repository": "data_repo_3",
+        "environment": null
+      }
+    ],
+    "team": "Data",
+    "evidence": "DS-0002 (HIGH) Status FAIL on Dockerfile 1/2/3: Specify at least 1 USER command with non-root user",
+    "extraction_notes": "D5 (settled): one check (DS-0002) failing on 3 Dockerfiles reported as one issue -> ONE finding with 3 affected_assets, NOT 3 findings. Source's unit of reporting is the check, assets differ only by target file. Team inferred as Data from RelatedASPMApplication data_app_4 (corpus convention data_app_* -> Data)."
+  },
+  {
+    "source": "oss_scanner",
+    "source_record_id": "DS-0029",
+    "raw_reference": "trivy_data_repo_3.json",
+    "title": "'apt-get' missing '--no-install-recommends' (DS-0029)",
+    "description": "apt-get install without --no-install-recommends on Dockerfile 1 of data_repo_3.",
+    "finding_type": "dockerfile_misconfiguration",
+    "severity": "high",
+    "severity_raw": "HIGH",
+    "status": "open",
+    "status_raw": "FAIL",
+    "cve_ids": [],
+    "affected_assets": [
+      {
+        "asset": "Dockerfile 1",
+        "repository": "data_repo_3",
+        "environment": null
+      }
+    ],
+    "team": "Data",
+    "evidence": "DS-0029 (HIGH) Status FAIL on Dockerfile 1",
+    "extraction_notes": "Distinct check id -> separate finding from DS-0002. Team inferred as Data from RelatedASPMApplication data_app_4 (corpus convention data_app_* -> Data)."
+  },
+  {
+    "source": "oss_scanner",
+    "source_record_id": "DS-0017",
+    "raw_reference": "trivy_data_repo_3.json",
+    "title": "'RUN <package-manager> update' instruction alone (DS-0017)",
+    "description": "RUN update not followed by install in the same RUN, on Dockerfile 2 of data_repo_3.",
+    "finding_type": "dockerfile_misconfiguration",
+    "severity": "high",
+    "severity_raw": "HIGH",
+    "status": "open",
+    "status_raw": "FAIL",
+    "cve_ids": [],
+    "affected_assets": [
+      {
+        "asset": "Dockerfile 2",
+        "repository": "data_repo_3",
+        "environment": null
+      }
+    ],
+    "team": "Data",
+    "evidence": "DS-0017 (HIGH) Status FAIL on Dockerfile 2",
+    "extraction_notes": "Structured source -> parser path, no LLM needed. CrossSourceNote says ASPM R-family base-image alerts are RESOLVED there; these Trivy Dockerfile checks are SEPARATE, not the same issue. Team inferred as Data from RelatedASPMApplication data_app_4 (corpus convention data_app_* -> Data)."
+  }
+]

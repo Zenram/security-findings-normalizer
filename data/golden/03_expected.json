@@ -1,0 +1,97 @@
+[
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_data_2026-09-16.txt",
+    "title": "Stale repositories across the project",
+    "description": "Stale/unmaintained repositories, repeating across the project. Governance group; recommended one policy rollout rather than per-repo tickets. Scan context: internal access only.",
+    "finding_type": "stale_repository",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "recurring",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "multiple repositories (not enumerated)", "repository": null, "environment": "internal access only"}
+    ],
+    "team": "Data",
+    "evidence": "Most of the volume is governance: stale repos, no default-branch protection, and no required reviewer.",
+    "extraction_notes": "D5: 'stale repos', 'no default-branch protection', 'no required reviewer' are DISTINCT controls -> 3 separate findings (this + next two). ~245 instances across ~99 repos is a DASHBOARD ESTIMATE (only 12 sampled) -> instance count, not finding/root-cause count; not a verified inventory, so repo list is null not invented."
+  },
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_data_2026-09-16.txt",
+    "title": "Default branch not protected (no branch protection)",
+    "description": "Default-branch protection not configured across repos in the project. Governance control.",
+    "finding_type": "branch_protection_missing",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "recurring",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "multiple repositories (not enumerated)", "repository": null, "environment": "internal access only"}
+    ],
+    "team": "Data",
+    "evidence": "no default-branch protection ... These repeat across the project.",
+    "extraction_notes": "Distinct governance control from stale-repo and required-reviewer."
+  },
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_data_2026-09-16.txt",
+    "title": "No required reviewer on default branch",
+    "description": "Required-reviewer policy not configured across repos. Governance control.",
+    "finding_type": "code_review_policy_missing",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "recurring",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "multiple repositories (not enumerated)", "repository": null, "environment": "internal access only"}
+    ],
+    "team": "Data",
+    "evidence": "no required reviewer. These repeat across the project.",
+    "extraction_notes": "Distinct governance control."
+  },
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_data_2026-09-16.txt",
+    "title": "Python XML/XXE detection (scanner-only, exploitability unconfirmed)",
+    "description": "Python XML/XXE scanner detection. No source validation this cycle; exploitability depends on input source. Mixed-language analyst note: 'XML e input esterno? no sabemos todavia; check before calling exploitable.'",
+    "finding_type": "xxe",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "scanner detection, not validated",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": null, "repository": null, "environment": null}
+    ],
+    "team": null,
+    "evidence": "Python XML/XXE ... these are scanner detections; no source validation was done this cycle.",
+    "extraction_notes": "MIXED LANGUAGE present (Italian+Spanish). Source: 'Team/repo is missing for one finding. Keep that field unknown' -> team=null. 'Please don't report any as confirmed exploitable' -> must NOT mark exploitable/confirmed."
+  },
+  {
+    "source": "team_report",
+    "source_record_id": null,
+    "raw_reference": "team_report_data_2026-09-16.txt",
+    "title": "Unsafe model-loading and archive-extraction sinks (scanner-only)",
+    "description": "Two model-loading hits and unsafe archive extraction detected. Scanner detections; reachability from an untrusted file not established this cycle.",
+    "finding_type": "unsafe_deserialization",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "scanner detection, not validated",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "model-loading / archive-extraction code", "repository": null, "environment": null}
+    ],
+    "team": "Data",
+    "evidence": "two model-loading hits, unsafe archive extraction ... no source validation was done this cycle.",
+    "extraction_notes": "D5: model-loading x2 + archive extraction share the unsafe-input-reaches-operation root cause and asset context -> grouped as one finding. An API-spec-without-global-security-declaration alert also appears in this text (runtime auth unknown) -> add as a 6th finding if labeling it fully."
+  }
+]

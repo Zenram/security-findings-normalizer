@@ -1,0 +1,40 @@
+[
+  {
+    "source": "oss_scanner",
+    "source_record_id": null,
+    "raw_reference": "linpeas_ubuntu_24.04_sanitized.txt",
+    "title": "CPU Spec store bypass: Vulnerable",
+    "description": "LinPEAS reports CPU vulnerability 'Spec store bypass: Vulnerable' on image data_image_ubuntu_1 (Ubuntu 24.04). Spectre v1/v2 show mitigations; all other CPU vulns Not affected.",
+    "finding_type": "cpu_vulnerability",
+    "severity": "unknown",
+    "severity_raw": "Vulnerable",
+    "status": "open",
+    "status_raw": "Vulnerable",
+    "cve_ids": [],
+    "affected_assets": [
+      {"asset": "data_image_ubuntu_1", "repository": null, "environment": null}
+    ],
+    "team": null,
+    "evidence": "Vulnerability Spec store bypass: Vulnerable",
+    "extraction_notes": "D4: LinPEAS gives no severity label here -> severity=unknown (do not guess High). status=open (scanner reports the state as currently vulnerable). Do NOT attach the header 'Potential CVE overlap' list to this finding -> those are candidate overlaps, not this finding's CVEs."
+  },
+  {
+    "source": "oss_scanner",
+    "source_record_id": null,
+    "raw_reference": "linpeas_ubuntu_24.04_sanitized.txt",
+    "title": "DiagSpill SCTP kernel exposure (CVE-2026-74469)",
+    "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp loaded; sctp_diag built-in). Mitigation: update the kernel or hard-disable sctp and sctp_diag if unused.",
+    "finding_type": "kernel_vulnerability",
+    "severity": "unknown",
+    "severity_raw": "Potentially vulnerable",
+    "status": "open",
+    "status_raw": "Potentially vulnerable",
+    "cve_ids": ["CVE-2026-74469"],
+    "affected_assets": [
+      {"asset": "data_image_ubuntu_1 (kernel 7.0.12-linuxkit)", "repository": null, "environment": null}
+    ],
+    "team": null,
+    "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
+    "extraction_notes": "KEY LINPEAS JUDGMENT: only confirmed/potentially-vulnerable lines become findings. CVE-2026-31431 is 'LIKELY NOT VULNERABLE' -> NOT a finding (negative result). CVE-2026-46331 'pedit COW' is 'Fixed in stable 7.0.13' for this kernel's range -> treated as fixed, NOT a finding. severity=unknown per D4."
+  }
+]

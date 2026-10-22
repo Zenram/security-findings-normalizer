@@ -1,0 +1,24 @@
+[
+  {
+    "source": "aspm",
+    "source_record_id": "issue-3513",
+    "raw_reference": "ox_issues_active_sanitized.csv#issue-3513",
+    "title": "alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium",
+    "description": "alpine@3.22.2 base image defined in the Dockerfile contains 80 vulnerabilities (3 with public exploits). Recommended upgrade to alpine@3.22.5. Impacted dependencies include libcrypto3, libssl3, musl-utils.",
+    "finding_type": "vulnerable_base_image",
+    "severity": "high",
+    "severity_raw": "High",
+    "status": "open",
+    "status_raw": "active (Is Fix Available: false)",
+    "cve_ids": [
+      "CVE-2026-31789", "CVE-2026-34182", "CVE-2025-15467",
+      "CVE-2026-45445", "CVE-2026-45447", "CVE-2026-40200"
+    ],
+    "affected_assets": [
+      {"asset": "alpine@3.22.2 base image", "repository": "devops_app_1", "environment": null}
+    ],
+    "team": "DevOps",
+    "evidence": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities ... Recommended Upgrade: alpine@3.22.5",
+    "extraction_notes": "D4 DUAL-SEVERITY RULE (settled): severity_raw = the platform-surfaced `Severity` column ('High'); `Original Severity` ('Critical') is recorded here in notes, not in severity_raw. The code mapping table maps 'High' -> severity enum 'high'. cve_ids here is a truncated sample for readability — the real golden label must contain the FULL list extracted from the Vulnerabilities cell. Count=80 is an instance count, not the CVE count."
+  }
+]

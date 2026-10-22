@@ -1,0 +1,434 @@
+[
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "01",
+    "status": "failed",
+    "findings": [],
+    "repaired": true,
+    "error": "invalid after repair. first: schema validation failed on finding[0]: 1 validation error for Finding\nsource\n  Input should be 'team_report', 'cnapp', 'aspm', 'oss_scanner' or 'unknown' [type=enum, input_value='team_report | unknown', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.14/v/enum | second: schema validation failed on finding[0]: 1 validation error for Finding\nsource\n  Input should be 'team_report', 'cnapp', 'aspm', 'oss_scanner' or 'unknown' [type=enum, input_value='team_report | unknown', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.14/v/enum",
+    "normalization_flags": [
+      "status: unmapped status_raw 'P2 hygiene' -> unknown (not guessed)"
+    ],
+    "latency_seconds": 15.882584500010125,
+    "input_tokens": 1519,
+    "output_tokens": 215
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "02",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Command-injection patterns from Python subprocess calls invoking bash -c",
+        "description": null,
+        "finding_type": "command_injection",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "repo A",
+            "repository": null,
+            "environment": null
+          },
+          {
+            "asset": "repo B",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": null,
+        "extraction_notes": null
+      }
+    ],
+    "repaired": true,
+    "error": null,
+    "normalization_flags": [
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 15.0265308751259,
+    "input_tokens": 1556,
+    "output_tokens": 159
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "03",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "team_report",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Stale repository",
+        "description": null,
+        "finding_type": "stale_repository",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": null,
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": null,
+        "extraction_notes": null
+      }
+    ],
+    "repaired": true,
+    "error": null,
+    "normalization_flags": [
+      "severity: no severity wording in source -> unknown",
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 11.295358250034042,
+    "input_tokens": 1560,
+    "output_tokens": 113
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "04",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "oss_scanner",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Potential CVE overlap: CVE-2026-23111, CVE-2026-27456, CVE-2026-31431, CVE-2026-43284, CVE-2026-43500, CVE-2026-53612, CVE-2026-53614",
+        "description": null,
+        "finding_type": "unknown",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [
+          "CVE-2026-23111",
+          "CVE-2026-27456",
+          "CVE-2026-31431",
+          "CVE-2026-43284",
+          "CVE-2026-43500",
+          "CVE-2026-53612",
+          "CVE-2026-53614"
+        ],
+        "affected_assets": [],
+        "team": null,
+        "evidence": null,
+        "extraction_notes": "Cross-source context: Exact CVE references occur in sanitized ASPM data_app_1 and data_app_4; repo ownership for this image is unknown."
+      }
+    ],
+    "repaired": true,
+    "error": null,
+    "normalization_flags": [
+      "severity: no severity wording in source -> unknown",
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 24.08589358406607,
+    "input_tokens": 1849,
+    "output_tokens": 315
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "05",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "unknown",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "DiagSpill SCTP kernel exposure (CVE-2026-74469)",
+        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in). Local exploitation needs no capability or unprivileged user namespace; verify vendor backports. Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused.",
+        "finding_type": "other",
+        "severity": "unknown",
+        "severity_raw": null,
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [
+          "CVE-2026-74469"
+        ],
+        "affected_assets": [
+          {
+            "asset": null,
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": "DiagSpill SCTP kernel exposure (CVE-2026-74469)",
+        "extraction_notes": null
+      }
+    ],
+    "repaired": true,
+    "error": null,
+    "normalization_flags": [
+      "severity: no severity wording in source -> unknown",
+      "status: no status wording in source -> unknown",
+      "finding_type: unmapped finding_type 'vulnerable_kernel' -> other (flagged, not invented)"
+    ],
+    "latency_seconds": 22.381187083083205,
+    "input_tokens": 1855,
+    "output_tokens": 243
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "06",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "aspm",
+        "source_record_id": "issue-3513",
+        "raw_reference": "path removed",
+        "title": "alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium",
+        "description": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities. Vulnerability Context Counts: Public Exploits: 3. Vulnerability Severity Counts (CVSS | scanner): Critical: 8 | 2 High: 33 | 6 Medium: 36 | 33 Low: 3 | 39. Impacted Dependencies: libcrypto3@3.5.4-r0 libssl3@3.5.4-r0 musl-utils@1.2.5-r10 +5 more",
+        "finding_type": "vulnerable_base_image",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "unknown",
+        "status_raw": null,
+        "cve_ids": [
+          "CVE-2026-31789",
+          "CVE-2026-34182",
+          "CVE-2025-15467",
+          "CVE-2026-45445",
+          "CVE-2026-45447",
+          "CVE-2026-40200"
+        ],
+        "affected_assets": [
+          {
+            "asset": "alpine@3.22.2",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": "devops",
+        "evidence": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities. Vulnerability Context Counts: Public Exploits: 3. Vulnerability Severity Counts (CVSS | scanner): Critical: 8 | 2 High: 33 | 6 Medium: 36 | 33 Low: 3 | 39. Impacted Dependencies: libcrypto3@3.5.4-r0 libssl3@3.5.4-r0 musl-utils@1.2.5-r10 +5 more",
+        "extraction_notes": "Inferred team as 'devops' from 'devops_app_1'."
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "status: no status wording in source -> unknown"
+    ],
+    "latency_seconds": 21.098403125070035,
+    "input_tokens": 1571,
+    "output_tokens": 522
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "07",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "oss_scanner",
+        "source_record_id": "issue-9804",
+        "raw_reference": null,
+        "title": "Missing Antiforgery C# API Exposed",
+        "description": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.",
+        "finding_type": "csrf",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "resolved",
+        "status_raw": "Not Fixed",
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": null,
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": null,
+        "evidence": "Adding the [ValidateAntiForgeryToken] attribute to the POST action enforces that requests must include a valid anti-forgery token, verified by the framework before executing the action.",
+        "extraction_notes": null
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [
+      "status: status matched phrase 'fixed' in 'Not Fixed'"
+    ],
+    "latency_seconds": 9.099072000011802,
+    "input_tokens": 1378,
+    "output_tokens": 221
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "08",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "aspm",
+        "source_record_id": null,
+        "raw_reference": null,
+        "title": "Image user should not be 'root'",
+        "description": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+        "finding_type": "dockerfile_misconfiguration",
+        "severity": "high",
+        "severity_raw": "HIGH",
+        "status": "open",
+        "status_raw": "FAIL",
+        "cve_ids": [],
+        "affected_assets": [
+          {
+            "asset": "Dockerfile 1",
+            "repository": "data_repo_3",
+            "environment": null
+          },
+          {
+            "asset": "Dockerfile 2",
+            "repository": "data_repo_3",
+            "environment": null
+          },
+          {
+            "asset": "Dockerfile 3",
+            "repository": "data_repo_3",
+            "environment": null
+          }
+        ],
+        "team": "DevOps",
+        "evidence": "Dockerfile 1: Specify at least 1 USER command in Dockerfile with non-root user as argument\nDockerfile 2: Specify at least 1 USER command in Dockerfile with non-root user as argument\nDockerfile 3: Specify at least 1 USER command in Dockerfile with non-root user as argument",
+        "extraction_notes": "Inferred team from 'data_app_4' in Metadata -> RelatedASPMApplication; cross-source association note provided in Metadata -> CrossSourceNote."
+      }
+    ],
+    "repaired": false,
+    "error": null,
+    "normalization_flags": [],
+    "latency_seconds": 13.516745750093833,
+    "input_tokens": 1653,
+    "output_tokens": 317
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "09",
+    "status": "ok",
+    "findings": [
+      {
+        "source": "aspm",
+        "source_record_id": "issue-7742",
+        "raw_reference": "related sanitized ASPM app: data_app_2",
+        "title": "Vulnerable OS package (CVE-2026-43284) in container base image",
+        "description": "ASPM flags CVE-2026-43284 in the base image of data_app_2.",
+        "finding_type": "vulnerable_package",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "open",
+        "status_raw": "open",
+        "cve_ids": [
+          "CVE-2026-43284"
+        ],
+        "affected_assets": [
+          {
+            "asset": "data_image_rocky_1",
+            "repository": null,
+            "environment": null
+          }
+        ],
+        "team": "data",
+        "evidence": "Vulnerable OS package (CVE-2026-43284) in container base image",
+        "extraction_notes": null
+      }
+    ],
+    "repaired": true,
+    "error": null,
+    "normalization_flags": [],
+    "latency_seconds": 18.92108854209073,
+    "input_tokens": 1448,
+    "output_tokens": 217
+  },
+  {
+    "model": "ollama",
+    "model_name": "qwen2.5:7b",
+    "prompt_version": "v1",
+    "sampling": {
+      "name": "sampled",
+      "temperature": 0.7,
+      "top_p": 0.95
+    },
+    "source_id": "10",
+    "status": "failed",
+    "findings": [],
+    "repaired": true,
+    "error": "invalid after repair. first: schema validation failed on finding[0]: 1 validation error for Finding\ntitle\n  Field required [type=missing, input_value={'severity': 'unknown', '...inding_type': 'unknown'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing | second: schema validation failed on finding[0]: 1 validation error for Finding\ntitle\n  Field required [type=missing, input_value={'severity': 'unknown', '...inding_type': 'unknown'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing",
+    "normalization_flags": [
+      "severity: no severity wording in source -> unknown",
+      "status: no status wording in source -> unknown",
+      "finding_type: no finding_type in source -> unknown"
+    ],
+    "latency_seconds": 0.6891166670247912,
+    "input_tokens": 1396,
+    "output_tokens": 2
+  }
+]

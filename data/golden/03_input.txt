@@ -1,0 +1,14 @@
+SANITIZED SYNTHETIC TRAINING EXAMPLE
+Based on the Data team's September 16 cloud/SAST report. Speaker names are fictional and consistent by role across this corpus. Repository names, alert IDs, tickets, links, and tenant details are removed or generalized. Not a verbatim Slack export.
+
+#data-security — Sep 16
+
+Alex (lead analyst): First baseline, not a delta. High only: seven recurring root-cause groups, zero Critical. Dashboard estimate is ~245 alert instances across ~99 repos, but only 12 were sampled; this is not a complete repo inventory.
+
+Jordan (engineer): Most of the volume is governance: stale repos, no default-branch protection, and no required reviewer. These repeat across the project. Better one policy rollout than a ticket for each repo. Scan context says internal access only.
+
+Priya (data researcher): Code alerts include two model-loading hits, unsafe archive extraction, Python XML/XXE, and an API spec without a global security declaration. These are scanner detections; no source validation was done this cycle. Exploitability depends on input source. Runtime API authentication is unknown. Please don't report any as confirmed exploitable.
+
+Sam (developer): For the model/archive/XML cases, we need to establish whether an untrusted file can reach the operation. If source review is needed, ask first; nobody cloned those repos for this report.
+
+Alex (analyst): Team/repo is missing for one finding. Keep that field unknown. Also, one note says "XML e input esterno? no sabemos todavia; check before calling exploitable." No prior baseline, so no trend claim.
