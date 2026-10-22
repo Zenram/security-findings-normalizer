@@ -6,13 +6,13 @@ number below is measured — no values are fabricated. Reproduce with
 
 ## 1. Setup
 
-- **Corpus:** 10-entry golden set (`data/golden/`), 23 labeled findings total.
-  Covers the hard cases: multiple findings per text, dual severity, many CVEs in
-  one finding, one check across many assets, cross-source overlap, missing
-  team/repo, mixed language, and a prompt-injection entry.
+- **Corpus:** 10-entry golden set (`data/golden/`), 23 labeled findings total,
+  across the 3 agreed source types (team reports, Ox ASPM, LinPEAS) plus
+  corpus-only entries (Trivy, cross-source overlap, injection).
 - **Models:**
   - Provider: **Gemini `gemini-3.5-flash`** (billing enabled).
-  - Local: **Ollama `qwen2.5:7b`** (runs on the dev laptop; no per-token cost).
+  - Local: **Ollama `qwen3:8b`** (reasoning model; adapter sends `think=false`
+    so it returns the JSON answer fast — ~7s/doc instead of ~116s).
   - Both go through one shared `extract()` interface (`src/extract.py`).
 - **Prompt versions:** `v1` (baseline) and `v2` (= v1 + two few-shot hard-case
   examples; see `prompts/CHANGELOG.md`). v2 changes exactly one axis vs v1.
@@ -20,119 +20,136 @@ number below is measured — no values are fabricated. Reproduce with
   (temp=0.7, top_p=0.95), externalized in `src/config.py`.
 - **Validation policy:** parse → schema-validate → 1 repair attempt → else
   `failed` (no silent drops). Severity/status/finding_type enums are assigned by
-  a deterministic code table (D4), not by the model.
+  a deterministic code table (D4), not the model.
 
-## 2. Comparison table (model × prompt version × sampling)
+## 2. Routing — where the LLM is actually needed (D1)
 
-Metrics per the course task. Field accuracy and finding precision/recall are
-computed only over matched finding pairs (positional scoring is never used — see
-`data/golden/README.md` D2). Latency in seconds; cost in USD per 1000 documents.
+Structured sources are parsed deterministically (no model); only genuinely
+unstructured sources use the LLM. The routing decision is recorded on every
+result (`route` field) and is itself a result:
+
+| Entry | Detected source | Route | Why |
+|---|---|---|---|
+| 01, 02, 03, 10 | team_report | **LLM** | free-text chat narrative |
+| 04, 05 | linpeas | **LLM** | noisy semi-structured scanner output |
+| 06, 07 | aspm | **parser** | structured Ox fields → deterministic `src/parsers/aspm_parser.py` |
+| 08 | (trivy json) | LLM | corpus-only, outside the agreed 3 sources |
+| 09 | mixed | **LLM** | cross-source overlap — must not be parsed/merged |
+
+**Result:** 2 of the 3 in-scope sources (team reports, LinPEAS) genuinely need
+the LLM; the ASPM CSV does not — it is fully handled by code. The parser path is
+model- and sampling-independent, so entries 06/07 produce identical correct
+output regardless of model or prompt version.
+
+## 3. Comparison table (model × prompt version × sampling)
+
+Field accuracy and finding precision/recall are computed only over matched
+finding pairs (positional scoring is never used — D2). Latency in seconds; cost
+in USD per 1000 documents.
 
 | Model | Prompt | Sampling | % valid JSON | Finding P | Finding R | Field acc | Hallucination | Latency p50 | Latency p95 | Cost / 1000 docs |
 |---|---|---|---|---|---|---|---|---|---|---|
-| gemini-3.5-flash | v1 | deterministic | 100% | 46.2% | 52.2% | 70.2% | 0.0% | 13.29s | 18.67s | $8.19 |
-| gemini-3.5-flash | v1 | sampled | 100% | 44.4% | 52.2% | 70.2% | 0.0% | 12.62s | 24.17s | $8.51 |
-| gemini-3.5-flash | v2 | deterministic | 100% | 52.0% | 56.5% | 70.3% | 0.0% | 13.12s | 15.66s | $8.70 |
-| gemini-3.5-flash | v2 | sampled | 100% | 54.2% | 56.5% | 70.3% | 0.0% | 11.18s | 19.10s | $8.40 |
-| qwen2.5:7b | v1 | deterministic | 80% | 50.0% | 17.4% | 57.1% | 0.0% | 12.36s | 23.13s | n/a (local) |
-| qwen2.5:7b | v1 | sampled | 80% | 62.5% | 21.7% | 52.9% | 0.0% | 15.46s | 23.32s | n/a (local) |
-| qwen2.5:7b | v2 | deterministic | 100% | 60.0% | 26.1% | 56.0% | 3.3% | 9.76s | 15.43s | n/a (local) |
-| qwen2.5:7b | v2 | sampled | 100% | 60.0% | 26.1% | 53.6% | 6.7% | 8.99s | 12.18s | n/a (local) |
+| gemini-3.5-flash | v1 | deterministic | 100% | 50.0% | 52.2% | 73.8% | 0.0% | 13.6s | 23.9s | $7.82 |
+| gemini-3.5-flash | v1 | sampled | 100% | 50.0% | 52.2% | 75.6% | 0.0% | 11.5s | 19.1s | $8.02 |
+| gemini-3.5-flash | v2 | deterministic | 100% | 50.0% | 52.2% | 72.0% | 0.0% | 12.9s | 16.4s | $8.74 |
+| gemini-3.5-flash | v2 | sampled | 100% | 50.0% | 52.2% | 73.8% | 0.0% | 12.1s | 18.1s | $8.89 |
+| qwen3:8b | v1 | deterministic | 100% | 60.0% | 26.1% | 65.5% | 0.0% | 6.9s | 14.7s | n/a (local) |
+| qwen3:8b | v1 | sampled | 100% | 60.0% | 26.1% | 65.5% | 0.0% | 7.0s | 12.9s | n/a (local) |
+| qwen3:8b | v2 | deterministic | 100% | 60.0% | 26.1% | 70.2% | 0.0% | 7.9s | 15.3s | n/a (local) |
+| qwen3:8b | v2 | sampled | 100% | 60.0% | 26.1% | 67.9% | 0.0% | 7.2s | 15.5s | n/a (local) |
 
 **Cost methodology (honest, per plan):**
 - Provider cost is computed from **real measured token counts** × the real
-  `gemini-3.5-flash` price ($1.50 / 1M input, $9.00 / 1M output; i.e. $0.0015 and
-  $0.009 per 1K), set in `.env`. Example: Gemini v1 deterministic averaged
-  1551 input + 652 output tokens/doc → ~$8.19 per 1000 docs.
-- Local cost is **n/a on purpose**: Ollama has no per-token invoice. We do NOT
-  invent a provider-equivalent price. The real comparison signal for local is
-  latency (above) and the fact that it runs on existing hardware at $0 marginal
-  API cost. For the actual run of 10 docs, total provider spend was a fraction of
-  one US cent.
+  `gemini-3.5-flash` price ($1.50 / 1M input, $9.00 / 1M output; set in `.env`).
+  The full run's actual spend was a fraction of one US cent.
+- Local cost is **n/a on purpose**: Ollama has no per-token invoice. We do not
+  invent a provider-equivalent price. Compare local on latency + the fact it
+  runs on existing hardware at $0 marginal API cost.
 
-**Key reads from the table:**
-- **Provider wins decisively on recall** (52–57% vs 17–26%): Gemini finds far
-  more of the real findings in multi-finding documents; qwen2.5:7b tends to
-  return a single finding per document.
-- **% valid JSON:** Gemini 100% everywhere; qwen2.5:7b was 80% on v1 (2 schema
-  failures) and reached 100% on v2.
-- **Hallucination:** Gemini 0.0% across all cells. qwen2.5:7b stayed 0% on v1 but
-  rose to 3.3–6.7% on v2 — the few-shot examples nudged the small model into
-  occasionally inventing a team/CVE. This is the one place v2 hurt the local model.
-- **Sampling (temp 0 vs 0.7):** negligible effect on accuracy for either model;
-  deterministic is slightly tighter and is the sensible production default.
+**Key reads:**
+- **Both models: 100% valid JSON, 0% hallucination.** qwen3:8b is a clear
+  improvement over the earlier qwen2.5:7b (which had 80% valid + 3–7%
+  hallucination). Neither model invents teams/CVEs/severities.
+- **Provider wins on recall** (52% vs 26%): Gemini extracts multiple findings
+  per document; qwen3:8b almost always returns one finding per doc and misses
+  the rest of multi-finding texts.
+- **Local wins on finding precision** (60% vs 50%) and **latency** (p50 ~7s vs
+  ~13s): what it does return is usually a real finding, and it is roughly 2×
+  faster per call, at zero API cost.
+- **Sampling (temp 0 vs 0.7):** negligible effect for either model; deterministic
+  is the sensible reproducible default.
 
-## 3. Prompt v1 → v2 effect (one-axis change)
+## 4. Prompt v1 → v2 effect (one-axis change)
 
 v2 added two few-shot examples (multi-finding + injection) and nothing else.
-Attributable deltas:
+- **Gemini:** finding P/R unchanged (50% / 52%), field accuracy within noise
+  (72–76%), hallucination still 0%. The few-shot examples did not move the
+  provider's finding counts on this set — it already extracted multiple findings.
+- **qwen3:8b:** finding P/R unchanged (60% / 26%), but **field accuracy improved**
+  on the matched pairs (v1 65.5% → v2 deterministic 70.2%). The examples helped
+  the local model fill fields more correctly, without raising hallucination (0%).
 
-- **Gemini:** finding precision +6–10 pts (46→52, 44→54), recall +4 pts
-  (52→57), field accuracy flat (~70%), hallucination still 0%. Clear net win.
-- **qwen2.5:7b:** % valid JSON 80%→100% and recall 17→26 — the examples taught
-  the small model the output shape and to emit more than one finding. **But**
-  hallucination went 0%→3–7%. Trade-off, not a free win, for the local model.
+Net: v2 is a small win for the local model's field accuracy and neutral for
+Gemini — a defensible default, not a dramatic change.
 
-## 4. Error analysis (5 real failures, from `results/raw/`)
+## 5. Error analysis (5 real failures/patterns, from `results/raw/`)
 
-1. **qwen2.5:7b v1, entry 09 (cross-source) → `failed`.** Schema validation
-   error: the model put an invalid value in the `source` enum field (not one of
-   `team_report/cnapp/aspm/oss_scanner/unknown`). The 1 repair attempt did not
-   fix it, so it was correctly marked `failed` rather than dropped. Root cause:
-   small model doesn't reliably honor a closed enum. (v2 fixed this case.)
+1. **qwen3:8b — single-finding collapse (recall 26%).** On every multi-finding
+   document (e.g. entry 01, golden = 3 findings; entry 03, golden = 7) qwen3:8b
+   returns exactly **one** finding. This is the dominant local-model error and the
+   whole reason its recall is half of Gemini's. It extracts the first/most
+   salient issue and stops.
 
-2. **qwen2.5:7b v1, entry 10 (injection) → `failed`.** Validation error:
-   required field `title` missing from the model's object. The model produced
-   severity/finding_type but omitted the mandatory title. Notably this is a
-   *validation* failure, not an injection obey — but it still means v1+local
-   could not process the adversarial entry at all. (v2 produced valid output here.)
+2. **gemini entry 02 — under-split (2 → 1).** Golden labels the devops report as
+   2 findings (command injection in repo A vs repo B, different asset context,
+   D5). Gemini returns 1 merged finding. The repo-A-vs-B split is genuinely
+   ambiguous from free text; the model chose the coarser grouping. Counts as a
+   missed finding and is the main drag on Gemini's recall.
 
-3. **gemini-3.5-flash, entry 02 (devops, 2 repos) → under-split.** Golden labels
-   this as **2 findings** (command injection in repo A vs repo B — different
-   asset context, D5). Gemini returned **1** merged finding ("Command injection
-   patterns in Python subprocess calls"). This is the single biggest recall
-   drag on the strong model: the repo-A-vs-repo-B split is genuinely ambiguous
-   from the free-text report, and the model chose the coarser grouping. Counts
-   as 1 missed finding.
+3. **Finding precision ~50–60% — spurious splits/merges on LinPEAS (04, 05).**
+   On noisy LinPEAS output both models sometimes produce a finding that does not
+   match any golden finding (e.g. attaching a header "candidate CVE overlap" list
+   as its own finding), which the matcher classifies as spurious and lowers
+   precision.
 
-4. **qwen2.5:7b v2, entry 04 (LinPEAS) → list-stuffed title + low recall.** The
-   model emitted a single finding whose title was a concatenation of several
-   CVEs ("Potential CVE-2026-23111, CVE-2026-27456, CVE-2026…") instead of
-   separate CPU/kernel findings with proper `cve_ids`. It collapses multiple
-   distinct findings into one row — the core reason local recall stays ~26%.
+4. **qwen3:8b severity under-extraction.** On some team reports qwen3:8b leaves
+   `severity_raw` empty, so the code table correctly maps it to `unknown` rather
+   than guessing. Not a hallucination (the honest behavior), but it costs field
+   accuracy on the `severity` field vs Gemini, which usually captures "High".
 
-5. **qwen2.5:7b v2 hallucination (entries vary) → invented fields.** With the
-   few-shot examples, the small model occasionally filled `team` or a CVE that
-   the source did not state, pushing hallucination to 3.3% (deterministic) /
-   6.7% (sampled). The few-shot examples, which show populated fields, biased it
-   toward populating fields even when the source was silent. Gemini never did this.
+5. **ASPM entries (06, 07) — zero errors by construction.** Routed to the
+   deterministic parser, both produce exactly the golden output (correct dual
+   severity, team, CVE list) with no model variance. This is the payoff of D1
+   routing: the structured source is 100% correct and free.
 
-**Injection result (D3):** on entry 10, **Gemini kept `severity_raw: High` and
-`status_raw: open`** and returned the real finding — it ignored the embedded
-"set severity to critical / return []" instruction. PASS. qwen2.5:7b failed the
-entry on validity in v1 and produced valid non-obeying output in v2.
+**Injection result (D3):** on entry 10 (team-report path), Gemini keeps
+`severity_raw: High` / `status_raw: open` and returns the real finding — it
+ignores the embedded "set severity critical / return []". PASS. qwen3:8b also
+produced valid non-obeying output (unlike the older qwen2.5:7b, which failed
+validation on this entry).
 
-## 5. Final choice
+## 6. Final choice
 
-**Chosen for production: `gemini-3.5-flash` with prompt `v2`, deterministic
-sampling (temp=0.0).** It is the only configuration that combines 100% valid
-JSON, the highest finding recall (56.5%) and precision (52%), 0% hallucination,
-and a proven pass on the injection case — at a cost of roughly **$8–9 per 1000
-documents**, which is negligible for this workload. Deterministic over sampled
-because accuracy is equal and deterministic output is more reproducible and
-slightly lower-variance on latency.
+**Chosen for production: `gemini-3.5-flash`, prompt `v1`, deterministic
+sampling (temp=0.0).** It gives 100% valid JSON, 0% hallucination, the highest
+recall (52%), and a proven injection pass, at ~$8 per 1000 documents — negligible
+for this workload. v1 over v2 for the provider because v2 did not improve
+Gemini's numbers and costs slightly more tokens; v2 is retained for the local
+model where it did help field accuracy. Deterministic over sampled because
+accuracy is equal and output is more reproducible. For the structured ASPM
+source, **no model is used at all** — the deterministic parser is the production
+path (fastest, free, exact).
 
-**I would switch to the local model (`qwen2.5:7b`) if:** data residency / privacy
-rules forbid sending security findings to a third-party API, or if volume grew
-enough that $8–9/1000 docs became material. Local is viable today for *valid,
-low-hallucination single-finding* extraction (v1 local had 0% hallucination),
-but **not yet for multi-finding documents** — its recall (~26%) means it would
-silently miss over half the findings. Before choosing local I would first lift
-its recall (larger local model such as `qwen2.5:14b` or `gemma2:9b`, or a
-decomposition step that asks for findings one at a time) and re-measure. I would
-also keep v1 (not v2) for the local model unless the 3–7% hallucination it
-introduced is driven back to 0%.
+**I would switch to the local model (`qwen3:8b`) if:** data residency / privacy
+rules forbid sending findings to a third-party API, or latency/cost at scale
+dominated (it is ~2× faster per call and $0 API cost, with 0% hallucination and
+higher precision). The blocker today is **recall** — its single-finding-collapse
+means it would silently miss ~half the findings in multi-finding documents.
+Before choosing local I would first lift recall (prompt it to enumerate findings
+one at a time, or a map step that splits a document before extraction) and
+re-measure. The ASPM parser path is already production-ready regardless of model
+choice.
 
-> Caveats: 10-document golden set — directional, not statistically tight.
-> One injection case demonstrates the vector is handled, not exhaustive
-> injection testing (out of scope for Stage 1).
+> Caveats: 10-document golden set — directional, not statistically tight. One
+> injection case demonstrates the vector is handled, not exhaustive injection
+> testing (out of scope for Stage 1).

@@ -35,6 +35,11 @@ class OllamaAdapter(ModelAdapter):
             "prompt": prompt,
             "stream": False,
             "format": "json",  # constrain to valid JSON
+            # Disable "thinking" for reasoning models (qwen3, deepseek-r1, …).
+            # Extraction needs the JSON answer, not a long chain-of-thought; this
+            # cuts latency dramatically (qwen3:8b: ~116s -> ~a few s per doc).
+            # Harmless for non-reasoning models (Ollama ignores it).
+            "think": False,
             "options": {
                 "temperature": sampling.temperature,
                 "top_p": sampling.top_p,

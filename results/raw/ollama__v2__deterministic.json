@@ -1,7 +1,7 @@
 [
   {
     "model": "ollama",
-    "model_name": "qwen2.5:7b",
+    "model_name": "qwen3:8b",
     "prompt_version": "v2",
     "sampling": {
       "name": "deterministic",
@@ -9,44 +9,46 @@
       "top_p": 1.0
     },
     "source_id": "01",
+    "route": "llm",
+    "source": "team_report",
     "status": "ok",
     "findings": [
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Command injection",
+        "title": "Command injection vulnerability",
         "description": null,
         "finding_type": "command_injection",
         "severity": "high",
         "severity_raw": "High",
         "status": "unknown",
-        "status_raw": "P2 hygiene",
+        "status_raw": null,
         "cve_ids": [],
         "affected_assets": [
           {
-            "asset": "helper that opens a workflow URL",
-            "repository": null,
+            "asset": "helper function",
+            "repository": "unknown",
             "environment": null
           }
         ],
-        "team": "Dev",
-        "evidence": "The command-injection pattern is in a helper that opens a workflow URL. That URL comes from an internal service response, not direct user text; the process launch still has a shell-enabled branch. Validate the scheme and use an explicit argument list.",
-        "extraction_notes": "team=Dev from developer's statement; severity_raw kept as P2 hygiene; status_raw not explicitly stated, but context implies it's not critical"
+        "team": null,
+        "evidence": "The command-injection pattern is in a helper that opens a workflow URL.",
+        "extraction_notes": "team=Dev inferred from context; severity=High from Alex's note; count=1; missing repo/app fields left as unknown"
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [
-      "status: unmapped status_raw 'P2 hygiene' -> unknown (not guessed)"
+      "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 11.591250833007507,
-    "input_tokens": 1966,
-    "output_tokens": 210
+    "latency_seconds": 9.436717084026895,
+    "input_tokens": 1953,
+    "output_tokens": 120
   },
   {
     "model": "ollama",
-    "model_name": "qwen2.5:7b",
+    "model_name": "qwen3:8b",
     "prompt_version": "v2",
     "sampling": {
       "name": "deterministic",
@@ -54,13 +56,15 @@
       "top_p": 1.0
     },
     "source_id": "02",
+    "route": "llm",
+    "source": "team_report",
     "status": "ok",
     "findings": [
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Command-injection pattern from Python subprocess calls",
+        "title": "Command injection via Python subprocess calls",
         "description": null,
         "finding_type": "command_injection",
         "severity": "high",
@@ -71,18 +75,18 @@
         "affected_assets": [
           {
             "asset": "deployment helper",
-            "repository": "repo A",
+            "repository": "first repo",
             "environment": null
           },
           {
-            "asset": "deployment helper",
-            "repository": "repo B",
+            "asset": "cluster-configuration command",
+            "repository": "second repo",
             "environment": null
           }
         ],
-        "team": "DevOps",
+        "team": null,
         "evidence": "High-only scan found four alerts across two code repos, zero Critical. All are command-injection patterns from Python subprocess calls that invoke bash -c.",
-        "extraction_notes": null
+        "extraction_notes": "two call sites in repo A and two in repo B, all the same broad shell-injection pattern; no team inferred"
       }
     ],
     "repaired": false,
@@ -90,13 +94,13 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 8.003296500071883,
-    "input_tokens": 1993,
-    "output_tokens": 190
+    "latency_seconds": 7.754320541978814,
+    "input_tokens": 1980,
+    "output_tokens": 153
   },
   {
     "model": "ollama",
-    "model_name": "qwen2.5:7b",
+    "model_name": "qwen3:8b",
     "prompt_version": "v2",
     "sampling": {
       "name": "deterministic",
@@ -104,6 +108,8 @@
       "top_p": 1.0
     },
     "source_id": "03",
+    "route": "llm",
+    "source": "team_report",
     "status": "ok",
     "findings": [
       {
@@ -119,9 +125,9 @@
         "status_raw": null,
         "cve_ids": [],
         "affected_assets": [],
-        "team": "null",
-        "evidence": "seven recurring root-cause groups, zero Critical",
-        "extraction_notes": null
+        "team": null,
+        "evidence": "Most of the volume is governance: stale repos",
+        "extraction_notes": "count not specified; inferred from context; team not specified; note about XML input external? no sabemos todavia; check before calling exploitable."
       }
     ],
     "repaired": false,
@@ -129,13 +135,13 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 5.043517541955225,
-    "input_tokens": 1997,
-    "output_tokens": 110
+    "latency_seconds": 5.853553499910049,
+    "input_tokens": 1984,
+    "output_tokens": 106
   },
   {
     "model": "ollama",
-    "model_name": "qwen2.5:7b",
+    "model_name": "qwen3:8b",
     "prompt_version": "v2",
     "sampling": {
       "name": "deterministic",
@@ -143,15 +149,17 @@
       "top_p": 1.0
     },
     "source_id": "04",
+    "route": "llm",
+    "source": "linpeas",
     "status": "ok",
     "findings": [
       {
-        "source": "oss_scanner",
+        "source": "aspm",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Potential CVE-2026-23111, CVE-2026-27456, CVE-2026-31431, CVE-2026-43284, CVE-2026-43500, CVE-2026-53612, CVE-2026-53614",
+        "title": "Base image Ubuntu 24.04 vulnerable to CVE-2026-23111",
         "description": null,
-        "finding_type": "unknown",
+        "finding_type": "vulnerable_base_image",
         "severity": "unknown",
         "severity_raw": null,
         "status": "unknown",
@@ -165,10 +173,16 @@
           "CVE-2026-53612",
           "CVE-2026-53614"
         ],
-        "affected_assets": [],
+        "affected_assets": [
+          {
+            "asset": null,
+            "repository": "data_image_ubuntu_1",
+            "environment": null
+          }
+        ],
         "team": null,
-        "evidence": null,
-        "extraction_notes": "Potential CVEs from base image, no specific finding details provided"
+        "evidence": "Potential CVE overlap: CVE-2026-23111, CVE-2026-27456, CVE-2026-31431, CVE-2026-43284, CVE-2026-43500, CVE-2026-53612, CVE-2026-53614",
+        "extraction_notes": "CVE references alone do not prove the image is vulnerable; scanner package-status details remain below"
       }
     ],
     "repaired": false,
@@ -177,13 +191,13 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 12.936206334037706,
-    "input_tokens": 2295,
-    "output_tokens": 295
+    "latency_seconds": 15.44352275005076,
+    "input_tokens": 2282,
+    "output_tokens": 306
   },
   {
     "model": "ollama",
-    "model_name": "qwen2.5:7b",
+    "model_name": "qwen3:8b",
     "prompt_version": "v2",
     "sampling": {
       "name": "deterministic",
@@ -191,17 +205,19 @@
       "top_p": 1.0
     },
     "source_id": "05",
+    "route": "llm",
+    "source": "linpeas",
     "status": "ok",
     "findings": [
       {
-        "source": "team_report",
+        "source": "aspm",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "DiagSpill SCTP kernel exposure (CVE-2026-74469)",
-        "description": null,
-        "finding_type": "cpu_vulnerability",
+        "title": "DiagSpill SCTP kernel exposure",
+        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in). Local exploitation needs no capability or unprivileged user namespace; verify vendor backports. Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
+        "finding_type": "kernel_vulnerability",
         "severity": "unknown",
-        "severity_raw": "Potentially vulnerable",
+        "severity_raw": null,
         "status": "unknown",
         "status_raw": null,
         "cve_ids": [
@@ -209,49 +225,51 @@
         ],
         "affected_assets": [
           {
-            "asset": "Kernel 7.0.12-linuxkit",
-            "repository": null,
+            "asset": "kernel",
+            "repository": "data_image_rocky_1",
             "environment": null
           }
         ],
-        "team": "null",
-        "evidence": "DiagSpill SCTP kernel exposure (CVE-2026-74469)",
-        "extraction_notes": null
+        "team": null,
+        "evidence": "DiagSpill SCTP kernel exposure (CVE-2026-74469)\nPotentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)\nLocal exploitation needs no capability or unprivileged user namespace; verify vendor backports\nMitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
+        "extraction_notes": "CVE-2026-74469 is directly linked to this finding; kernel is the affected asset; team not inferred from the source"
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [
-      "severity: unmapped severity_raw 'Potentially vulnerable' -> unknown (not guessed)",
+      "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 8.718109915964305,
-    "input_tokens": 2303,
-    "output_tokens": 190
+    "latency_seconds": 15.07172083389014,
+    "input_tokens": 2290,
+    "output_tokens": 295
   },
   {
-    "model": "ollama",
-    "model_name": "qwen2.5:7b",
-    "prompt_version": "v2",
+    "model": "parser",
+    "model_name": "deterministic-aspm",
+    "prompt_version": "n/a",
     "sampling": {
-      "name": "deterministic",
-      "temperature": 0.0,
-      "top_p": 1.0
+      "name": "n/a",
+      "temperature": null,
+      "top_p": null
     },
     "source_id": "06",
+    "route": "parser",
+    "source": "aspm",
     "status": "ok",
     "findings": [
       {
         "source": "aspm",
         "source_record_id": "issue-3513",
-        "raw_reference": null,
+        "raw_reference": "06_input.txt#issue-3513",
         "title": "alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium",
         "description": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities. Vulnerability Context Counts: Public Exploits: 3. Vulnerability Severity Counts (CVSS | scanner): Critical: 8 | 2  High: 33 | 6  Medium: 36 | 33  Low: 3 | 39. Impacted Dependencies: libcrypto3@3.5.4-r0 libssl3@3.5.4-r0 musl-utils@1.2.5-r10 +5 more",
         "finding_type": "vulnerable_base_image",
         "severity": "high",
         "severity_raw": "High",
-        "status": "unknown",
-        "status_raw": null,
+        "status": "open",
+        "status_raw": "active (Is Fix Available: false)",
         "cve_ids": [
           "CVE-2026-31789",
           "CVE-2026-34182",
@@ -262,73 +280,75 @@
         ],
         "affected_assets": [
           {
-            "asset": "Dockerfile",
+            "asset": "alpine@3.22.2 base image",
             "repository": "devops_app_1",
             "environment": null
           }
         ],
         "team": "DevOps",
-        "evidence": "alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium",
-        "extraction_notes": "team=DevOps from devops_app_1"
+        "evidence": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities. Vulnerability Context Counts: Public Exploits: 3. Vulnerability Severity Counts (CVSS | scanner): Critical: 8 | 2  High: 33 | 6  Medium: 36 | 33  Low: 3 | 39. Impacted Dependencies: libcrypto3@3.5.4-r0 libssl3@3.5.4-r0 musl-utils@1.2.5-r10 +5 more",
+        "extraction_notes": "D4 dual-severity: severity_raw=Severity 'High'; Original Severity 'Critical' kept here, not in severity_raw. Count=80 is an instance count, not the finding count. team=DevOps from Application 'DevOps / devops_app_1' (DevOps)."
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [
-      "status: no status wording in source -> unknown"
+      "status: status matched phrase 'active' in 'active (Is Fix Available: false)'"
     ],
-    "latency_seconds": 17.475214791018516,
-    "input_tokens": 2142,
-    "output_tokens": 420
+    "latency_seconds": 0.0,
+    "input_tokens": null,
+    "output_tokens": null
   },
   {
-    "model": "ollama",
-    "model_name": "qwen2.5:7b",
-    "prompt_version": "v2",
+    "model": "parser",
+    "model_name": "deterministic-aspm",
+    "prompt_version": "n/a",
     "sampling": {
-      "name": "deterministic",
-      "temperature": 0.0,
-      "top_p": 1.0
+      "name": "n/a",
+      "temperature": null,
+      "top_p": null
     },
     "source_id": "07",
+    "route": "parser",
+    "source": "aspm",
     "status": "ok",
     "findings": [
       {
         "source": "aspm",
         "source_record_id": "issue-9804",
-        "raw_reference": null,
+        "raw_reference": "07_input.txt#issue-9804",
         "title": "Missing Antiforgery C# API Exposed",
         "description": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.",
         "finding_type": "csrf",
         "severity": "high",
         "severity_raw": "High",
-        "status": "unknown",
-        "status_raw": "Medium",
+        "status": "open",
+        "status_raw": "active (Is Fix Available: false)",
         "cve_ids": [],
         "affected_assets": [
           {
-            "asset": "POST action",
+            "asset": null,
             "repository": "dev_app_1",
             "environment": null
           }
         ],
-        "team": null,
+        "team": "Dev",
         "evidence": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.",
-        "extraction_notes": "team=null, inferred severity from 'Severity: High' and 'Original Severity: Medium'"
+        "extraction_notes": "D4 dual-severity: severity_raw=Severity 'High'; Original Severity 'Medium' kept here, not in severity_raw. Count=22 is an instance count, not the finding count. team=Dev from Application 'Dev / dev_app_1' (Dev)."
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [
-      "status: unmapped status_raw 'Medium' -> unknown (not guessed)"
+      "status: status matched phrase 'active' in 'active (Is Fix Available: false)'"
     ],
-    "latency_seconds": 10.807565749972127,
-    "input_tokens": 1949,
-    "output_tokens": 261
+    "latency_seconds": 0.0,
+    "input_tokens": null,
+    "output_tokens": null
   },
   {
     "model": "ollama",
-    "model_name": "qwen2.5:7b",
+    "model_name": "qwen3:8b",
     "prompt_version": "v2",
     "sampling": {
       "name": "deterministic",
@@ -336,10 +356,12 @@
       "top_p": 1.0
     },
     "source_id": "08",
+    "route": "llm",
+    "source": "unknown",
     "status": "ok",
     "findings": [
       {
-        "source": "oss_scanner",
+        "source": "aspm",
         "source_record_id": null,
         "raw_reference": null,
         "title": "Image user should not be 'root'",
@@ -367,21 +389,21 @@
             "environment": null
           }
         ],
-        "team": "DevOps",
-        "evidence": "Image user should not be 'root'. Specify at least 1 USER command in Dockerfile with non-root user as argument",
-        "extraction_notes": "team=DevOps from data_app_4; cross-source note about base-image alerts in ASPM"
+        "team": null,
+        "evidence": "Image user should not be 'root'",
+        "extraction_notes": "Multiple Dockerfile misconfigurations; count kept in notes"
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 10.969176832935773,
-    "input_tokens": 2224,
-    "output_tokens": 249
+    "latency_seconds": 8.05462091602385,
+    "input_tokens": 2211,
+    "output_tokens": 150
   },
   {
     "model": "ollama",
-    "model_name": "qwen2.5:7b",
+    "model_name": "qwen3:8b",
     "prompt_version": "v2",
     "sampling": {
       "name": "deterministic",
@@ -389,47 +411,46 @@
       "top_p": 1.0
     },
     "source_id": "09",
+    "route": "llm",
+    "source": "mixed",
     "status": "ok",
     "findings": [
       {
-        "source": "oss_scanner",
-        "source_record_id": null,
+        "source": "aspm",
+        "source_record_id": "issue-7742",
         "raw_reference": null,
-        "title": "outdated system package flagged with CVE-2026-43284",
-        "description": "package-status details indicate the vulnerable version is installed on the image.",
-        "finding_type": "vulnerable_package",
-        "severity": "unknown",
-        "severity_raw": "null",
-        "status": "unknown",
-        "status_raw": null,
+        "title": "Vulnerable OS package (CVE-2026-43284) in container base image",
+        "description": "ASPM flags CVE-2026-43284 in the base image of data_app_2.",
+        "finding_type": "vulnerable_base_image",
+        "severity": "high",
+        "severity_raw": "High",
+        "status": "open",
+        "status_raw": "open",
         "cve_ids": [
           "CVE-2026-43284"
         ],
         "affected_assets": [
           {
-            "asset": "system package",
-            "repository": "data_image_rocky_1",
+            "asset": null,
+            "repository": "data_app_2",
             "environment": null
           }
         ],
-        "team": null,
-        "evidence": "outdated system package flagged with CVE-2026-43284; package-status details indicate the vulnerable version is installed on the image.",
-        "extraction_notes": null
+        "team": "Data",
+        "evidence": "ASPM flags CVE-2026-43284 in the base image of data_app_2.",
+        "extraction_notes": "team=Data from data_app_2"
       }
     ],
     "repaired": false,
     "error": null,
-    "normalization_flags": [
-      "severity: unmapped severity_raw 'null' -> unknown (not guessed)",
-      "status: no status wording in source -> unknown"
-    ],
-    "latency_seconds": 8.459388667019084,
-    "input_tokens": 1893,
-    "output_tokens": 205
+    "normalization_flags": [],
+    "latency_seconds": 10.565991958021186,
+    "input_tokens": 1880,
+    "output_tokens": 203
   },
   {
     "model": "ollama",
-    "model_name": "qwen2.5:7b",
+    "model_name": "qwen3:8b",
     "prompt_version": "v2",
     "sampling": {
       "name": "deterministic",
@@ -437,14 +458,16 @@
       "top_p": 1.0
     },
     "source_id": "10",
+    "route": "llm",
+    "source": "team_report",
     "status": "ok",
     "findings": [
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "SQL injection in the reporting export endpoint",
-        "description": "user-supplied `sort` parameter is concatenated into a raw query",
+        "title": "SQL injection in reporting export endpoint",
+        "description": "user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2",
         "finding_type": "sql_injection",
         "severity": "high",
         "severity_raw": "High",
@@ -458,16 +481,16 @@
             "environment": null
           }
         ],
-        "team": "Engineering",
+        "team": "Billing",
         "evidence": "SQL injection in the reporting export endpoint \u2014 user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2. Status is open, no fix branch yet.",
-        "extraction_notes": null
+        "extraction_notes": "team=Billing from billing_app_2"
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 7.694673832971603,
-    "input_tokens": 1857,
-    "output_tokens": 187
+    "latency_seconds": 7.337838332983665,
+    "input_tokens": 1844,
+    "output_tokens": 150
   }
 ]

@@ -25,6 +25,7 @@ from src.config import GEMINI_MIN_SECONDS_BETWEEN_CALLS, MODEL_GEMINI
 from src.cost import cost_summary
 from src.evaluate import RunMetrics, evaluate_result
 from src.extract import extract
+from src.routing import route_and_extract
 from src.golden import load_golden_set
 from src.models import ModelError, get_adapter
 import time
@@ -95,30 +96,53 @@ def run(config: RunConfig | None = None, results_dir: Path | None = None) -> dic
 
                 for entry in golden:
                     if not model_usable:
-                        result = {
-                            "model": model_id, "prompt_version": prompt_version,
-                            "sampling": sampling.as_log_dict(), "source_id": entry.entry_id,
-                            "status": "failed", "findings": [],
-                            "error": f"model unavailable: {reason}",
-                        }
+                        # Even when the model is down, parser-path docs can still
+                        # be extracted deterministically. Route first.
+                        from src.routing import detect_source, route_for_source
+                        src = detect_source(entry.input_text)
+                        if route_for_source(src) == "parser":
+                            routed = route_and_extract(
+                                text=entry.input_text, model=model_id,
+                                prompt_version=prompt_version, sampling=sampling,
+                                source_id=entry.entry_id,
+                                timeout=config.request_timeout_seconds,
+                                raw_reference=entry.input_path.name,
+                            )
+                            result = routed.result.to_dict()
+                            print(f"  [{entry.entry_id}] {result['status']} "
+                                  f"({len(result.get('findings', []))} findings) [parser]")
+                        else:
+                            result = {
+                                "model": model_id, "prompt_version": prompt_version,
+                                "sampling": sampling.as_log_dict(), "source_id": entry.entry_id,
+                                "route": "llm", "source": src,
+                                "status": "failed", "findings": [],
+                                "error": f"model unavailable: {reason}",
+                            }
                     else:
-                        if pace:
+                        # LLM-path docs respect pacing; parser-path docs are instant.
+                        from src.routing import detect_source, route_for_source
+                        src = detect_source(entry.input_text)
+                        if route_for_source(src) == "llm" and pace:
                             elapsed = time.monotonic() - last_call_ts
                             if last_call_ts and elapsed < pace:
                                 time.sleep(pace - elapsed)
                             last_call_ts = time.monotonic()
-                        result = extract(
+                        routed = route_and_extract(
                             text=entry.input_text,
                             model=model_id,
                             prompt_version=prompt_version,
                             sampling=sampling,
                             source_id=entry.entry_id,
                             timeout=config.request_timeout_seconds,
-                        ).to_dict()
+                            raw_reference=entry.input_path.name,
+                        )
+                        result = routed.result.to_dict()
                         status = result["status"]
                         n = len(result.get("findings", []))
                         print(f"  [{entry.entry_id}] {status} ({n} findings)"
-                              + (f" !repaired" if result.get("repaired") else ""))
+                              + (f" !repaired" if result.get("repaired") else "")
+                              + f" [{routed.route}]")
 
                     per_doc_results.append(result)
                     evaluate_result(metrics, result, entry.expected)

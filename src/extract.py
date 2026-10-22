@@ -46,6 +46,8 @@ class ExtractionResult:
     prompt_version: str
     sampling: dict
     source_id: str  # golden entry id or input file stem
+    route: str = "llm"  # "llm" | "parser" (D1 routing — reportable result)
+    source: Optional[str] = None  # detected source family
 
     # --- outcome ---
     status: str = "pending"  # set to "ok" | "failed" before returning

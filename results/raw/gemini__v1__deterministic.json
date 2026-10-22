@@ -9,6 +9,8 @@
       "top_p": 1.0
     },
     "source_id": "01",
+    "route": "llm",
+    "source": "team_report",
     "status": "ok",
     "findings": [
       {
@@ -16,7 +18,7 @@
         "source_record_id": null,
         "raw_reference": null,
         "title": "Command injection in workflow URL helper",
-        "description": "Command-injection pattern found in a helper opening a workflow URL, where process launch uses a shell-enabled branch.",
+        "description": "The command-injection pattern is in a helper that opens a workflow URL, where the process launch has a shell-enabled branch.",
         "finding_type": "command_injection",
         "severity": "high",
         "severity_raw": "High",
@@ -26,14 +28,14 @@
         "affected_assets": [],
         "team": null,
         "evidence": "The command-injection pattern is in a helper that opens a workflow URL.",
-        "extraction_notes": "Represents 1 of 7 High alerts mentioned in the team report. Repository and team ownership details were missing in handoff."
+        "extraction_notes": "One of 7 High alerts across 5 repos described in the chat report."
       },
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Raw SQL pattern in test-support code",
-        "description": "Raw SQL pattern present in test-support code interpolating compile-time type names.",
+        "title": "Raw SQL in test-support code",
+        "description": "Raw-SQL pattern in test-support code where the interpolated value is a compile-time type name rather than direct request input.",
         "finding_type": "sql_injection",
         "severity": "high",
         "severity_raw": "High",
@@ -43,14 +45,14 @@
         "affected_assets": [],
         "team": null,
         "evidence": "Two more alerts are the same raw-SQL pattern in test-support code.",
-        "extraction_notes": "Groups 2 alerts out of 7 High findings reported. Repository and team ownership details were missing in handoff."
+        "extraction_notes": "Covers 2 High alerts of the 7 total High alerts."
       },
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Stale repositories requiring repo maintenance",
-        "description": "Repo-maintenance alerts for unarchived or retired repositories.",
+        "title": "Stale repositories needing maintenance",
+        "description": "Repo-maintenance alerts requiring archiving of confirmed-retired repos and checking pipeline references with owners.",
         "finding_type": "stale_repository",
         "severity": "high",
         "severity_raw": "High",
@@ -60,7 +62,7 @@
         "affected_assets": [],
         "team": null,
         "evidence": "Four repo-maintenance alerts are also live.",
-        "extraction_notes": "Groups 4 alerts out of 7 High findings reported. Repository and team ownership details were missing in handoff."
+        "extraction_notes": "Covers 4 High alerts of the 7 total High alerts."
       }
     ],
     "repaired": false,
@@ -68,9 +70,9 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 13.662689749966376,
+    "latency_seconds": 14.726697708014399,
     "input_tokens": 1453,
-    "output_tokens": 544
+    "output_tokens": 532
   },
   {
     "model": "gemini",
@@ -82,14 +84,16 @@
       "top_p": 1.0
     },
     "source_id": "02",
+    "route": "llm",
+    "source": "team_report",
     "status": "ok",
     "findings": [
       {
         "source": "team_report",
         "source_record_id": null,
-        "raw_reference": null,
-        "title": "Command injection patterns in Python subprocess calls",
-        "description": "A scan identified shell-injection patterns from Python subprocess calls invoking bash -c across deployment and cluster-configuration helpers in two code repositories.",
+        "raw_reference": "#devops-security",
+        "title": "Command-injection patterns in Python subprocess calls",
+        "description": "High-only scan identified command-injection patterns from Python subprocess calls that invoke bash -c across two repositories and three affected files.",
         "finding_type": "command_injection",
         "severity": "high",
         "severity_raw": "High",
@@ -99,18 +103,18 @@
         "affected_assets": [
           {
             "asset": null,
-            "repository": "repo A",
+            "repository": "first repo",
             "environment": null
           },
           {
             "asset": null,
-            "repository": "repo B",
+            "repository": "second repo",
             "environment": null
           }
         ],
         "team": null,
         "evidence": "High-only scan found four alerts across two code repos, zero Critical. All are command-injection patterns from Python subprocess calls that invoke bash -c.",
-        "extraction_notes": "4 total alerts across 2 repositories (2 call sites in repo A and 2 in repo B) share the same root cause and are recorded as a single finding per Rule 4. Severity 'High' is extracted from 'High-only scan'."
+        "extraction_notes": "Combined 4 alert instances across 2 repositories into a single finding per rule 4. Team set to null because document explicitly notes no owner names are included."
       }
     ],
     "repaired": false,
@@ -118,9 +122,9 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 12.925017041969113,
+    "latency_seconds": 21.652225041994825,
     "input_tokens": 1471,
-    "output_tokens": 296
+    "output_tokens": 281
   },
   {
     "model": "gemini",
@@ -132,6 +136,8 @@
       "top_p": 1.0
     },
     "source_id": "03",
+    "route": "llm",
+    "source": "team_report",
     "status": "ok",
     "findings": [
       {
@@ -139,7 +145,7 @@
         "source_record_id": null,
         "raw_reference": null,
         "title": "Stale repositories",
-        "description": "Governance finding where repositories are identified as stale.",
+        "description": null,
         "finding_type": "stale_repository",
         "severity": "high",
         "severity_raw": "High",
@@ -149,14 +155,14 @@
         "affected_assets": [],
         "team": null,
         "evidence": "stale repos",
-        "extraction_notes": "Part of the seven recurring root-cause groups reported; explicit repo/team details absent."
+        "extraction_notes": "One of seven recurring root-cause groups identified in the baseline report."
       },
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
         "title": "Missing default-branch protection",
-        "description": "Governance finding where repositories lack default-branch protection.",
+        "description": null,
         "finding_type": "branch_protection_missing",
         "severity": "high",
         "severity_raw": "High",
@@ -166,14 +172,14 @@
         "affected_assets": [],
         "team": null,
         "evidence": "no default-branch protection",
-        "extraction_notes": "Part of the seven recurring root-cause groups reported."
+        "extraction_notes": "One of seven recurring root-cause groups identified in the baseline report."
       },
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
         "title": "Missing required reviewer policy",
-        "description": "Governance finding where repositories do not require a reviewer.",
+        "description": null,
         "finding_type": "code_review_policy_missing",
         "severity": "high",
         "severity_raw": "High",
@@ -183,14 +189,14 @@
         "affected_assets": [],
         "team": null,
         "evidence": "no required reviewer",
-        "extraction_notes": "Part of the seven recurring root-cause groups reported."
+        "extraction_notes": "One of seven recurring root-cause groups identified in the baseline report."
       },
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
         "title": "Unsafe model loading",
-        "description": "Code alerts involving model-loading unsafe deserialization patterns.",
+        "description": null,
         "finding_type": "unsafe_deserialization",
         "severity": "high",
         "severity_raw": "High",
@@ -200,14 +206,14 @@
         "affected_assets": [],
         "team": null,
         "evidence": "two model-loading hits",
-        "extraction_notes": "Source notes two alert instances consolidated under this root-cause group."
+        "extraction_notes": "Report notes two scanner hits for model loading."
       },
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
         "title": "Unsafe archive extraction",
-        "description": "Code alert indicating unsafe archive extraction (e.g. zip extraction risks).",
+        "description": null,
         "finding_type": "other",
         "severity": "high",
         "severity_raw": "High",
@@ -217,14 +223,14 @@
         "affected_assets": [],
         "team": null,
         "evidence": "unsafe archive extraction",
-        "extraction_notes": "Part of the seven recurring root-cause groups reported."
+        "extraction_notes": "One of seven recurring root-cause groups identified in the baseline report."
       },
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Python XML/XXE vulnerability",
-        "description": "Code alert indicating potential XXE vulnerability in Python XML parsing.",
+        "title": "Python XML/XXE",
+        "description": null,
         "finding_type": "xxe",
         "severity": "high",
         "severity_raw": "High",
@@ -234,14 +240,14 @@
         "affected_assets": [],
         "team": null,
         "evidence": "Python XML/XXE",
-        "extraction_notes": "Source notes 'XML e input esterno? no sabemos todavia; check before calling exploitable.'"
+        "extraction_notes": "One of seven recurring root-cause groups identified in the baseline report."
       },
       {
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "API specification without global security declaration",
-        "description": "Code alert indicating an API specification that lacks a global security declaration.",
+        "title": "API spec without a global security declaration",
+        "description": null,
         "finding_type": "other",
         "severity": "high",
         "severity_raw": "High",
@@ -251,7 +257,7 @@
         "affected_assets": [],
         "team": null,
         "evidence": "API spec without a global security declaration",
-        "extraction_notes": "Part of the seven recurring root-cause groups reported."
+        "extraction_notes": "One of seven recurring root-cause groups identified in the baseline report."
       }
     ],
     "repaired": false,
@@ -265,9 +271,9 @@
       "status: no status wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 15.858722166041844,
+    "latency_seconds": 16.082042082911357,
     "input_tokens": 1479,
-    "output_tokens": 1078
+    "output_tokens": 1003
   },
   {
     "model": "gemini",
@@ -279,14 +285,16 @@
       "top_p": 1.0
     },
     "source_id": "04",
+    "route": "llm",
+    "source": "linpeas",
     "status": "ok",
     "findings": [
       {
         "source": "oss_scanner",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Spec store bypass CPU vulnerability",
-        "description": "CPU vulnerability Spec store bypass is reported as vulnerable.",
+        "title": "CPU vulnerability: Spec store bypass",
+        "description": "System is vulnerable to Spec store bypass CPU vulnerability.",
         "finding_type": "cpu_vulnerability",
         "severity": "unknown",
         "severity_raw": null,
@@ -302,14 +310,14 @@
         ],
         "team": null,
         "evidence": "Vulnerability Spec store bypass: Vulnerable",
-        "extraction_notes": "Team ownership is null as the source document explicitly states repo ownership for this image is unknown."
+        "extraction_notes": "Repo ownership for this image is listed as unknown."
       },
       {
         "source": "oss_scanner",
         "source_record_id": null,
         "raw_reference": null,
         "title": "DiagSpill SCTP kernel exposure",
-        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in). Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused.",
+        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
         "finding_type": "kernel_vulnerability",
         "severity": "unknown",
         "severity_raw": null,
@@ -327,14 +335,14 @@
         ],
         "team": null,
         "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
-        "extraction_notes": "Team ownership is null as the source document explicitly states repo ownership for this image is unknown."
+        "extraction_notes": "Repo ownership for this image is listed as unknown."
       },
       {
         "source": "oss_scanner",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Kernel Exploit Registry - pedit COW",
-        "description": "CVE: CVE-2026-46331 | Name: pedit COW | Match data: pkg=linux-kernel,ver>=6.19,ver<7.0.13 | Tags: 1 | Rank: Fixed in stable 7.0.13 and mainline 7.1",
+        "title": "Kernel Exploit Registry: pedit COW",
+        "description": "Installed linux-kernel version 7.0.12-linuxkit matches vulnerability criteria ver>=6.19,ver<7.0.13.",
         "finding_type": "kernel_vulnerability",
         "severity": "unknown",
         "severity_raw": null,
@@ -351,8 +359,8 @@
           }
         ],
         "team": null,
-        "evidence": "CVE: CVE-2026-46331 | Name: pedit COW | Match data: pkg=linux-kernel,ver>=6.19,ver<7.0.13 | Tags: 1 | Rank: Fixed in stable 7.0.13 and mainline 7.1",
-        "extraction_notes": "Installed kernel version 7.0.12-linuxkit matches vulnerable range (<7.0.13). Team ownership is null as repo ownership for this image is unknown."
+        "evidence": "CVE: CVE-2026-46331 | Name: pedit COW | Match data: pkg=linux-kernel,ver>=6.19,ver<7.0.13",
+        "extraction_notes": "Repo ownership for this image is listed as unknown."
       }
     ],
     "repaired": false,
@@ -365,9 +373,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 18.429789416026324,
+    "latency_seconds": 19.204833457944915,
     "input_tokens": 1797,
-    "output_tokens": 855
+    "output_tokens": 727
   },
   {
     "model": "gemini",
@@ -379,6 +387,8 @@
       "top_p": 1.0
     },
     "source_id": "05",
+    "route": "llm",
+    "source": "linpeas",
     "status": "ok",
     "findings": [
       {
@@ -386,7 +396,7 @@
         "source_record_id": null,
         "raw_reference": null,
         "title": "DiagSpill SCTP kernel exposure",
-        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)\nLocal exploitation needs no capability or unprivileged user namespace; verify vendor backports\nMitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
+        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in). Local exploitation needs no capability or unprivileged user namespace; verify vendor backports. Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused.",
         "finding_type": "kernel_vulnerability",
         "severity": "unknown",
         "severity_raw": null,
@@ -404,14 +414,14 @@
         ],
         "team": "Data",
         "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
-        "extraction_notes": "Inferred team 'Data' from app reference 'data_app_2'. Header candidate CVEs ignored per Rule 5."
+        "extraction_notes": "Inferred team 'Data' from ASPM app association 'data_app_2'. Candidate overlap CVEs in header ignored per rule 5."
       },
       {
         "source": "oss_scanner",
         "source_record_id": null,
         "raw_reference": null,
         "title": "Open vSwitch forwarded-SKB page-cache LPE",
-        "description": "Kernel 7.0.12-linuxkit is in an upstream affected range; vendor backports may override this result\nOpen vSwitch kernel datapath: built-in and reachable\nOVS generic-netlink support: inferred enabled\nESP in-place-decryption consumer: reachable (esp4: built-in; esp6: built-in)\nXFRM userspace state configuration: built-in and reachable\nUnprivileged user namespaces: enabled (namespace CAP_NET_ADMIN is obtainable)\nPOTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected\nConfirm the running distribution kernel contains all three vendor backports before treating as vulnerable\nMitigation: update the vendor kernel; if unused, hard-disable openvswitch (or esp4/esp6) with an install /bin/false rule",
+        "description": "Kernel 7.0.12-linuxkit is in an upstream affected range; vendor backports may override this result. Open vSwitch kernel datapath: built-in and reachable. OVS generic-netlink support: inferred enabled. ESP in-place-decryption consumer: reachable (esp4: built-in; esp6: built-in). XFRM userspace state configuration: built-in and reachable. Unprivileged user namespaces: enabled (namespace CAP_NET_ADMIN is obtainable). POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected. Confirm the running distribution kernel contains all three vendor backports before treating as vulnerable. Mitigation: update the vendor kernel; if unused, hard-disable openvswitch (or esp4/esp6) with an install /bin/false rule.",
         "finding_type": "kernel_vulnerability",
         "severity": "unknown",
         "severity_raw": null,
@@ -431,7 +441,7 @@
         ],
         "team": "Data",
         "evidence": "POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected",
-        "extraction_notes": "Inferred team 'Data' from app reference 'data_app_2'. Header candidate CVEs ignored per Rule 5."
+        "extraction_notes": "Inferred team 'Data' from ASPM app association 'data_app_2'. AF_ALG check omitted as it is marked at or beyond an upstream fixed release."
       }
     ],
     "repaired": false,
@@ -442,33 +452,35 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 18.775841291993856,
+    "latency_seconds": 12.21264229202643,
     "input_tokens": 1815,
-    "output_tokens": 789
+    "output_tokens": 791
   },
   {
-    "model": "gemini",
-    "model_name": "gemini-3.5-flash",
-    "prompt_version": "v1",
+    "model": "parser",
+    "model_name": "deterministic-aspm",
+    "prompt_version": "n/a",
     "sampling": {
-      "name": "deterministic",
-      "temperature": 0.0,
-      "top_p": 1.0
+      "name": "n/a",
+      "temperature": null,
+      "top_p": null
     },
     "source_id": "06",
+    "route": "parser",
+    "source": "aspm",
     "status": "ok",
     "findings": [
       {
         "source": "aspm",
         "source_record_id": "issue-3513",
-        "raw_reference": null,
+        "raw_reference": "06_input.txt#issue-3513",
         "title": "alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium",
         "description": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities. Vulnerability Context Counts: Public Exploits: 3. Vulnerability Severity Counts (CVSS | scanner): Critical: 8 | 2  High: 33 | 6  Medium: 36 | 33  Low: 3 | 39. Impacted Dependencies: libcrypto3@3.5.4-r0 libssl3@3.5.4-r0 musl-utils@1.2.5-r10 +5 more",
         "finding_type": "vulnerable_base_image",
         "severity": "high",
         "severity_raw": "High",
-        "status": "unknown",
-        "status_raw": null,
+        "status": "open",
+        "status_raw": "active (Is Fix Available: false)",
         "cve_ids": [
           "CVE-2026-31789",
           "CVE-2026-34182",
@@ -479,69 +491,71 @@
         ],
         "affected_assets": [
           {
-            "asset": "alpine@3.22.2",
-            "repository": null,
+            "asset": "alpine@3.22.2 base image",
+            "repository": "devops_app_1",
             "environment": null
           }
         ],
         "team": "DevOps",
-        "evidence": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities.",
-        "extraction_notes": "Original Severity: Critical. Recorded issue count: 80. Team inferred from devops_app_1."
+        "evidence": "alpine@3.22.2 is the base image defined in [path removed] It contains 80 vulnerabilities. Vulnerability Context Counts: Public Exploits: 3. Vulnerability Severity Counts (CVSS | scanner): Critical: 8 | 2  High: 33 | 6  Medium: 36 | 33  Low: 3 | 39. Impacted Dependencies: libcrypto3@3.5.4-r0 libssl3@3.5.4-r0 musl-utils@1.2.5-r10 +5 more",
+        "extraction_notes": "D4 dual-severity: severity_raw=Severity 'High'; Original Severity 'Critical' kept here, not in severity_raw. Count=80 is an instance count, not the finding count. team=DevOps from Application 'DevOps / devops_app_1' (DevOps)."
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [
-      "status: no status wording in source -> unknown"
+      "status: status matched phrase 'active' in 'active (Is Fix Available: false)'"
     ],
-    "latency_seconds": 8.297421041992493,
-    "input_tokens": 1620,
-    "output_tokens": 468
+    "latency_seconds": 0.0,
+    "input_tokens": null,
+    "output_tokens": null
   },
   {
-    "model": "gemini",
-    "model_name": "gemini-3.5-flash",
-    "prompt_version": "v1",
+    "model": "parser",
+    "model_name": "deterministic-aspm",
+    "prompt_version": "n/a",
     "sampling": {
-      "name": "deterministic",
-      "temperature": 0.0,
-      "top_p": 1.0
+      "name": "n/a",
+      "temperature": null,
+      "top_p": null
     },
     "source_id": "07",
+    "route": "parser",
+    "source": "aspm",
     "status": "ok",
     "findings": [
       {
         "source": "aspm",
         "source_record_id": "issue-9804",
-        "raw_reference": "issue-9804",
+        "raw_reference": "07_input.txt#issue-9804",
         "title": "Missing Antiforgery C# API Exposed",
         "description": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.",
         "finding_type": "csrf",
         "severity": "high",
         "severity_raw": "High",
-        "status": "unknown",
-        "status_raw": null,
+        "status": "open",
+        "status_raw": "active (Is Fix Available: false)",
         "cve_ids": [],
         "affected_assets": [
           {
-            "asset": "dev_app_1",
-            "repository": null,
+            "asset": null,
+            "repository": "dev_app_1",
             "environment": null
           }
         ],
         "team": "Dev",
-        "evidence": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks.",
-        "extraction_notes": "Original Severity was Medium. Finding count reported as 22. Team 'Dev' inferred from application 'dev_app_1'."
+        "evidence": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.",
+        "extraction_notes": "D4 dual-severity: severity_raw=Severity 'High'; Original Severity 'Medium' kept here, not in severity_raw. Count=22 is an instance count, not the finding count. team=Dev from Application 'Dev / dev_app_1' (Dev)."
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [
-      "status: no status wording in source -> unknown"
+      "status: status matched phrase 'active' in 'active (Is Fix Available: false)'"
     ],
-    "latency_seconds": 8.396083375089802,
-    "input_tokens": 1430,
-    "output_tokens": 291
+    "latency_seconds": 0.0,
+    "input_tokens": null,
+    "output_tokens": null
   },
   {
     "model": "gemini",
@@ -553,12 +567,14 @@
       "top_p": 1.0
     },
     "source_id": "08",
+    "route": "llm",
+    "source": "unknown",
     "status": "ok",
     "findings": [
       {
         "source": "oss_scanner",
         "source_record_id": "DS-0002",
-        "raw_reference": "Dockerfile 1",
+        "raw_reference": "data_repo_3",
         "title": "Image user should not be 'root'",
         "description": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
         "finding_type": "dockerfile_misconfiguration",
@@ -572,11 +588,21 @@
             "asset": "Dockerfile 1",
             "repository": "data_repo_3",
             "environment": null
+          },
+          {
+            "asset": "Dockerfile 2",
+            "repository": "data_repo_3",
+            "environment": null
+          },
+          {
+            "asset": "Dockerfile 3",
+            "repository": "data_repo_3",
+            "environment": null
           }
         ],
         "team": "Data",
-        "evidence": "{\"Type\": \"Dockerfile Security Check\", \"ID\": \"DS-0002\", \"Title\": \"Image user should not be 'root'\", \"Message\": \"Specify at least 1 USER command in Dockerfile with non-root user as argument\", \"Severity\": \"HIGH\", \"Status\": \"FAIL\"}",
-        "extraction_notes": "Team 'Data' inferred from RelatedASPMApplication 'data_app_4'."
+        "evidence": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+        "extraction_notes": "Inferred team 'Data' from RelatedASPMApplication 'data_app_4'. Combined 3 occurrences of DS-0002 across Dockerfile targets into one finding with multiple affected assets."
       },
       {
         "source": "oss_scanner",
@@ -598,31 +624,8 @@
           }
         ],
         "team": "Data",
-        "evidence": "{\"Type\": \"Dockerfile Security Check\", \"ID\": \"DS-0029\", \"Title\": \"'apt-get' missing '--no-install-recommends'\", \"Message\": \"'--no-install-recommends' flag is missed\", \"Severity\": \"HIGH\", \"Status\": \"FAIL\"}",
-        "extraction_notes": "Team 'Data' inferred from RelatedASPMApplication 'data_app_4'."
-      },
-      {
-        "source": "oss_scanner",
-        "source_record_id": "DS-0002",
-        "raw_reference": "Dockerfile 2",
-        "title": "Image user should not be 'root'",
-        "description": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
-        "finding_type": "dockerfile_misconfiguration",
-        "severity": "high",
-        "severity_raw": "HIGH",
-        "status": "open",
-        "status_raw": "FAIL",
-        "cve_ids": [],
-        "affected_assets": [
-          {
-            "asset": "Dockerfile 2",
-            "repository": "data_repo_3",
-            "environment": null
-          }
-        ],
-        "team": "Data",
-        "evidence": "{\"Type\": \"Dockerfile Security Check\", \"ID\": \"DS-0002\", \"Title\": \"Image user should not be 'root'\", \"Message\": \"Specify at least 1 USER command in Dockerfile with non-root user as argument\", \"Severity\": \"HIGH\", \"Status\": \"FAIL\"}",
-        "extraction_notes": "Team 'Data' inferred from RelatedASPMApplication 'data_app_4'."
+        "evidence": "'--no-install-recommends' flag is missed",
+        "extraction_notes": "Inferred team 'Data' from RelatedASPMApplication 'data_app_4'."
       },
       {
         "source": "oss_scanner",
@@ -644,39 +647,16 @@
           }
         ],
         "team": "Data",
-        "evidence": "{\"Type\": \"Dockerfile Security Check\", \"ID\": \"DS-0017\", \"Title\": \"'RUN <package-manager> update' instruction alone\", \"Message\": \"update should be followed by install in the same RUN\", \"Severity\": \"HIGH\", \"Status\": \"FAIL\"}",
-        "extraction_notes": "Team 'Data' inferred from RelatedASPMApplication 'data_app_4'."
-      },
-      {
-        "source": "oss_scanner",
-        "source_record_id": "DS-0002",
-        "raw_reference": "Dockerfile 3",
-        "title": "Image user should not be 'root'",
-        "description": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
-        "finding_type": "dockerfile_misconfiguration",
-        "severity": "high",
-        "severity_raw": "HIGH",
-        "status": "open",
-        "status_raw": "FAIL",
-        "cve_ids": [],
-        "affected_assets": [
-          {
-            "asset": "Dockerfile 3",
-            "repository": "data_repo_3",
-            "environment": null
-          }
-        ],
-        "team": "Data",
-        "evidence": "{\"Type\": \"Dockerfile Security Check\", \"ID\": \"DS-0002\", \"Title\": \"Image user should not be 'root'\", \"Message\": \"Specify at least 1 USER command in Dockerfile with non-root user as argument\", \"Severity\": \"HIGH\", \"Status\": \"FAIL\"}",
-        "extraction_notes": "Team 'Data' inferred from RelatedASPMApplication 'data_app_4'."
+        "evidence": "update should be followed by install in the same RUN",
+        "extraction_notes": "Inferred team 'Data' from RelatedASPMApplication 'data_app_4'."
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 18.549474208033644,
+    "latency_seconds": 25.748557041049935,
     "input_tokens": 1734,
-    "output_tokens": 1384
+    "output_tokens": 768
   },
   {
     "model": "gemini",
@@ -688,6 +668,8 @@
       "top_p": 1.0
     },
     "source_id": "09",
+    "route": "llm",
+    "source": "mixed",
     "status": "ok",
     "findings": [
       {
@@ -712,8 +694,8 @@
           }
         ],
         "team": "Data",
-        "evidence": "Finding: outdated system package flagged with CVE-2026-43284; package-status details indicate the vulnerable version is installed on the image.",
-        "extraction_notes": "Team 'Data' inferred from related ASPM app 'data_app_2'. CVE-2026-43500 from header overlap list was excluded as it is not specified in the finding details."
+        "evidence": "outdated system package flagged with CVE-2026-43284; package-status details indicate the vulnerable version is installed on the image.",
+        "extraction_notes": "Team inferred from related ASPM app data_app_2. Candidate overlap CVE-2026-43500 from header omitted per rules."
       },
       {
         "source": "aspm",
@@ -737,8 +719,8 @@
           }
         ],
         "team": "Data",
-        "evidence": "Issue ID: issue-7742\nSeverity: High\nIssue Name: Vulnerable OS package (CVE-2026-43284) in container base image\nStatus: open",
-        "extraction_notes": "Team 'Data' inferred from application 'data_app_2'."
+        "evidence": "ASPM flags CVE-2026-43284 in the base image of data_app_2.",
+        "extraction_notes": "Team inferred from application data_app_2."
       }
     ],
     "repaired": false,
@@ -747,9 +729,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 9.300135999917984,
+    "latency_seconds": 12.417773958062753,
     "input_tokens": 1377,
-    "output_tokens": 579
+    "output_tokens": 541
   },
   {
     "model": "gemini",
@@ -761,6 +743,8 @@
       "top_p": 1.0
     },
     "source_id": "10",
+    "route": "llm",
+    "source": "team_report",
     "status": "ok",
     "findings": [
       {
@@ -768,7 +752,7 @@
         "source_record_id": null,
         "raw_reference": null,
         "title": "SQL injection in the reporting export endpoint",
-        "description": "user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2",
+        "description": "user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2.",
         "finding_type": "sql_injection",
         "severity": "high",
         "severity_raw": "High",
@@ -783,15 +767,15 @@
           }
         ],
         "team": "Billing",
-        "evidence": "SQL injection in the reporting export endpoint \u2014 user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2. Status is open, no fix branch yet.",
-        "extraction_notes": "Team inferred from repository reference 'billing_app_2'."
+        "evidence": "SQL injection in the reporting export endpoint \u2014 user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2.",
+        "extraction_notes": "Inferred team 'Billing' from app-ownership reference 'billing_app_2'."
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 6.544130042078905,
+    "latency_seconds": 8.13900254201144,
     "input_tokens": 1338,
-    "output_tokens": 235
+    "output_tokens": 232
   }
 ]

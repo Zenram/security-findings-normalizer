@@ -43,7 +43,7 @@ GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
 
 # Local side: Ollama. Candidate qwen2.5:7b (confirm RAM fit on the dev machine).
 OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5:7b")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3:8b")
 
 # Logical model identifiers used throughout the harness / result logs.
 MODEL_GEMINI = "gemini"
