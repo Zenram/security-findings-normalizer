@@ -158,7 +158,7 @@ Corpus run (`gemini-3.5-flash` / v1 / deterministic, 2026-10-22):
 
 Note: the ASPM records are counted per CSV row (each row is one alert). Only the
 3 mentor-approved sources are in the corpus; Trivy/Kubescape/Orca/standards are
-excluded until a later stage. Per-document outputs: `results/corpus/`; summary:
+excluded until a later Part. Per-document outputs: `results/corpus/`; summary:
 `results/corpus_summary.json`.
 
 ## 7. Final choice
@@ -185,4 +185,4 @@ choice.
 
 > Caveats: 10-document golden set — directional, not statistically tight. One
 > injection case demonstrates the vector is handled, not exhaustive injection
-> testing (out of scope for Stage 1).
+> testing (out of scope for Part 1).

@@ -3,8 +3,8 @@
 ## `raw/` — input corpus (NOT committed)
 
 Gitignored. Input texts grouped by source family so the router can tag `source`.
-Mentor-approved Stage-1 scope is **3 source families proven end-to-end**: team
-reports, Ox ASPM, LinPEAS. The other folders are corpus material for later stages.
+Mentor-approved Part 1 scope is **3 source families proven end-to-end**: team
+reports, Ox ASPM, LinPEAS. The other folders are corpus material for later Parts.
 
 ```
 raw/
@@ -15,11 +15,11 @@ raw/
 │   ├── linpeas/    # source=oss_scanner   (LinPEAS output)                  — LLM path
 │   ├── trivy/      # source=oss_scanner   (Trivy JSON/txt)                  — corpus only
 │   └── kubescape/  # source=oss_scanner   (Kubescape blocks)                — corpus only
-└── standarts/      # AWS HIPAA/SOC2 md — REFERENCE only, NOT extracted (RAG stage)
+└── standarts/      # AWS HIPAA/SOC2 md — REFERENCE only, NOT extracted (RAG, Part 2)
 ```
 
 **Do not count `standarts/` toward the extraction texts** — compliance
-references are not findings. They are kept for the later RAG stage.
+references are not findings. They are kept for the RAG Part (Part 2).
 
 ## `real/` — original sanitized exports (NOT committed)
 

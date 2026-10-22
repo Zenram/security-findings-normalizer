@@ -1,14 +1,16 @@
 # Security Findings Normalizer
 
-Stage 1 of a 4-stage AI Engineering capstone. Turns "dirty" security texts
+Part 1 (Extraction) of a 4-part AI Engineering capstone. Turns "dirty" security
+texts
 (team reports, CNAPP/ASPM alert exports, open-source scanner output) into
 valid structured JSON against one canonical schema, and proves — with numbers —
 which model and prompt to pick for production.
 
-> **Status:** Stage 1 complete. Schema, shared model interface, validation +
-> 1-retry, versioned prompts (v1/v2), eval harness, and a full measured run are
-> in place. See `REPORT.md` for results. The schema under `schema/` is the frozen
-> Stage 1 contract.
+> **Status:** Part 1 (Extraction) complete. Schema, shared model interface,
+> validation + 1-retry, versioned prompts (v1/v2), eval harness, and a full
+> measured run are in place. See `REPORT.md` for results. The schema under
+> `schema/` is the frozen Part 1 contract. ("Part" = one of the 4 big project
+> steps: Extraction → RAG → Agent → Service.)
 
 ## What it does
 
@@ -86,7 +88,7 @@ make test        # run the test suite (pytest)
 ## Repository layout
 
 ```
-schema/        Canonical Pydantic schema (frozen Stage 1 contract)
+schema/        Canonical Pydantic schema (frozen Part 1 contract)
 prompts/       Versioned extraction prompts (v1, v2) + CHANGELOG
 src/           Pipeline code — see src/README.md for the per-file map
   models/      Gemini + Ollama adapters behind one interface
@@ -116,10 +118,10 @@ Each major directory has its own README: `src/README.md` (file map),
 - The system never fabricates values: absent -> `null` / `unknown`.
 - Report text is treated as **data, not instructions** (prompt-injection safe).
 
-## Scope (Stage 1)
+## Scope (Part 1 — Extraction)
 
 In scope: canonical schema, extraction, schema validation, model/prompt
 comparison, source traceability, evaluation vs golden set.
 
-Out of scope (later stages): correlation/deduplication, historical tracking,
-RAG, agent, production service.
+Out of scope (later Parts): correlation/deduplication, historical tracking,
+RAG (Part 2), agent (Part 3), production service (Part 4).
