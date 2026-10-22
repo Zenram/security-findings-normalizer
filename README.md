@@ -13,20 +13,27 @@ which model and prompt to pick for production.
 ## What it does
 
 1. Takes raw text + metadata.
-2. Extracts one or more security findings into a canonical Pydantic schema.
-3. Validates against the schema; on invalid output, **one** repair attempt,
-   else the record is marked `failed`.
-4. Logs each result with model, prompt version, and sampling params.
-5. Scores output against a hand-labeled golden set.
+2. **Routes** each document: structured sources (Ox ASPM) are parsed
+   deterministically in code; genuinely unstructured sources (team reports,
+   LinPEAS) go through the LLM. (D1 — the routing decision is itself a result.)
+3. Extracts one or more security findings into a canonical Pydantic schema.
+   Severity/status/finding_type enums are assigned by a deterministic code table
+   (D4), not the model — the model only extracts the original `*_raw` wording.
+4. Validates against the schema; on invalid output, **one** repair attempt,
+   else the record is marked `failed` (no silent drops).
+5. Logs each result with model, prompt version, sampling params, and route.
+6. Scores output against a hand-labeled golden set (D2 — match by stable key,
+   then field accuracy over matched pairs; never by position).
 
 ## Models compared
 
 - **Provider (cloud):** Google Gemini — default `gemini-3.5-flash` (set in
   `.env`; `gemini-2.5-flash` is retired for new users). Needs `GEMINI_API_KEY`
   and billing enabled (the free tier's ~5 req/min cap is too low for a full run).
-  Full-run cost is a fraction of a US cent (~$8–9 per **1000** docs).
-- **Local:** Ollama `qwen2.5:7b` — no key, runs on the laptop. Needs
-  `ollama serve` running and the model pulled.
+  Full-run cost is a fraction of a US cent (~$8 per **1000** docs).
+- **Local:** Ollama `qwen3:8b` — no key, runs on the laptop. Needs `ollama serve`
+  running and the model pulled. (Reasoning model; the adapter sends `think=false`
+  so it returns the JSON answer fast, ~7s/doc.)
 - Both behind one shared `extract(text, model, prompt_version, sampling)` interface.
 
 ## Setup
@@ -38,7 +45,7 @@ pip install -r requirements.txt
 
 cp .env.example .env               # then set GEMINI_API_KEY and (optional) prices
 # For the local model:
-#   ollama pull qwen2.5:7b && ollama serve &
+#   ollama pull qwen3:8b && ollama serve &
 ```
 
 `.env` holds secrets and is gitignored; only `.env.example` is committed. The
@@ -70,14 +77,21 @@ make test        # run the test suite (pytest)
 ```
 schema/        Canonical Pydantic schema (frozen Stage 1 contract)
 prompts/       Versioned extraction prompts (v1, v2) + CHANGELOG
-src/           extract() interface, model adapters, validation, evaluation
-data/raw/      INPUT DOCUMENTS — gitignored, never committed
-data/real/     Original sanitized exports — gitignored, never committed
-data/golden/   Labeled ground truth (committed, synthetic/sanitized only)
-results/       Run outputs — JSON results are committed; logs are gitignored
-tests/         Schema + harness tests
-REPORT.md      Model x prompt x sampling comparison + final choice
+src/           Pipeline code — see src/README.md for the per-file map
+  models/      Gemini + Ollama adapters behind one interface
+  parsers/     Deterministic parsers for structured sources (ASPM)
+data/          Inputs + golden set — see data/README.md
+  raw/         INPUT DOCUMENTS — gitignored, never committed
+  real/        Original sanitized exports — gitignored, never committed
+  golden/      Labeled ground truth (committed; see data/golden/README.md)
+results/       Run outputs — JSON results committed; logs gitignored
+tests/         Offline test suite — see tests/README.md
+REPORT.md      Model x prompt x sampling comparison + routing table + final choice
 ```
+
+Each major directory has its own README: `src/README.md` (file map),
+`tests/README.md` (what each test covers), `data/README.md` +
+`data/golden/README.md` (corpus + labeling rules).
 
 ## Data & safety
 
