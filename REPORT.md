@@ -130,23 +130,30 @@ validation on this entry).
 
 ## 6. Corpus processing (Step 1 "run all texts" — 30-text volume)
 
-The 10-entry golden set is the **measurement** subset (scored above). Step 1 also
-requires running the full corpus. `python3 main.py --corpus` processes the whole
-in-scope raw corpus through the same pipeline + routing and saves outputs to
-`results/corpus/` — these texts are **unlabeled, so they are processed, not
-scored** (no answer key; accuracy/P/R are only computed on the golden set).
+The 10-entry golden set is the **measurement** subset (scored above). The 10
+golden texts count toward the 30-text minimum — the task is "30 texts, **of which
+10** are the golden set", so the 30 = ~20 unlabeled + 10 golden. We process
+**38 texts total: 28 unlabeled corpus + 10 golden**, which clears the 30-text
+minimum with margin.
+
+`python3 main.py --corpus` processes the whole in-scope raw corpus through the
+same pipeline + routing and saves outputs to `results/corpus/` — these texts are
+**unlabeled, so they are processed, not scored** (no answer key; accuracy/P/R are
+only computed on the 10 golden).
+
+**Volume: 28 corpus + 10 golden = 38 texts ≥ 30 minimum. ✅**
 
 Corpus run (`gemini-3.5-flash` / v1 / deterministic, 2026-10-22):
 
 | Metric | Value |
 |---|---|
-| Texts processed | **28** (10 team reports + 5 LinPEAS + 13 Ox ASPM records across 2 exports) |
-| Total processed incl. golden | **38** (28 corpus + 10 golden) — meets the 30-text minimum |
-| % valid JSON | 100% (28/28, 0 failed) |
-| Findings extracted | 79 |
-| Routing | 13 parser (ASPM) / 15 LLM (team reports + LinPEAS) |
-| Latency p50 / p95 | 11.5s / 26.1s |
-| Avg tokens | ~ per LLM doc (see `results/corpus_summary.json`) |
+| **Total texts processed** | **38** (28 corpus + 10 golden) — **meets the 30-text minimum** |
+| Corpus texts (unlabeled subset) | 28 (10 team reports + 5 LinPEAS + 13 Ox ASPM records across 2 exports) |
+| Golden texts (labeled, scored) | 10 |
+| % valid JSON (corpus) | 100% (28/28, 0 failed) |
+| Findings extracted (corpus) | 79 |
+| Routing (corpus) | 13 parser (ASPM) / 15 LLM (team reports + LinPEAS) |
+| Latency p50 / p95 (corpus) | 11.5s / 26.1s |
 | Cost / 1000 docs | ~$24 (dominated by long LinPEAS inputs; actual spend for this run was cents) |
 
 Note: the ASPM records are counted per CSV row (each row is one alert). Only the
