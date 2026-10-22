@@ -1,0 +1,49 @@
+{
+  "model": "parser",
+  "model_name": "deterministic-aspm",
+  "prompt_version": "n/a",
+  "sampling": {
+    "name": "n/a",
+    "temperature": null,
+    "top_p": null
+  },
+  "source_id": "aspm__ox_resolved_issues_high_sep_oct_sanitized__row1",
+  "route": "parser",
+  "source": "aspm",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "aspm",
+      "source_record_id": null,
+      "raw_reference": "data/raw/aspm/ox_resolved_issues_high_sep_oct_sanitized.csv#row1",
+      "title": "Generic Secret",
+      "description": "Generic Secret was found in the code of a private repository.Generic secret detected in code or configuration. Secrets contain sensitive information that should be protected from unauthorized access.",
+      "finding_type": "unknown",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "resolved",
+      "status_raw": "resolved (Thu, 15 Oct 2026 18:18:23 GMT)",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": null,
+          "repository": "dev_app_1",
+          "environment": null
+        }
+      ],
+      "team": "Dev",
+      "evidence": "Generic Secret was found in the code of a private repository.Generic secret detected in code or configuration. Secrets contain sensitive information that should be protected from unauthorized access.",
+      "extraction_notes": "D4 dual-severity: severity_raw=Severity 'High'; Original Severity 'High' kept here, not in severity_raw. Count=1 is an instance count, not the finding count. team=Dev from Application 'Dev / dev_app_1' (Dev)."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "status: status matched phrase 'resolved' in 'resolved (Thu, 15 Oct 2026 18:18:23 GMT)'"
+  ],
+  "latency_seconds": 0.0,
+  "input_tokens": null,
+  "output_tokens": null,
+  "doc_id": "aspm__ox_resolved_issues_high_sep_oct_sanitized__row1",
+  "origin": "data/raw/aspm/ox_resolved_issues_high_sep_oct_sanitized.csv#row1"
+}

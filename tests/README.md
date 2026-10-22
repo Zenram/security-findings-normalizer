@@ -19,6 +19,7 @@ and fast (~0.1s). 31 tests total.
 | `test_normalize.py` | D4 code tables: known severity/status/finding_type map correctly; LinPEAS state words ("Vulnerable") → `unknown` (not guessed); "suggested accept-risk (not applied)" → `open`; unmapped values → `unknown`/`other` + a flag. | 10 |
 | `test_pipeline.py` | The `extract()` flow with a **fake adapter**: happy path applies the code-table normalization; the 1-repair-then-ok path; the 1-repair-then-**failed** path (no silent drop); D2 matching classifies matched/missed/spurious; `evaluate_result` aggregates metrics. | 6 |
 | `test_routing.py` | D1 routing: ASPM detected → parser, team reports/LinPEAS → LLM, cross-source "mixed" → LLM (not parsed); the ASPM parser output matches golden entries 06 & 07 **without a model**; parser output still gets code-table enums; parser rejects non-ASPM text. | 9 |
+| `test_corpus.py` | Corpus loader: all 3 sources present; ASPM CSVs expand to one text per row; doc ids unique; ASPM routes to parser, others to LLM. | 4 |
 | `conftest.py` | Puts the repo root on `sys.path` so `import src...` / `import schema...` work under pytest from any directory. | — |
 | `__init__.py` | Package marker. | — |
 

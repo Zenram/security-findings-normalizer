@@ -1,0 +1,77 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "team_report__team_report_dev_2026-09-14",
+  "route": "llm",
+  "source": "team_report",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "Command injection in workflow URL helper",
+      "description": "A helper function opening a workflow URL from an internal service response contains a shell-enabled process launch branch.",
+      "finding_type": "command_injection",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [],
+      "team": null,
+      "evidence": "The command-injection pattern is in a helper that opens a workflow URL.",
+      "extraction_notes": "Represents 1 of 7 High alerts reported. No team owner supplied in *_app_N format."
+    },
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "Raw SQL pattern in test support code",
+      "description": "Raw SQL pattern present in test-support code where compile-time type names are interpolated.",
+      "finding_type": "sql_injection",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "open",
+      "status_raw": "open",
+      "cve_ids": [],
+      "affected_assets": [],
+      "team": null,
+      "evidence": "Two more alerts are the same raw-SQL pattern in test-support code.",
+      "extraction_notes": "Grouped finding covering 2 High alerts. Source notes 'They remain open in this snapshot'."
+    },
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "Stale repositories and repo-maintenance issues",
+      "description": "Repo-maintenance alerts regarding confirmed-retired repositories that need archiving and pipeline reference verification.",
+      "finding_type": "stale_repository",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "open",
+      "status_raw": "live",
+      "cve_ids": [],
+      "affected_assets": [],
+      "team": null,
+      "evidence": "Four repo-maintenance alerts are also live.",
+      "extraction_notes": "Grouped finding covering 4 High alerts. Source notes team owners are missing in export."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "status: no status wording in source -> unknown"
+  ],
+  "latency_seconds": 16.650630666059442,
+  "input_tokens": 1453,
+  "output_tokens": 536,
+  "doc_id": "team_report__team_report_dev_2026-09-14",
+  "origin": "data/raw/team_reports/team_report_dev_2026-09-14.txt"
+}

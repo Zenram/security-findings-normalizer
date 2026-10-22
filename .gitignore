@@ -18,8 +18,11 @@ results/**/*.log
 !results/.gitkeep
 !results/metrics.json
 !results/REPORT_DATA.json
+!results/corpus_summary.json
 !results/raw/
 !results/raw/*.json
+!results/corpus/
+!results/corpus/*.json
 
 # === Databases / local stores ===
 *.db

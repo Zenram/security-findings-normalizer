@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-10-22T13:05:43.633275+00:00",
+  "config": {
+    "model": "gemini",
+    "prompt_version": "v1",
+    "sampling": "deterministic"
+  },
+  "note": "Corpus texts are UNLABELED: processed, not scored. Accuracy/precision/recall are only in metrics.json (golden set).",
+  "texts_processed": 28,
+  "valid_json": 28,
+  "pct_valid_json": 1.0,
+  "failed": 0,
+  "total_findings": 79,
+  "route_counts": {
+    "parser": 13,
+    "llm": 15
+  },
+  "source_counts": {
+    "team_report": 10,
+    "linpeas": 5,
+    "aspm": 13
+  },
+  "latency_p50": 11.509145249961875,
+  "latency_p95": 26.078895830723923,
+  "avg_input_tokens": 10054.866666666667,
+  "avg_output_tokens": 999.7333333333333,
+  "cost": {
+    "model": "gemini",
+    "method": "provider token pricing (USD per 1K tokens from env)",
+    "cost_per_1000_docs_usd": 24.079900000000002,
+    "note": null
+  }
+}

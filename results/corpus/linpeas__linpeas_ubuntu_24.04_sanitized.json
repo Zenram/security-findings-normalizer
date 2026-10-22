@@ -1,0 +1,214 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "linpeas__linpeas_ubuntu_24.04_sanitized",
+  "route": "llm",
+  "source": "linpeas",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Modules Information / DiagSpill SCTP kernel exposure",
+      "title": "DiagSpill SCTP kernel exposure",
+      "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in). Local exploitation needs no capability or unprivileged user namespace.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-74469"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_ubuntu_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": null,
+      "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
+      "extraction_notes": "Extracted from LinPEAS kernel module vulnerability scan section."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry / CVE-2026-46331",
+      "title": "pedit COW Kernel Vulnerability",
+      "description": "Kernel exploit registry matched CVE-2026-46331 for linux-kernel ver>=6.19,ver<7.0.13.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-46331"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_ubuntu_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": null,
+      "evidence": "CVE: CVE-2026-46331 | Name: pedit COW | Match data: pkg=linux-kernel,ver>=6.19,ver<7.0.13 | Tags: 1 | Rank: Fixed in stable 7.0.13 and mainline 7.1",
+      "extraction_notes": "Running kernel 7.0.12-linuxkit falls within the affected range."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry / CVE-2026-53362",
+      "title": "IPv6 fraggap out-of-bounds write Kernel Vulnerability",
+      "description": "Kernel exploit registry matched CVE-2026-53362 for linux-kernel ver>=6.19,ver<7.1.3.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-53362"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_ubuntu_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": null,
+      "evidence": "CVE: CVE-2026-53362 | Name: IPv6 fraggap out-of-bounds write | Match data: pkg=linux-kernel,ver>=6.19,ver<7.1.3,CONFIG_IPV6=[my]",
+      "extraction_notes": "Running kernel 7.0.12-linuxkit falls within the affected range."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry / CVE-2026-64564",
+      "title": "SCTPhantom SCTP ASCONF transport UAF Kernel Vulnerability",
+      "description": "Kernel exploit registry matched CVE-2026-64564 for linux-kernel ver>=6.19,ver<7.1.6.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-64564"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_ubuntu_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": null,
+      "evidence": "CVE: CVE-2026-64564 | Name: SCTPhantom SCTP ASCONF transport UAF | Match data: pkg=linux-kernel,ver>=6.19,ver<7.1.6,CONFIG_IP_SCTP=[my]",
+      "extraction_notes": "Running kernel 7.0.12-linuxkit falls within the affected range."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry / CVE-2026-53361",
+      "title": "BadGarbage AF_UNIX garbage-collector race Kernel Vulnerability",
+      "description": "Kernel exploit registry matched CVE-2026-53361 for linux-kernel ver>=6.19,ver<7.1.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-53361"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_ubuntu_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": null,
+      "evidence": "CVE: CVE-2026-53361 | Name: BadGarbage AF_UNIX garbage-collector race | Match data: pkg=linux-kernel,ver>=6.19,ver<7.1",
+      "extraction_notes": "Running kernel 7.0.12-linuxkit falls within the affected range."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Package Vulnerabilities / Open vSwitch forwarded-SKB page-cache LPE",
+      "title": "Open vSwitch forwarded-SKB page-cache LPE",
+      "description": "Kernel 7.0.12-linuxkit is in an upstream affected range and all known OVS/ESP/userns/setuid prerequisites were detected.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-80977",
+        "CVE-2026-89487",
+        "CVE-2026-90049"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_ubuntu_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": null,
+      "evidence": "POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected",
+      "extraction_notes": "Three CVEs share this single check context."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Permissions in init, init.d, systemd, and rc.d",
+      "title": "Writable /etc/passwd file",
+      "description": "The system /etc/passwd file is writable by the current execution context.",
+      "finding_type": "other",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "data_image_ubuntu_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": null,
+      "evidence": "/etc/passwd is writable",
+      "extraction_notes": null
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown"
+  ],
+  "latency_seconds": 26.42288579104934,
+  "input_tokens": 29249,
+  "output_tokens": 2032,
+  "doc_id": "linpeas__linpeas_ubuntu_24.04_sanitized",
+  "origin": "data/raw/oss_scanner/linpeas/linpeas_ubuntu_24.04_sanitized.txt"
+}

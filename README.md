@@ -59,8 +59,19 @@ python3 main.py --models gemini         # provider only
 python3 main.py --models ollama         # local only
 python3 main.py --prompts v1            # one prompt version
 python3 main.py --sampling deterministic  # one sampling config
+python3 main.py --corpus                # ALSO process the full raw corpus (~30 texts)
+python3 main.py --corpus-only           # ONLY process the raw corpus (skip the golden grid)
 make run                                # equivalent wrapper
 ```
+
+By default the run processes the **10 golden** texts (the labeled set used for
+all quality metrics). To also process the wider **unlabeled corpus** (team
+reports + LinPEAS + Ox ASPM in `data/raw/`, **28 corpus texts → 38 total with the
+golden set**), add `--corpus`. Corpus texts are **processed and saved, not
+scored** (no answer key) — outputs go to `results/corpus/` and a
+`results/corpus_summary.json` (valid %, latency, cost, routing). This satisfies
+Step 1's "run all texts" while keeping accuracy measured only on the golden set.
+See REPORT.md §6.
 
 Runs extraction across every model × prompt version × sampling config over the
 golden set, writes per-document outputs to `results/raw/`, aggregated metrics to

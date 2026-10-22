@@ -1,0 +1,49 @@
+{
+  "model": "parser",
+  "model_name": "deterministic-aspm",
+  "prompt_version": "n/a",
+  "sampling": {
+    "name": "n/a",
+    "temperature": null,
+    "top_p": null
+  },
+  "source_id": "aspm__ox_issues_active_sanitized__row5",
+  "route": "parser",
+  "source": "aspm",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "aspm",
+      "source_record_id": "issue-4626",
+      "raw_reference": "data/raw/aspm/ox_issues_active_sanitized.csv#row5#issue-4626",
+      "title": "AWS Token Log Bash Leaked via Logging",
+      "description": "API keys logged in plaintext expose authentication credentials to anyone with access to log files, log aggregation systems, or log backups.",
+      "finding_type": "unknown",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "open",
+      "status_raw": "active (Is Fix Available: false)",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": null,
+          "repository": "data_app_3",
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "API keys logged in plaintext expose authentication credentials to anyone with access to log files, log aggregation systems, or log backups.",
+      "extraction_notes": "D4 dual-severity: severity_raw=Severity 'High'; Original Severity 'High' kept here, not in severity_raw. Count=1 is an instance count, not the finding count. team=Data from Application 'Data / data_app_3' (Data)."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "status: status matched phrase 'active' in 'active (Is Fix Available: false)'"
+  ],
+  "latency_seconds": 0.0,
+  "input_tokens": null,
+  "output_tokens": null,
+  "doc_id": "aspm__ox_issues_active_sanitized__row5",
+  "origin": "data/raw/aspm/ox_issues_active_sanitized.csv#row5"
+}

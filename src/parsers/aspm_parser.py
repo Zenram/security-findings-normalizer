@@ -102,9 +102,19 @@ def _row_to_finding(row: dict[str, str], raw_reference: str) -> dict:
     original_severity = _clean(row.get("Original Severity"))
     is_fix = _clean(row.get("Is Fix Available"))
     count = _clean(row.get("Count"))
-    cves = _extract_cves(row.get("Vulnerabilities"))
+    # Active export lists CVEs in "Vulnerabilities"; resolved export in
+    # "Resolved Vulnerabilities".
+    cves = _extract_cves(row.get("Vulnerabilities") or row.get("Resolved Vulnerabilities"))
 
-    status_raw = f"active (Is Fix Available: {is_fix})" if is_fix is not None else "active"
+    # Status: a resolved export carries a Resolved Issue Date -> resolved;
+    # otherwise the record is active/open.
+    resolved_date = _clean(row.get("Resolved Issue Date"))
+    if resolved_date:
+        status_raw = f"resolved ({resolved_date})"
+    elif is_fix is not None:
+        status_raw = f"active (Is Fix Available: {is_fix})"
+    else:
+        status_raw = "active"
 
     notes_bits = []
     if original_severity:
@@ -171,7 +181,13 @@ _OX_FIELDS = {
     "Category", "Issue Name", "SLA", "Policy", "Issue Owner", "First Seen Date",
     "Issue ID", "Issue Description", "Recommendation", "CWE", "Vulnerabilities",
     "Severity Factors", "Is Fix Available", "Source tools",
+    # resolved-issues export variants:
+    "Resolved Issue Date", "Resolved Vulnerabilities",
 }
+
+# Strong field names that identify an Ox record even without an Issue ID (the
+# resolved-issues export has no Issue ID).
+_OX_IDENTIFYING = ("Issue ID", "Issue Name")
 
 
 def parse_aspm(text: str, raw_reference: str = "ox_issues.csv") -> list[dict]:
@@ -182,18 +198,21 @@ def parse_aspm(text: str, raw_reference: str = "ox_issues.csv") -> list[dict]:
     """
     stripped = text.lstrip()
 
-    # CSV path: a header line containing the key Ox columns.
+    # CSV path: a header line with Application + an identifying Ox column.
     first_line = stripped.splitlines()[0] if stripped else ""
-    if "Application" in first_line and "Issue ID" in first_line and "," in first_line:
+    if ("Application" in first_line and "," in first_line
+            and any(k in first_line for k in _OX_IDENTIFYING)):
         reader = csv.DictReader(io.StringIO(stripped))
-        findings = [_row_to_finding(r, raw_reference) for r in reader]
+        findings = [_row_to_finding(r, raw_reference) for r in reader
+                    if any((v or "").strip() for v in r.values())]
         if not findings:
             raise ValueError("ASPM CSV had a header but no data rows")
         return findings
 
-    # Block path: single `Field: value` record (golden format).
+    # Block path: single `Field: value` record (golden format). Accept records
+    # that have Application + an identifying field (Issue ID or Issue Name).
     row = _parse_block(stripped)
-    if row and row.get("Issue ID"):
+    if row and row.get("Application") and any(row.get(k) for k in _OX_IDENTIFYING):
         return [_row_to_finding(row, raw_reference)]
 
     raise ValueError("input does not look like an Ox ASPM export")

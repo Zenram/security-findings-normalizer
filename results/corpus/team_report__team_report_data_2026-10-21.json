@@ -1,0 +1,97 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "team_report__team_report_data_2026-10-21",
+  "route": "llm",
+  "source": "team_report",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "Vulnerable base image python:3.9-slim in batch Dockerfile",
+      "description": "python:3.9-slim is still in data_repo_1's batch Dockerfile. An update PR exists, but it is not merged.",
+      "finding_type": "vulnerable_base_image",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "resolved",
+      "status_raw": "open, not fixed",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "data_app_1",
+          "repository": "data_repo_1",
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "python:3.9-slim is still in data_repo_1's batch Dockerfile. The update PR exists, but it is NOT merged. Status open, not fixed.",
+      "extraction_notes": "Inferred team 'Data' from app ownership 'data_app_1'."
+    },
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "Unsafe archive extraction without path validation",
+      "description": "A job in data_app_2 unpacks an uploaded tar archive without checking member paths, potentially leading to arbitrary file overwrite.",
+      "finding_type": "other",
+      "severity": "medium",
+      "severity_raw": "Medium",
+      "status": "open",
+      "status_raw": "Remedation not applied",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "data_app_2",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "Medium archive-extraction problem in data_app_2. A job unpacks an uploaded tar without checking member paths.",
+      "extraction_notes": "Inferred team 'Data' from app ownership 'data_app_2'. Owner unassigned and repo name not provided in source."
+    },
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "Stale experiment repository without maintainer",
+      "description": "Stale experiment repo data_repo_6 under data_app_4 has no maintainer and remains readable.",
+      "finding_type": "stale_repository",
+      "severity": "low",
+      "severity_raw": "Low",
+      "status": "accepted_risk",
+      "status_raw": "accepted risk until retirement",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "data_app_4",
+          "repository": "data_repo_6",
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "Low, stale experiment repo data_repo_6 under data_app_4 has no maintainer.",
+      "extraction_notes": "Inferred team 'Data' from app ownership 'data_app_4'."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "status: status matched phrase 'fixed' in 'open, not fixed'",
+    "status: status matched phrase 'not applied' in 'Remedation not applied'",
+    "status: status matched phrase 'accepted' in 'accepted risk until retirement'"
+  ],
+  "latency_seconds": 10.186808999977075,
+  "input_tokens": 1427,
+  "output_tokens": 739,
+  "doc_id": "team_report__team_report_data_2026-10-21",
+  "origin": "data/raw/team_reports/team_report_data_2026-10-21.txt"
+}

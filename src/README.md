@@ -27,9 +27,10 @@ raw text ─► routing.detect_source ─► PARSER path (aspm)   ─┐
 | `validate.py` | `parse_json_array` (tolerant JSON parsing), `apply_normalization` (runs the D4 tables), `validate_findings` (parse → normalize → schema-validate against `Finding`). |
 | `normalize.py` | **D4 code tables.** `normalize_severity` / `normalize_status` / `normalize_finding_type`: map the model's `*_raw` wording to the controlled enums. Unknown → `unknown`/`other` + a flag, never invented. |
 | `golden.py` | Loads the `NN_input` / `NN_expected.json` pairs from `data/golden/`. |
+| `corpus.py` | Loads the full **unlabeled** raw corpus (team reports + LinPEAS + Ox ASPM rows) for `--corpus` mode. One text per report/LinPEAS file; one text per ASPM CSV **row**. Processed, not scored. |
 | `evaluate.py` | **D2 scoring.** `match_findings` (match predicted↔golden by stable key → matched/missed/spurious, never by position), field accuracy over matched pairs, finding-level P/R, % valid JSON, hallucination rate, latency p50/p95. `RunMetrics` aggregates per grid cell. |
 | `cost.py` | Cost-per-1000-docs. Provider: real token counts × real prices from `.env` (null if unset — never fabricated). Local: null on purpose (no per-token invoice), reports latency instead. |
-| `runner.py` | Ties it together. Sweeps the grid over the golden set, routes each doc, scores, writes `results/raw/*.json`, `results/metrics.json`, `results/REPORT_DATA.json`, prints a summary. `--models/--prompts/--sampling` flags. |
+| `runner.py` | Ties it together. Sweeps the grid over the golden set, routes each doc, scores, writes `results/raw/*.json`, `results/metrics.json`, `results/REPORT_DATA.json`, prints a summary. Flags: `--models/--prompts/--sampling`; `--corpus` (also process the full unlabeled raw corpus → `results/corpus/`, not scored); `--corpus-only`. |
 | `main.py` | Module entry (`python -m src.main`). The primary entry point is `main.py` at the repo root (`python3 main.py`). |
 | `__init__.py` | Package markers (required for imports). |
 

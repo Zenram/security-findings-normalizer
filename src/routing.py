@@ -48,15 +48,16 @@ def detect_source(text: str) -> str:
     linpeas_sig = "linpeas" in low
 
     # Ox ASPM: real CSV header row, OR the `Field: value` block (golden format)
-    # with Ox-specific field names anywhere in the text.
+    # with Ox-specific field names anywhere in the text. The resolved-issues
+    # export has no `Issue ID`, so accept `Application` + any strong Ox field.
     first_line = text.lstrip().splitlines()[0] if text.strip() else ""
-    is_csv_header = ("Application" in first_line and "Issue ID" in first_line
-                     and "," in first_line)
-    has_block_fields = bool(
-        re.search(r"^\s*Application\s*:", text, re.MULTILINE)
-        and re.search(r"^\s*Issue ID\s*:", text, re.MULTILINE)
-    )
-    aspm_sig = is_csv_header or has_block_fields
+    is_csv_header = ("Application" in first_line and "," in first_line
+                     and ("Issue ID" in first_line or "Issue Name" in first_line))
+    has_app = bool(re.search(r"^\s*Application\s*:", text, re.MULTILINE))
+    has_ox_field = bool(re.search(
+        r"^\s*(Issue ID|Issue Name|Business Priority|Policy|Original Severity"
+        r"|Source tools|Resolved Issue Date)\s*:", text, re.MULTILINE))
+    aspm_sig = is_csv_header or (has_app and has_ox_field)
 
     # If BOTH an ASPM signature and a LinPEAS signature are present, it is a
     # mixed document -> LLM path, not the deterministic parser.

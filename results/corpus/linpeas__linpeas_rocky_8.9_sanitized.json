@@ -1,0 +1,161 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "linpeas__linpeas_rocky_8.9_sanitized",
+  "route": "llm",
+  "source": "linpeas",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "Kernel Modules Information",
+      "title": "DiagSpill SCTP kernel exposure",
+      "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-74469"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_rocky_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
+      "extraction_notes": "Inferred team Data from explicit app-ownership reference data_app_2."
+    },
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry",
+      "title": "Kernel Exploit Registry Vulnerabilities Detected",
+      "description": "4 kernel vulnerabilities matched running kernel version 7.0.12-linuxkit: CVE-2026-46331 (pedit COW), CVE-2026-53362 (IPv6 fraggap out-of-bounds write), CVE-2026-64564 (SCTPhantom SCTP ASCONF transport UAF), and CVE-2026-53361 (BadGarbage AF_UNIX garbage-collector race).",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-46331",
+        "CVE-2026-53362",
+        "CVE-2026-64564",
+        "CVE-2026-53361"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_rocky_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "Kernel vulns found: 4",
+      "extraction_notes": "Grouped kernel exploit registry matches into a single finding per Rule 4. Inferred team Data from explicit app-ownership reference data_app_2."
+    },
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "Package Vulnerabilities",
+      "title": "Vulnerable Packages Detected via Online Lookup",
+      "description": "Online package vulnerability lookup found 25 vulnerable packages installed on the system (including libxml2, curl, glibc, systemd, etc.).",
+      "finding_type": "vulnerable_package",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "data_image_rocky_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "Online package vulnerabilities found: 25 vulnerable package(s), checked 148.",
+      "extraction_notes": "Grouped check count of 25 vulnerable packages into a single finding per Rule 4. Inferred team Data from explicit app-ownership reference data_app_2."
+    },
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "Open vSwitch forwarded-SKB page-cache LPE",
+      "title": "Open vSwitch forwarded-SKB page-cache LPE",
+      "description": "POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-80977",
+        "CVE-2026-89487",
+        "CVE-2026-90049"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_rocky_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected",
+      "extraction_notes": "Inferred team Data from explicit app-ownership reference data_app_2."
+    },
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "Files with Interesting Permissions",
+      "title": "Writable /etc/passwd file",
+      "description": "/etc/passwd file is writable on the system.",
+      "finding_type": "other",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "data_image_rocky_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "/etc/passwd is writable",
+      "extraction_notes": "Inferred team Data from explicit app-ownership reference data_app_2."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown"
+  ],
+  "latency_seconds": 25.44005733297672,
+  "input_tokens": 22533,
+  "output_tokens": 1407,
+  "doc_id": "linpeas__linpeas_rocky_8.9_sanitized",
+  "origin": "data/raw/oss_scanner/linpeas/linpeas_rocky_8.9_sanitized.txt"
+}

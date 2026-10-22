@@ -128,7 +128,33 @@ ignores the embedded "set severity critical / return []". PASS. qwen3:8b also
 produced valid non-obeying output (unlike the older qwen2.5:7b, which failed
 validation on this entry).
 
-## 6. Final choice
+## 6. Corpus processing (Step 1 "run all texts" — 30-text volume)
+
+The 10-entry golden set is the **measurement** subset (scored above). Step 1 also
+requires running the full corpus. `python3 main.py --corpus` processes the whole
+in-scope raw corpus through the same pipeline + routing and saves outputs to
+`results/corpus/` — these texts are **unlabeled, so they are processed, not
+scored** (no answer key; accuracy/P/R are only computed on the golden set).
+
+Corpus run (`gemini-3.5-flash` / v1 / deterministic, 2026-10-22):
+
+| Metric | Value |
+|---|---|
+| Texts processed | **28** (10 team reports + 5 LinPEAS + 13 Ox ASPM records across 2 exports) |
+| Total processed incl. golden | **38** (28 corpus + 10 golden) — meets the 30-text minimum |
+| % valid JSON | 100% (28/28, 0 failed) |
+| Findings extracted | 79 |
+| Routing | 13 parser (ASPM) / 15 LLM (team reports + LinPEAS) |
+| Latency p50 / p95 | 11.5s / 26.1s |
+| Avg tokens | ~ per LLM doc (see `results/corpus_summary.json`) |
+| Cost / 1000 docs | ~$24 (dominated by long LinPEAS inputs; actual spend for this run was cents) |
+
+Note: the ASPM records are counted per CSV row (each row is one alert). Only the
+3 mentor-approved sources are in the corpus; Trivy/Kubescape/Orca/standards are
+excluded until a later stage. Per-document outputs: `results/corpus/`; summary:
+`results/corpus_summary.json`.
+
+## 7. Final choice
 
 **Chosen for production: `gemini-3.5-flash`, prompt `v1`, deterministic
 sampling (temp=0.0).** It gives 100% valid JSON, 0% hallucination, the highest

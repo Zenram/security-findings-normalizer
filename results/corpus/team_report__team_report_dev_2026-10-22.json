@@ -1,0 +1,96 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "team_report__team_report_dev_2026-10-22",
+  "route": "llm",
+  "source": "team_report",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "SQL injection in search endpoint",
+      "description": "A request filter is concatenated into raw SQL in a search endpoint. Authentication is required, but injection risk remains. Parameterized query change is not deployed.",
+      "finding_type": "sql_injection",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "open",
+      "status_raw": "Still open",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "dev_app_2",
+          "repository": "dev_repo_2",
+          "environment": null
+        }
+      ],
+      "team": "Dev",
+      "evidence": "High: SQL injection in a search endpoint in dev_repo_2. A request filter is concatenated into raw SQL. Authentication is required, but that doesn't remove injection risk. Still open",
+      "extraction_notes": "Inferred team 'Dev' from dev_app_2. Repository dev_repo_2 explicitly stated."
+    },
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "Request error strings written into interpolated log messages",
+      "description": "dev_app_2 writes request error strings into interpolated log messages in dev_repo_2. A proposed structured logging fix is queued.",
+      "finding_type": "other",
+      "severity": "medium",
+      "severity_raw": "Medium",
+      "status": "unknown",
+      "status_raw": "waiting for review",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "dev_app_2",
+          "repository": "dev_repo_2",
+          "environment": null
+        }
+      ],
+      "team": "Dev",
+      "evidence": "Medium: dev_app_2 writes request error strings into interpolated log messages. Same repo, different root cause. Proposed structured logging fix is queued. Status \"waiting for review\"",
+      "extraction_notes": "Inferred repository dev_repo_2 from 'Same repo' referencing dev_repo_2. Inferred team 'Dev' from dev_app_2."
+    },
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "OpenAPI document omits global security declaration",
+      "description": "dev_app_3's OpenAPI document omits the global security declaration. Deployed endpoint requires bearer auth, making this a documentation/config gap.",
+      "finding_type": "other",
+      "severity": "low",
+      "severity_raw": "Low",
+      "status": "accepted_risk",
+      "status_raw": "Accepted risk",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "dev_app_3",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Dev",
+      "evidence": "Low: dev_app_3's OpenAPI document omits the global security declaration. Repo not supplied. We checked the deployed endpoint does require bearer auth, so this is a documentation/config gap",
+      "extraction_notes": "Inferred team 'Dev' from dev_app_3. Repository not supplied in source."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "status: status matched phrase 'open' in 'Still open'",
+    "status: unmapped status_raw 'waiting for review' -> unknown (not guessed)"
+  ],
+  "latency_seconds": 14.861657417030074,
+  "input_tokens": 1407,
+  "output_tokens": 776,
+  "doc_id": "team_report__team_report_dev_2026-10-22",
+  "origin": "data/raw/team_reports/team_report_dev_2026-10-22.txt"
+}

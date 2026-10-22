@@ -1,0 +1,102 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "linpeas__linpeas_alpine_3.20_sanitized",
+  "route": "llm",
+  "source": "linpeas",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "Container hardening",
+      "title": "Workload runs as root with no non-root user configured",
+      "description": "Observed workload runs as root with no non-root user configured. Unnecessary root execution for this lab worker; non-root migration not applied.",
+      "finding_type": "dockerfile_misconfiguration",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "lab_container_alpine_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "DevOps",
+      "evidence": "Observed workload runs as root with no non-root user configured.",
+      "extraction_notes": "Team inferred from devops_app_1."
+    },
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "Writable executable search",
+      "title": "World-writable directory in PATH before system directories",
+      "description": "World-writable directory occurs before system directories in this worker's PATH (/opt/lab/bin with permissions drwxrwxrwx). Unprivileged local users can replace commands in that directory.",
+      "finding_type": "other",
+      "severity": "unknown",
+      "severity_raw": "WARNING",
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "lab_container_alpine_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "DevOps",
+      "evidence": "WARNING: world-writable directory occurs before system directories in this worker's PATH.",
+      "extraction_notes": "Team inferred from devops_app_1."
+    },
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "Kernel candidate review",
+      "title": "Potentially vulnerable shared host kernel (CVE-2022-0847)",
+      "description": "CVE-2022-0847: potentially vulnerable shared host kernel reported by the lab version check. Running kernel build string omitted; vendor patch status UNKNOWN.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2022-0847"
+      ],
+      "affected_assets": [
+        {
+          "asset": "lab_container_alpine_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "DevOps",
+      "evidence": "CVE-2022-0847: potentially vulnerable shared host kernel reported by the lab version check.",
+      "extraction_notes": "Team inferred from devops_app_1."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: unmapped severity_raw 'WARNING' -> unknown (not guessed)",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown"
+  ],
+  "latency_seconds": 13.412207958986983,
+  "input_tokens": 1549,
+  "output_tokens": 724,
+  "doc_id": "linpeas__linpeas_alpine_3.20_sanitized",
+  "origin": "data/raw/oss_scanner/linpeas/linpeas_alpine_3.20_sanitized.txt"
+}

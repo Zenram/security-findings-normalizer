@@ -1,0 +1,102 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "linpeas__linpeas_ubuntu_22.04_sanitized",
+  "route": "llm",
+  "source": "linpeas",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": null,
+      "title": "pkexec package potentially vulnerable to CVE-2021-4034",
+      "description": "CVE-2021-4034: POTENTIALLY VULNERABLE - version evidence incomplete; vendor backport status unknown. Candidate package issue only.",
+      "finding_type": "vulnerable_package",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "open",
+      "status_raw": "POTENTIALLY VULNERABLE",
+      "cve_ids": [
+        "CVE-2021-4034"
+      ],
+      "affected_assets": [
+        {
+          "asset": "lab_container_ubuntu_2",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "CVE-2021-4034: POTENTIALLY VULNERABLE - version evidence incomplete; vendor backport status unknown.",
+      "extraction_notes": "Team inferred from data_app_4 reference in report header."
+    },
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "/opt/lab/cleanup.sh",
+      "title": "Scheduled cleanup script is writable by all users and scheduled to run as root",
+      "description": "WARNING: cleanup script is writable by all users and scheduled to run as root. Remediation not applied; restrict write permissions and review the scheduled task.",
+      "finding_type": "other",
+      "severity": "unknown",
+      "severity_raw": "WARNING",
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "lab_container_ubuntu_2",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "WARNING: cleanup script is writable by all users and scheduled to run as root.",
+      "extraction_notes": "Team inferred from data_app_4 reference in report header."
+    },
+    {
+      "source": "oss_scanner",
+      "source_record_id": null,
+      "raw_reference": "/opt/lab/report-helper",
+      "title": "Custom SUID helper with writable configuration file",
+      "description": "Custom SUID helper present; writable configuration: /opt/lab/report-helper.conf (mode 0666). Potential privilege-escalation configuration: helper reads this file before privileged operations.",
+      "finding_type": "other",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "lab_container_ubuntu_2",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "Custom SUID helper present; writable configuration: /opt/lab/report-helper.conf (mode 0666).",
+      "extraction_notes": "Team inferred from data_app_4 reference in report header."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "severity: no severity wording in source -> unknown",
+    "status: status matched phrase 'vulnerable' in 'POTENTIALLY VULNERABLE'",
+    "severity: unmapped severity_raw 'WARNING' -> unknown (not guessed)",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown"
+  ],
+  "latency_seconds": 13.70607212500181,
+  "input_tokens": 1542,
+  "output_tokens": 764,
+  "doc_id": "linpeas__linpeas_ubuntu_22.04_sanitized",
+  "origin": "data/raw/oss_scanner/linpeas/linpeas_ubuntu_22.04_sanitized.txt"
+}

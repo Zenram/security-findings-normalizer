@@ -1,0 +1,96 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "team_report__team_report_devops_2026-10-20",
+  "route": "llm",
+  "source": "team_report",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": "#devops-security",
+      "title": "Shell-injection pattern in deployment helper",
+      "description": "A deployment helper formats a command using request-supplied job arguments and invokes a shell.",
+      "finding_type": "command_injection",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "open",
+      "status_raw": "Open",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "devops_app_1",
+          "repository": "devops_repo_2",
+          "environment": null
+        }
+      ],
+      "team": "DevOps",
+      "evidence": "devops_app_1 in devops_repo_2 has a High shell-injection pattern: a deployment helper formats a command using request-supplied job arguments and invokes a shell.",
+      "extraction_notes": "Inferred team 'DevOps' from app ownership reference 'devops_app_1'."
+    },
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": "#devops-security",
+      "title": "Automation role can attach arbitrary IAM policies",
+      "description": "The automation role can attach arbitrary IAM policies. A least-privilege policy was requested, but no permission change has occurred.",
+      "finding_type": "other",
+      "severity": "medium",
+      "severity_raw": "Medium",
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "devops_app_2",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "DevOps",
+      "evidence": "Also devops_app_2, Medium: the automation role can attach arbitrary IAM policies.",
+      "extraction_notes": "Inferred team 'DevOps' from app ownership reference 'devops_app_2'. Document explicitly states repository and owner are missing."
+    },
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": "#devops-security",
+      "title": "Sandbox permits helper to run as root",
+      "description": "devops_app_1's sandbox permits a helper to run as root when non-root would suffice. Risk decision recorded for lab environment only.",
+      "finding_type": "other",
+      "severity": "low",
+      "severity_raw": "Low",
+      "status": "accepted_risk",
+      "status_raw": "accepted risk - lab only",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "devops_app_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "DevOps",
+      "evidence": "Third item, Low, devops_app_1's sandbox permits a helper to run as root when non-root would suffice. Jordan recorded \"accepted risk - lab only\".",
+      "extraction_notes": "Inferred team 'DevOps' from app ownership reference 'devops_app_1'."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "status: no status wording in source -> unknown",
+    "status: status matched phrase 'accepted' in 'accepted risk - lab only'"
+  ],
+  "latency_seconds": 12.831481499946676,
+  "input_tokens": 1418,
+  "output_tokens": 742,
+  "doc_id": "team_report__team_report_devops_2026-10-20",
+  "origin": "data/raw/team_reports/team_report_devops_2026-10-20.txt"
+}

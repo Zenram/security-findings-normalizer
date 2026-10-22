@@ -1,0 +1,49 @@
+{
+  "model": "parser",
+  "model_name": "deterministic-aspm",
+  "prompt_version": "n/a",
+  "sampling": {
+    "name": "n/a",
+    "temperature": null,
+    "top_p": null
+  },
+  "source_id": "aspm__ox_issues_active_sanitized__row1",
+  "route": "parser",
+  "source": "aspm",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "aspm",
+      "source_record_id": "issue-9804",
+      "raw_reference": "data/raw/aspm/ox_issues_active_sanitized.csv#row1#issue-9804",
+      "title": "Missing Antiforgery C# API Exposed",
+      "description": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.",
+      "finding_type": "csrf",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "open",
+      "status_raw": "active (Is Fix Available: false)",
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": null,
+          "repository": "dev_app_1",
+          "environment": null
+        }
+      ],
+      "team": "Dev",
+      "evidence": "The vulnerability is a missing anti-forgery token on a state-changing HTTP POST MVC action, which exposes the endpoint to Cross-Site Request Forgery (CSRF) attacks. Without the token validation, malicious sites could trick authenticated users into submitting unwanted requests.",
+      "extraction_notes": "D4 dual-severity: severity_raw=Severity 'High'; Original Severity 'Medium' kept here, not in severity_raw. Count=22 is an instance count, not the finding count. team=Dev from Application 'Dev / dev_app_1' (Dev)."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "status: status matched phrase 'active' in 'active (Is Fix Available: false)'"
+  ],
+  "latency_seconds": 0.0,
+  "input_tokens": null,
+  "output_tokens": null,
+  "doc_id": "aspm__ox_issues_active_sanitized__row1",
+  "origin": "data/raw/aspm/ox_issues_active_sanitized.csv#row1"
+}

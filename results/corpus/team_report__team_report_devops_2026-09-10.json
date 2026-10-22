@@ -1,0 +1,54 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "team_report__team_report_devops_2026-09-10",
+  "route": "llm",
+  "source": "team_report",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "team_report",
+      "source_record_id": null,
+      "raw_reference": "#devops-security",
+      "title": "Command injection patterns in Python subprocess calls invoking bash -c",
+      "description": "A scan identified four command-injection alerts across two code repositories and three affected files, all stemming from Python subprocess calls invoking bash -c. In the first repository, two alerts exist in a deployment helper (container registry login and package push). In the second repository, two alerts exist in helpers building a cluster-configuration command using Lambda environment variables.",
+      "finding_type": "command_injection",
+      "severity": "high",
+      "severity_raw": "High",
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": null,
+          "repository": "first repo",
+          "environment": null
+        },
+        {
+          "asset": null,
+          "repository": "second repo",
+          "environment": null
+        }
+      ],
+      "team": null,
+      "evidence": "High-only scan found four alerts across two code repos, zero Critical. All are command-injection patterns from Python subprocess calls that invoke bash -c.",
+      "extraction_notes": "Grouped 4 alerts across 2 repositories (3 total affected files) into 1 finding per Rule 4. Team set to null because source explicitly states no tickets or owner names are included."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "status: no status wording in source -> unknown"
+  ],
+  "latency_seconds": 19.325369874946773,
+  "input_tokens": 1471,
+  "output_tokens": 335,
+  "doc_id": "team_report__team_report_devops_2026-09-10",
+  "origin": "data/raw/team_reports/team_report_devops_2026-09-10.txt"
+}

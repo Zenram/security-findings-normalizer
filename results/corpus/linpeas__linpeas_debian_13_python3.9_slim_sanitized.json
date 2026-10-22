@@ -1,0 +1,239 @@
+{
+  "model": "gemini",
+  "model_name": "gemini-3.5-flash",
+  "prompt_version": "v1",
+  "sampling": {
+    "name": "deterministic",
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "source_id": "linpeas__linpeas_debian_13_python3.9_slim_sanitized",
+  "route": "llm",
+  "source": "linpeas",
+  "status": "ok",
+  "findings": [
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "CPU info",
+      "title": "CPU Vulnerability - Spec store bypass",
+      "description": "Spec store bypass vulnerability detected as Vulnerable on running Apple CPU architecture.",
+      "finding_type": "cpu_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "data_image_python39_slim_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "Vulnerability Spec store bypass:      Vulnerable",
+      "extraction_notes": "Inferred team Data from ASPM app data_app_1 referenced in header."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Modules Information",
+      "title": "DiagSpill SCTP kernel exposure",
+      "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in). Local exploitation needs no capability or unprivileged user namespace.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-74469"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_python39_slim_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)",
+      "extraction_notes": "Inferred team Data from ASPM app data_app_1 referenced in header."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry",
+      "title": "pedit COW Kernel Vulnerability",
+      "description": "Match data: pkg=linux-kernel,ver>=6.19,ver<7.0.13. Fixed in stable 7.0.13 and mainline 7.1.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-46331"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_python39_slim_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "CVE: CVE-2026-46331 | Name: pedit COW | Match data: pkg=linux-kernel,ver>=6.19,ver<7.0.13",
+      "extraction_notes": "Inferred team Data from ASPM app data_app_1 referenced in header."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry",
+      "title": "IPv6 fraggap out-of-bounds write Kernel Vulnerability",
+      "description": "Match data: pkg=linux-kernel,ver>=6.19,ver<7.1.3,CONFIG_IPV6=[my]. Fixed in stable 7.1.3 and mainline 7.2-rc1.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-53362"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_python39_slim_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "CVE: CVE-2026-53362 | Name: IPv6 fraggap out-of-bounds write | Match data: pkg=linux-kernel,ver>=6.19,ver<7.1.3,CONFIG_IPV6=[my]",
+      "extraction_notes": "Inferred team Data from ASPM app data_app_1 referenced in header."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry",
+      "title": "SCTPhantom SCTP ASCONF transport UAF Kernel Vulnerability",
+      "description": "Match data: pkg=linux-kernel,ver>=6.19,ver<7.1.6,CONFIG_IP_SCTP=[my]. Fixed in stable 7.1.6 and mainline 7.2.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-64564"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_python39_slim_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "CVE: CVE-2026-64564 | Name: SCTPhantom SCTP ASCONF transport UAF | Match data: pkg=linux-kernel,ver>=6.19,ver<7.1.6,CONFIG_IP_SCTP=[my]",
+      "extraction_notes": "Inferred team Data from ASPM app data_app_1 referenced in header."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Kernel Exploit Registry",
+      "title": "BadGarbage AF_UNIX garbage-collector race Kernel Vulnerability",
+      "description": "Match data: pkg=linux-kernel,ver>=6.19,ver<7.1. Fixed in mainline 7.1; public exploit can provide local root and container escape.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-53361"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_python39_slim_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "CVE: CVE-2026-53361 | Name: BadGarbage AF_UNIX garbage-collector race | Match data: pkg=linux-kernel,ver>=6.19,ver<7.1",
+      "extraction_notes": "Inferred team Data from ASPM app data_app_1 referenced in header."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Package Vulnerabilities",
+      "title": "Open vSwitch forwarded-SKB page-cache LPE",
+      "description": "Kernel 7.0.12-linuxkit is in an upstream affected range. POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected.",
+      "finding_type": "kernel_vulnerability",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [
+        "CVE-2026-80977",
+        "CVE-2026-89487",
+        "CVE-2026-90049"
+      ],
+      "affected_assets": [
+        {
+          "asset": "data_image_python39_slim_1",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "POTENTIAL ROOT LPE: the affected kernel range and all known OVS/ESP/userns/setuid prerequisites were detected",
+      "extraction_notes": "Inferred team Data from ASPM app data_app_1 referenced in header."
+    },
+    {
+      "source": "unknown",
+      "source_record_id": null,
+      "raw_reference": "Files with Interesting Permissions",
+      "title": "Writable /etc/passwd file",
+      "description": "/etc/passwd file is writable by non-root users, allowing potential unauthorized privilege escalation.",
+      "finding_type": "other",
+      "severity": "unknown",
+      "severity_raw": null,
+      "status": "unknown",
+      "status_raw": null,
+      "cve_ids": [],
+      "affected_assets": [
+        {
+          "asset": "/etc/passwd",
+          "repository": null,
+          "environment": null
+        }
+      ],
+      "team": "Data",
+      "evidence": "/etc/passwd is writable",
+      "extraction_notes": "Inferred team Data from ASPM app data_app_1 referenced in header."
+    }
+  ],
+  "repaired": false,
+  "error": null,
+  "normalization_flags": [
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown",
+    "severity: no severity wording in source -> unknown",
+    "status: no status wording in source -> unknown"
+  ],
+  "latency_seconds": 28.341150249936618,
+  "input_tokens": 81339,
+  "output_tokens": 2240,
+  "doc_id": "linpeas__linpeas_debian_13_python3.9_slim_sanitized",
+  "origin": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt"
+}

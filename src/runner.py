@@ -224,7 +224,156 @@ def build_arg_parser() -> argparse.ArgumentParser:
                    help="Prompt versions to run (e.g. --prompts v1 v2).")
     p.add_argument("--sampling", nargs="+", default=None,
                    help="Sampling configs to run (e.g. --sampling deterministic).")
+    p.add_argument("--corpus", action="store_true",
+                   help="Also process the full unlabeled raw corpus (~30 texts) "
+                        "through the pipeline and save outputs to results/corpus/. "
+                        "Corpus texts are processed, NOT scored (no golden labels). "
+                        "Uses the production config (first model/prompt/sampling).")
+    p.add_argument("--corpus-only", action="store_true",
+                   help="Process ONLY the raw corpus (skip the golden grid).")
     return p
+
+
+def run_corpus(config: RunConfig | None = None, results_dir: Path | None = None) -> dict:
+    """Process the full unlabeled raw corpus (~30 texts) through the pipeline.
+
+    Produces PROCESSING stats only (valid %, latency, cost, routing, finding
+    counts) — NOT accuracy, because corpus texts have no golden labels. Writes
+    results/corpus/<doc_id>.json and results/corpus_summary.json.
+    """
+    from src.corpus import load_corpus
+    from src.routing import detect_source, route_for_source
+
+    config = config or RunConfig()
+    results_dir = results_dir or RESULTS_DIR
+    corpus_dir = results_dir / "corpus"
+    corpus_dir.mkdir(parents=True, exist_ok=True)
+
+    # Production config = the first entry of each grid axis.
+    model_id = config.models[0]
+    prompt_version = config.prompt_versions[0]
+    sampling = SAMPLING_CONFIGS[config.sampling_configs[0]]
+
+    reason = _preflight(model_id, config.request_timeout_seconds)
+    model_usable = reason is None
+    if not model_usable:
+        print(f"[corpus] model '{model_id}' not usable: {reason}")
+
+    texts = load_corpus()
+    print(f"[corpus] loaded {len(texts)} raw texts "
+          f"(config: {model_id}/{prompt_version}/{sampling.name})")
+
+    pace = (GEMINI_MIN_SECONDS_BETWEEN_CALLS
+            if (model_usable and model_id == MODEL_GEMINI) else 0.0)
+    last_call_ts = 0.0
+
+    processed = 0
+    valid = 0
+    failed = 0
+    total_findings = 0
+    latencies: list[float] = []
+    in_tokens: list[int] = []
+    out_tokens: list[int] = []
+    route_counts: dict[str, int] = {"parser": 0, "llm": 0}
+    source_counts: dict[str, int] = {}
+
+    for ct in texts:
+        src = detect_source(ct.text)
+        source_counts[src] = source_counts.get(src, 0) + 1
+
+        if not model_usable and route_for_source(src) == "llm":
+            result = {
+                "doc_id": ct.doc_id, "origin": ct.origin, "source": src,
+                "route": "llm", "status": "failed", "findings": [],
+                "error": f"model unavailable: {reason}",
+            }
+        else:
+            if route_for_source(src) == "llm" and pace:
+                elapsed = time.monotonic() - last_call_ts
+                if last_call_ts and elapsed < pace:
+                    time.sleep(pace - elapsed)
+                last_call_ts = time.monotonic()
+            routed = route_and_extract(
+                text=ct.text, model=model_id, prompt_version=prompt_version,
+                sampling=sampling, source_id=ct.doc_id,
+                timeout=config.request_timeout_seconds, raw_reference=ct.origin,
+            )
+            result = routed.result.to_dict()
+            result["doc_id"] = ct.doc_id
+            result["origin"] = ct.origin
+
+        processed += 1
+        route_counts[result.get("route", "llm")] = route_counts.get(result.get("route", "llm"), 0) + 1
+        if result.get("status") == "ok":
+            valid += 1
+            total_findings += len(result.get("findings", []))
+        else:
+            failed += 1
+        if result.get("latency_seconds") is not None:
+            latencies.append(result["latency_seconds"])
+        if result.get("input_tokens") is not None:
+            in_tokens.append(result["input_tokens"])
+        if result.get("output_tokens") is not None:
+            out_tokens.append(result["output_tokens"])
+
+        (corpus_dir / f"{ct.doc_id}.json").write_text(
+            json.dumps(result, indent=2), encoding="utf-8"
+        )
+        print(f"  [{ct.doc_id}] {result.get('status')} "
+              f"({len(result.get('findings', []))} findings) [{result.get('route')}]")
+
+    def _pct(a, b):
+        return (a / b) if b else None
+
+    def _pctile(data, p):
+        if not data:
+            return None
+        s = sorted(data)
+        k = (len(s) - 1) * p
+        f = int(k); c = min(f + 1, len(s) - 1)
+        return s[f] if f == c else s[f] + (s[c] - s[f]) * (k - f)
+
+    avg_in = (sum(in_tokens) / len(in_tokens)) if in_tokens else None
+    avg_out = (sum(out_tokens) / len(out_tokens)) if out_tokens else None
+
+    summary = {
+        "generated_at": _utc_now(),
+        "config": {"model": model_id, "prompt_version": prompt_version,
+                   "sampling": sampling.name},
+        "note": ("Corpus texts are UNLABELED: processed, not scored. Accuracy/"
+                 "precision/recall are only in metrics.json (golden set)."),
+        "texts_processed": processed,
+        "valid_json": valid,
+        "pct_valid_json": _pct(valid, processed),
+        "failed": failed,
+        "total_findings": total_findings,
+        "route_counts": route_counts,
+        "source_counts": source_counts,
+        "latency_p50": _pctile(latencies, 0.50),
+        "latency_p95": _pctile(latencies, 0.95),
+        "avg_input_tokens": avg_in,
+        "avg_output_tokens": avg_out,
+        "cost": cost_summary(model_id, {"avg_input_tokens": avg_in,
+                                        "avg_output_tokens": avg_out,
+                                        "latency_p50": _pctile(latencies, 0.50),
+                                        "latency_p95": _pctile(latencies, 0.95)}),
+    }
+    (results_dir / "corpus_summary.json").write_text(
+        json.dumps(summary, indent=2), encoding="utf-8")
+
+    print("\n============ CORPUS SUMMARY ============")
+    print(f"texts processed : {processed}")
+    print(f"valid JSON      : {valid} ({_fmt(summary['pct_valid_json'], pct=True)})")
+    print(f"failed          : {failed}")
+    print(f"total findings  : {total_findings}")
+    print(f"routing         : {route_counts}")
+    print(f"sources         : {source_counts}")
+    print(f"latency p50/p95 : {_fmt(summary['latency_p50'])}/{_fmt(summary['latency_p95'])} s")
+    cpd = summary['cost'].get('cost_per_1000_docs_usd')
+    print(f"cost / 1000     : {('$'+format(cpd,'.2f')) if cpd is not None else 'n/a (local)'}")
+    print("========================================")
+    print("Per-doc outputs: results/corpus/ | summary: results/corpus_summary.json")
+    return summary
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -236,5 +385,12 @@ def main(argv: list[str] | None = None) -> int:
         config.prompt_versions = args.prompts
     if args.sampling:
         config.sampling_configs = args.sampling
+
+    if args.corpus_only:
+        run_corpus(config)
+        return 0
+
     run(config)
+    if args.corpus:
+        run_corpus(config)
     return 0
