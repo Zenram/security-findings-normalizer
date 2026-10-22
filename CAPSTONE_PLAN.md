@@ -4,6 +4,12 @@
 > This is the PLAN, not the implementation. Stage 1 is the current course task
 > (due 27.10, ~9 h, 30 pts). Stages 2-4 are the course trajectory; their detail
 > firms up as earlier stages land.
+>
+> **STAGE 1 STATUS: COMPLETE (2026-10-22).** As-built details, measured results,
+> and any divergence from this plan live in `REPORT.md` and
+> `../STAGE1_HANDBACK.md`. The D1–D6 decisions and the Stage 2–4 trajectory below
+> still hold; a few implementation facts (model names, entry command, checklist)
+> were refreshed to match what shipped.
 
 Related source docs: `general_plans/1_education_plan_short.md`,
 `2_general_plan.md`, `3_full_project_plan.md`, `4_edu_chat_idea_post.md`.
@@ -173,9 +179,13 @@ findings in one text; mixed languages; injection attempt. Expected JSON matches
 
 ## Stage 2 — Second Model + Measurement
 
-**Local model candidate:** Ollama `qwen2.5:7b` (already run by the user in prior
-projects; ~8 GB RAM; decent multilingual). Fallback candidates: `gemma2:9b`,
-`qwen2.5:14b` if hardware allows. Provider side: Google Gemini via API.
+**Local model (as built):** Ollama `qwen3:8b` — a reasoning model run with
+`think=false` so it returns JSON fast (~7s/doc vs ~116s with thinking on).
+Upgraded from the original candidate `qwen2.5:7b` because qwen3:8b reached 100%
+valid JSON and 0% hallucination. Fallbacks if needed: `qwen2.5:7b`, `gemma2:9b`.
+**Provider (as built):** Google Gemini `gemini-3.5-flash` (the planned
+`gemini-2.5-flash` was retired for new users; needs billing — free tier RPM is
+too low for a full run).
 
 **Metrics to track** (per `model x prompt version x sampling` row):
 
@@ -228,14 +238,14 @@ projects; ~8 GB RAM; decent multilingual). Fallback candidates: `gemma2:9b`,
 
 - [x] `prompts/` with CHANGELOG
 - [x] `data/` with golden set location (committed) + `raw/` ignored
-- [x] `results/` (ignored except `.gitkeep`)
-- [x] `REPORT.md` (structure stubbed)
+- [x] `results/` (JSON outputs committed; logs ignored)
+- [x] `REPORT.md` (complete — comparison table, routing, corpus, error analysis, choice)
 - [x] `README.md`
-- [x] `.env.example` only; single-command run (`make run`)
-- [x] `.gitignore` excludes input data, DB files, env, results, logs, vector stores
+- [x] `.env.example` only; single-command run (`python3 main.py`; `make run` wraps it)
+- [x] `.gitignore` excludes input data, DB files, env, logs, vector stores (results JSON committed)
 - [x] `schema/finding.py` (frozen Stage 1 contract)
-- [ ] `requirements.txt` / `pyproject.toml` — Developer adds (dependency choice)
-- [ ] `src/` implementation — Developer builds
+- [x] `requirements.txt` (pydantic>=2.11, google-genai, requests, python-dotenv, pytest)
+- [x] `src/` implementation — built (extract interface, adapters, routing, parsers, eval, runner)
 
 ---
 
