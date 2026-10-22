@@ -3,7 +3,7 @@ Central configuration for the Security Findings Normalizer (Stage 1).
 
 Loads from environment (.env via python-dotenv if present). Secrets NEVER live
 in source — only `.env.example` is committed. See CAPSTONE_PLAN "Repo Structure
-Checklist" and DEV_HANDOFF step 1.
+Checklist" and the Part 1 build plan.
 
 Sampling params are deliberately NOT hardcoded into the model adapters: the eval
 harness sets them per-run (Stage 2 "config comparison"). The values here are

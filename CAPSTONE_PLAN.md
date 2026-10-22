@@ -13,13 +13,15 @@
 >
 > **PART 1 (Extraction) STATUS: COMPLETE (2026-10-22)** — all 4 of its course
 > steps done. As-built details, measured results, and any divergence from this
-> plan live in `REPORT.md` and `../PART1_HANDBACK.md`. The D1–D6 decisions and
+> plan live in `REPORT.md` (and, for the maintainer, the handback kept outside
+> the repo). The D1–D6 decisions and
 > the Part 2–4 trajectory below still hold; implementation facts (model names,
 > entry command, checklist) were refreshed to match what shipped.
 > Part 1 is the current course task (due 27.10, ~9 h, 30 pts).
 
-Related source docs: `general_plans/1_education_plan_short.md`,
-`2_general_plan.md`, `3_full_project_plan.md`, `4_edu_chat_idea_post.md`.
+Related source docs (kept outside this repo, in the maintainer's planning
+workspace): the education plan, general plan, full project plan, and the
+edu-chat idea notes.
 
 ---
 

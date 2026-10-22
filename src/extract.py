@@ -1,5 +1,5 @@
 """
-The shared extraction interface (DEV_HANDOFF step 3):
+The shared extraction interface (see CAPSTONE_PLAN Part 1 — Step 2):
 
     extract(text, model, prompt_version, sampling) -> ExtractionResult
 

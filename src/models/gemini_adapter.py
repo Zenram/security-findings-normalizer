@@ -1,6 +1,5 @@
 """
-Gemini adapter (provider/cloud side). Uses the google-genai client, the same
-library the user's ai-chatbots repo uses.
+Gemini adapter (provider/cloud side). Uses the google-genai client.
 
 Structured output: we request JSON via response_mime_type="application/json" and
 pass the schema expectation in the prompt. We keep parsing/validation upstream
@@ -30,8 +29,7 @@ def _parse_retry_delay_seconds(error_text: str, default: int = 30) -> int:
     """Pull the server-suggested retry delay out of a 429/503 error string.
 
     Google returns e.g. "Please retry in 55.286s." and a RetryInfo
-    retryDelay: '55s'. We honor that rather than guessing (pattern reused from
-    the ai-chatbots quota handler).
+    retryDelay: '55s'. We honor that rather than guessing.
     """
     m = re.search(r"retry in\s+(\d+(?:\.\d+)?)s", error_text, re.IGNORECASE)
     if m:

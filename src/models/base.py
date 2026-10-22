@@ -1,7 +1,7 @@
 """
 Shared model-adapter contract. Gemini and Ollama both implement `ModelAdapter`
 so the rest of the pipeline is model-agnostic (CAPSTONE_PLAN: "both behind one
-shared interface"; DEV_HANDOFF step 3).
+shared interface"; see CAPSTONE_PLAN Part 1 — Step 2).
 
 An adapter's only job: given a fully-rendered prompt, return raw text + timing +
 token usage. It does NOT parse, validate, or normalize — that happens upstream

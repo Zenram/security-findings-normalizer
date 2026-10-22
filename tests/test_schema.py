@@ -1,5 +1,5 @@
 """
-Schema contract tests (DEV_HANDOFF step 2): a valid record passes; a missing
+Schema contract tests (CAPSTONE_PLAN Part 1 — Step 1): a valid record passes; a missing
 required `title` fails; a bad enum fails; nulls are allowed where specified.
 Also: every golden expected record validates against the Finding model.
 """
