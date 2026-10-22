@@ -10,6 +10,26 @@ This is the measurement baseline for extraction quality. Each entry is a **pair*
 The evaluation harness runs each model on `NN_input` and scores its output
 against `NN_expected`.
 
+## What the golden set is FOR (plain-language)
+
+The golden set is a **measuring instrument, not training data and not product
+output.** The models are never fine-tuned on it — it is used purely to *evaluate*.
+
+Its one job: tell you **which model + prompt + sampling config to trust** on the
+real, unlabeled data (`data/raw/`, run via `--corpus`). You label 10
+representative hard cases once, score every model/config against them, and the
+winner is the config you then apply to the 28 corpus texts (and all future
+files) — which you never have to label, because the golden set already proved
+which config is reliable.
+
+Think of it as a taste test with 10 dishes where you already know the correct
+recipe: you're not teaching the chefs, you're deciding which chef to hire. The
+hire then cooks everything else.
+
+Consequence: the answer is only as good as the golden set is *representative*.
+10 examples covering the hard cases give a **directional** answer, not a
+statistically tight one. Grow the golden set as new edge cases appear.
+
 ## How scoring works (important — see CAPSTONE_PLAN D2)
 
 A text can contain several findings; the model may return a different count or

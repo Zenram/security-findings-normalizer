@@ -9,7 +9,7 @@ make test          # or: python3 -m pytest -q
 
 All tests are **offline** — no network, no API key, no running Ollama. The
 pipeline test uses a fake in-memory model adapter, so the suite is deterministic
-and fast (~0.1s). 31 tests total.
+and fast (~0.1s). 35 tests total.
 
 ## Files
 
