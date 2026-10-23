@@ -11,10 +11,10 @@ google-genai==1.14.0
 
 # Local model: Ollama HTTP client (we call the REST API via requests;
 # requests is also handy for timeouts/retries we control ourselves)
-requests==2.32.3
+requests==2.33.0
 
 # .env loading (keeps GEMINI_API_KEY out of source)
-python-dotenv==1.0.1
+python-dotenv==1.2.2
 
 # Tests
-pytest==8.3.3
+pytest==9.0.3
