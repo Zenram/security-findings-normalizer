@@ -4,6 +4,23 @@ Generated from a full live run on **2026-10-22** (`results/metrics.json`). Every
 number below is measured — no values are fabricated. Reproduce with
 `python3 main.py`; per-document outputs are in `results/raw/`.
 
+> **Bottom line:** Production choice is **`gemini-3.5-flash`, prompt `v1`,
+> deterministic sampling** — 100% valid JSON, 0% hallucination, highest recall
+> (52%), injection pass, ~$8 per 1000 docs. The structured **Ox ASPM source uses
+> no model at all** (deterministic parser: fastest, free, exact). Switch to the
+> local `qwen3:8b` only if privacy rules forbid the cloud API — but first fix its
+> recall (it collapses multi-finding docs to one finding). Full rationale in §7.
+
+## Contents
+
+1. [Setup](#1-setup)
+2. [Routing — where the LLM is actually needed (D1)](#2-routing--where-the-llm-is-actually-needed-d1)
+3. [Comparison table (model × prompt version × sampling)](#3-comparison-table-model--prompt-version--sampling)
+4. [Prompt v1 → v2 effect (one-axis change)](#4-prompt-v1--v2-effect-one-axis-change)
+5. [Error analysis (5 real failures/patterns)](#5-error-analysis-5-real-failurespatterns-from-resultsraw)
+6. [Corpus processing](#6-corpus-processing-step-1-run-all-texts--30-text-volume)
+7. [Final choice](#7-final-choice)
+
 ## 1. Setup
 
 - **Corpus:** 10-entry golden set (`data/golden/`), 23 labeled findings total,
@@ -130,11 +147,10 @@ validation on this entry).
 
 ## 6. Corpus processing (Step 1 "run all texts" — 30-text volume)
 
-The 10-entry golden set is the **measurement** subset (scored above). The 10
-golden texts count toward the 30-text minimum — the task is "30 texts, **of which
-10** are the golden set", so the 30 = ~20 unlabeled + 10 golden. We process
-**38 texts total: 28 unlabeled corpus + 10 golden**, which clears the 30-text
-minimum with margin.
+The 10-entry golden set is the **measurement** subset (scored above). The task
+is "30 texts, **of which 10** are the golden set", so the golden texts count
+toward the minimum. We process **38 texts total: 28 unlabeled corpus + 10
+golden**, which clears the 30-text minimum with margin.
 
 `python3 main.py --corpus` processes the whole in-scope raw corpus through the
 same pipeline + routing and saves outputs to `results/corpus/` — these texts are

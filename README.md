@@ -1,8 +1,7 @@
 # Security Findings Normalizer
 
 Part 1 (Extraction) of a 4-part AI Engineering capstone. Turns "dirty" security
-texts
-(team reports, CNAPP/ASPM alert exports, open-source scanner output) into
+texts (team reports, CNAPP/ASPM alert exports, open-source scanner output) into
 valid structured JSON against one canonical schema, and proves — with numbers —
 which model and prompt to pick for production.
 
@@ -11,6 +10,20 @@ which model and prompt to pick for production.
 > measured run are in place. See `REPORT.md` for results. The schema under
 > `schema/` is the frozen Part 1 contract. ("Part" = one of the 4 big project
 > steps: Extraction → RAG → Agent → Service.)
+
+## Quickstart
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env            # set GEMINI_API_KEY to run the provider model
+make test                       # offline test suite — no key or network needed
+python3 main.py                 # full measured comparison run (needs a model)
+```
+
+**Prerequisites:** Python 3.11+ (tested on 3.14). A `GEMINI_API_KEY` is needed
+only for the cloud model; the local model instead needs Ollama (`ollama serve`
++ `ollama pull qwen3:8b`). The test suite needs neither.
 
 ## What it does
 
@@ -32,7 +45,9 @@ which model and prompt to pick for production.
 - **Provider (cloud):** Google Gemini — default `gemini-3.5-flash` (set in
   `.env`; `gemini-2.5-flash` is retired for new users). Needs `GEMINI_API_KEY`
   and billing enabled (the free tier's ~5 req/min cap is too low for a full run).
-  Full-run cost is a fraction of a US cent (~$8 per **1000** docs).
+  Full-run cost is a fraction of a US cent (~$8 per **1000** docs). For key-free
+  local testing you can set `GEMINI_MODEL=gemma-4-26b-a4b-it` (separate free
+  quota bucket).
 - **Local:** Ollama `qwen3:8b` — no key, runs on the laptop. Needs `ollama serve`
   running and the model pulled. (Reasoning model; the adapter sends `think=false`
   so it returns the JSON answer fast, ~7s/doc.)
@@ -57,26 +72,29 @@ code reads `GEMINI_API_KEY` from your environment or from `.env`.
 
 ```bash
 python3 main.py                         # full grid: {gemini,ollama} x {v1,v2} x {deterministic,sampled}
-python3 main.py --models gemini         # provider only
-python3 main.py --models ollama         # local only
-python3 main.py --prompts v1            # one prompt version
-python3 main.py --sampling deterministic  # one sampling config
-python3 main.py --corpus                # ALSO process the full raw corpus (~30 texts)
-python3 main.py --corpus-only           # ONLY process the raw corpus (skip the golden grid)
 make run                                # equivalent wrapper
 ```
 
+### CLI flags
+
+| Flag | Effect |
+|---|---|
+| `--models gemini` / `--models ollama` | Run only the provider, or only the local model. |
+| `--prompts v1` | Run a single prompt version (default: both). |
+| `--sampling deterministic` | Run a single sampling config (default: both). |
+| `--corpus` | ALSO process the full unlabeled raw corpus (~28 texts) after the golden grid. |
+| `--corpus-only` | ONLY process the raw corpus (skip the golden grid). |
+
 By default the run processes the **10 golden** texts (the labeled set used for
-all quality metrics). To also process the wider **unlabeled corpus** (team
-reports + LinPEAS + Ox ASPM in `data/raw/`, **28 corpus texts → 38 total with the
-golden set**), add `--corpus`. Corpus texts are **processed and saved, not
+all quality metrics). Add `--corpus` to also process the wider **unlabeled
+corpus** (team reports + LinPEAS + Ox ASPM in `data/raw/`) — **28 corpus texts,
+for 38 total with the golden set**. Corpus texts are **processed and saved, not
 scored** (no answer key) — outputs go to `results/corpus/` and a
 `results/corpus_summary.json` (valid %, latency, cost, routing). This satisfies
 Step 1's "run all texts" while keeping accuracy measured only on the golden set.
 See REPORT.md §6.
 
-Runs extraction across every model × prompt version × sampling config over the
-golden set, writes per-document outputs to `results/raw/`, aggregated metrics to
+Each run writes per-document outputs to `results/raw/`, aggregated metrics to
 `results/metrics.json`, and a report feed to `results/REPORT_DATA.json`. The
 comparison write-up is in `REPORT.md`. A model that is unreachable (no key /
 Ollama down) produces clearly-marked `failed` rows — never fabricated numbers.
