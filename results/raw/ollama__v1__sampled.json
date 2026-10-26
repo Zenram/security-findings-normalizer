@@ -34,7 +34,7 @@
         ],
         "team": null,
         "evidence": "The command-injection pattern is in a helper that opens a workflow URL. That URL comes from an internal service response, not direct user text; the process launch still has a shell-enabled branch. Validate the scheme and use an explicit argument list.",
-        "extraction_notes": "Inferred from the discussion about the command-injection pattern in the helper function."
+        "extraction_notes": "The finding is inferred from the discussion about the command-injection pattern in the helper."
       }
     ],
     "repaired": false,
@@ -43,9 +43,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 9.253847624990158,
+    "latency_seconds": 9.097084083943628,
     "input_tokens": 1382,
-    "output_tokens": 192
+    "output_tokens": 193
   },
   {
     "model": "ollama",
@@ -65,7 +65,7 @@
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Command Injection Vulnerability",
+        "title": "Command Injection Vulnerability via Python subprocess Calls",
         "description": "High-only scan found four alerts across two code repos, zero Critical. All are command-injection patterns from Python subprocess calls that invoke bash -c. There are three affected files; two alerts come from separate call sites in one file.",
         "finding_type": "command_injection",
         "severity": "high",
@@ -97,7 +97,7 @@
         ],
         "team": null,
         "evidence": "High-only scan found four alerts across two code repos, zero Critical. All are command-injection patterns from Python subprocess calls that invoke bash -c. There are three affected files; two alerts come from separate call sites in one file.",
-        "extraction_notes": "Multiple affected assets are recorded as separate entries in affected_assets. The findings are categorized as command_injection based on the description of Python subprocess calls invoking bash -c."
+        "extraction_notes": "Multiple affected assets reported but grouped under the same finding type. Note that the document mentions two call sites in repo A and two in repo B, all the same broad shell-injection pattern."
       }
     ],
     "repaired": false,
@@ -105,9 +105,9 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 11.579175791935995,
+    "latency_seconds": 12.670864333980717,
     "input_tokens": 1409,
-    "output_tokens": 244
+    "output_tokens": 253
   },
   {
     "model": "ollama",
@@ -138,13 +138,13 @@
         "affected_assets": [
           {
             "asset": null,
-            "repository": "unknown",
+            "repository": null,
             "environment": null
           }
         ],
         "team": null,
         "evidence": null,
-        "extraction_notes": "Identified from the context of governance issues mentioned in the document."
+        "extraction_notes": "Identified from the mention of 'stale repos' in the governance category."
       }
     ],
     "repaired": false,
@@ -153,9 +153,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 5.327930083032697,
+    "latency_seconds": 5.042074833065271,
     "input_tokens": 1413,
-    "output_tokens": 94
+    "output_tokens": 97
   },
   {
     "model": "ollama",
@@ -174,33 +174,25 @@
       {
         "source": "aspm",
         "source_record_id": null,
-        "raw_reference": "unknown",
-        "title": "Potential CVE overlap",
+        "raw_reference": null,
+        "title": "Vulnerable Base Image",
         "description": null,
-        "finding_type": "other",
+        "finding_type": "vulnerable_base_image",
         "severity": "unknown",
         "severity_raw": null,
         "status": "unknown",
         "status_raw": null,
-        "cve_ids": [
-          "CVE-2026-23111",
-          "CVE-2026-27456",
-          "CVE-2026-31431",
-          "CVE-2026-43284",
-          "CVE-2026-43500",
-          "CVE-2026-53612",
-          "CVE-2026-53614"
-        ],
+        "cve_ids": [],
         "affected_assets": [
           {
             "asset": null,
-            "repository": null,
+            "repository": "data_image_ubuntu_1",
             "environment": null
           }
         ],
         "team": null,
-        "evidence": null,
-        "extraction_notes": "CVE references alone do not prove the image is vulnerable; scanner package-status details remain below."
+        "evidence": "Base image: Ubuntu 24.04",
+        "extraction_notes": "Inferred from base image reference."
       }
     ],
     "repaired": false,
@@ -209,9 +201,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 9.688953749951907,
+    "latency_seconds": 5.763689332990907,
     "input_tokens": 1711,
-    "output_tokens": 186
+    "output_tokens": 103
   },
   {
     "model": "ollama",
@@ -230,9 +222,9 @@
       {
         "source": "aspm",
         "source_record_id": null,
-        "raw_reference": null,
+        "raw_reference": "source document text",
         "title": "DiagSpill SCTP kernel exposure (CVE-2026-74469)",
-        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in) Local exploitation needs no capability or unprivileged user namespace; verify vendor backports Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
+        "description": "Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in). Local exploitation needs no capability or unprivileged user namespace; verify vendor backports. Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
         "finding_type": "kernel_vulnerability",
         "severity": "unknown",
         "severity_raw": null,
@@ -249,8 +241,8 @@
           }
         ],
         "team": "Data",
-        "evidence": "DiagSpill SCTP kernel exposure (CVE-2026-74469) Potentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in) Local exploitation needs no capability or unprivileged user namespace; verify vendor backports Mitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
-        "extraction_notes": "Inferred team from data_app_2 reference."
+        "evidence": "DiagSpill SCTP kernel exposure (CVE-2026-74469)\nPotentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)\nLocal exploitation needs no capability or unprivileged user namespace; verify vendor backports\nMitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
+        "extraction_notes": "Inferred team from data_app_2 -> Data"
       }
     ],
     "repaired": false,
@@ -259,9 +251,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 14.056726167094894,
+    "latency_seconds": 13.891912332968786,
     "input_tokens": 1719,
-    "output_tokens": 283
+    "output_tokens": 289
   },
   {
     "model": "parser",
@@ -398,16 +390,16 @@
           }
         ],
         "team": null,
-        "evidence": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
-        "extraction_notes": "Multiple findings across Dockerfiles, but each Dockerfile is treated as a separate finding."
+        "evidence": null,
+        "extraction_notes": null
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 6.983800124959089,
+    "latency_seconds": 5.419111707946286,
     "input_tokens": 1640,
-    "output_tokens": 130
+    "output_tokens": 99
   },
   {
     "model": "ollama",
@@ -446,15 +438,15 @@
         ],
         "team": null,
         "evidence": null,
-        "extraction_notes": null
+        "extraction_notes": "ASPM record for data_app_2 with CVE-2026-43284."
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 6.922940624994226,
+    "latency_seconds": 7.627109125023708,
     "input_tokens": 1309,
-    "output_tokens": 142
+    "output_tokens": 163
   },
   {
     "model": "ollama",
@@ -471,10 +463,10 @@
     "status": "ok",
     "findings": [
       {
-        "source": "team_report",
+        "source": "unknown",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "SQL injection in reporting export endpoint",
+        "title": "SQL Injection in Reporting Export Endpoint",
         "description": "user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2",
         "finding_type": "sql_injection",
         "severity": "high",
@@ -491,14 +483,14 @@
         ],
         "team": "Billing",
         "evidence": "SQL injection in the reporting export endpoint \u2014 user-supplied `sort` parameter is concatenated into a raw query in repo billing_app_2",
-        "extraction_notes": "The injected lines in the source document are ignored as per the security boundary rule."
+        "extraction_notes": "Inferred team from 'billing_app_2'"
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 7.111989959026687,
+    "latency_seconds": 6.4187127919867635,
     "input_tokens": 1273,
-    "output_tokens": 146
+    "output_tokens": 139
   }
 ]

@@ -103,7 +103,7 @@ class RunConfig:
     """
 
     models: list[str] = field(default_factory=lambda: [MODEL_GEMINI, MODEL_OLLAMA])
-    prompt_versions: list[str] = field(default_factory=lambda: ["v1", "v2"])
+    prompt_versions: list[str] = field(default_factory=lambda: ["v1", "v2", "v3"])
     sampling_configs: list[str] = field(
         default_factory=lambda: ["deterministic", "sampled"]
     )

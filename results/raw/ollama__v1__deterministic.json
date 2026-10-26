@@ -43,7 +43,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 13.826595209073275,
+    "latency_seconds": 13.899417957989499,
     "input_tokens": 1382,
     "output_tokens": 194
   },
@@ -100,7 +100,7 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 11.33656283293385,
+    "latency_seconds": 10.705752416979522,
     "input_tokens": 1409,
     "output_tokens": 232
   },
@@ -148,7 +148,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 5.132428082986735,
+    "latency_seconds": 4.827666917000897,
     "input_tokens": 1413,
     "output_tokens": 97
   },
@@ -196,7 +196,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 6.1656107909511775,
+    "latency_seconds": 5.820702166995034,
     "input_tokens": 1711,
     "output_tokens": 105
   },
@@ -246,7 +246,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 15.500739875016734,
+    "latency_seconds": 14.999427250004373,
     "input_tokens": 1719,
     "output_tokens": 295
   },
@@ -392,7 +392,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 6.455882415990345,
+    "latency_seconds": 6.305168000049889,
     "input_tokens": 1640,
     "output_tokens": 119
   },
@@ -439,7 +439,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 7.313294208026491,
+    "latency_seconds": 6.764610292040743,
     "input_tokens": 1309,
     "output_tokens": 142
   },
@@ -484,7 +484,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 7.4238238339312375,
+    "latency_seconds": 6.92573324998375,
     "input_tokens": 1273,
     "output_tokens": 150
   }

@@ -5,13 +5,13 @@
     "sampling": "deterministic",
     "model_usable": true,
     "pct_valid_json": 1.0,
-    "finding_precision": 0.5,
+    "finding_precision": 0.4444444444444444,
     "finding_recall": 0.5217391304347826,
-    "overall_field_accuracy": 0.7380952380952381,
-    "hallucination_rate": 0.0,
-    "latency_p50": 13.572235833038576,
-    "latency_p95": 23.90520764147513,
-    "cost_per_1000_docs_usd": 7.821375000000001
+    "overall_field_accuracy": 0.7321428571428571,
+    "hallucination_rate": 0.016666666666666666,
+    "latency_p50": 15.695638916513417,
+    "latency_p95": 23.309648679674137,
+    "cost_per_1000_docs_usd": 8.48175
   },
   {
     "model": "gemini",
@@ -19,13 +19,13 @@
     "sampling": "sampled",
     "model_usable": true,
     "pct_valid_json": 1.0,
-    "finding_precision": 0.5,
+    "finding_precision": 0.46153846153846156,
     "finding_recall": 0.5217391304347826,
-    "overall_field_accuracy": 0.7559523809523809,
+    "overall_field_accuracy": 0.7202380952380952,
     "hallucination_rate": 0.0,
-    "latency_p50": 11.48616489599226,
-    "latency_p95": 19.084319170942763,
-    "cost_per_1000_docs_usd": 8.019375
+    "latency_p50": 18.751709979085717,
+    "latency_p95": 30.13094742338289,
+    "cost_per_1000_docs_usd": 8.8125
   },
   {
     "model": "gemini",
@@ -35,11 +35,11 @@
     "pct_valid_json": 1.0,
     "finding_precision": 0.5,
     "finding_recall": 0.5217391304347826,
-    "overall_field_accuracy": 0.7202380952380952,
+    "overall_field_accuracy": 0.7321428571428571,
     "hallucination_rate": 0.0,
-    "latency_p50": 12.87287700001616,
-    "latency_p95": 16.364319325162796,
-    "cost_per_1000_docs_usd": 8.74425
+    "latency_p50": 14.417054979479872,
+    "latency_p95": 19.161169479024828,
+    "cost_per_1000_docs_usd": 8.8005
   },
   {
     "model": "gemini",
@@ -47,13 +47,41 @@
     "sampling": "sampled",
     "model_usable": true,
     "pct_valid_json": 1.0,
-    "finding_precision": 0.5,
+    "finding_precision": 0.4444444444444444,
+    "finding_recall": 0.5217391304347826,
+    "overall_field_accuracy": 0.7321428571428571,
+    "hallucination_rate": 0.0,
+    "latency_p50": 15.99490002100356,
+    "latency_p95": 29.947218193806474,
+    "cost_per_1000_docs_usd": 9.185249999999998
+  },
+  {
+    "model": "gemini",
+    "prompt_version": "v3",
+    "sampling": "deterministic",
+    "model_usable": true,
+    "pct_valid_json": 1.0,
+    "finding_precision": 0.52,
+    "finding_recall": 0.5652173913043478,
+    "overall_field_accuracy": 0.7252747252747253,
+    "hallucination_rate": 0.03076923076923077,
+    "latency_p50": 15.221533333533444,
+    "latency_p95": 22.68960308327805,
+    "cost_per_1000_docs_usd": 10.82325
+  },
+  {
+    "model": "gemini",
+    "prompt_version": "v3",
+    "sampling": "sampled",
+    "model_usable": true,
+    "pct_valid_json": 1.0,
+    "finding_precision": 0.48,
     "finding_recall": 0.5217391304347826,
     "overall_field_accuracy": 0.7380952380952381,
     "hallucination_rate": 0.0,
-    "latency_p50": 12.055888020433486,
-    "latency_p95": 18.068590340955414,
-    "cost_per_1000_docs_usd": 8.891625
+    "latency_p50": 13.340768166526686,
+    "latency_p95": 18.687953339895465,
+    "cost_per_1000_docs_usd": 10.698375
   },
   {
     "model": "ollama",
@@ -65,8 +93,8 @@
     "finding_recall": 0.2608695652173913,
     "overall_field_accuracy": 0.6547619047619048,
     "hallucination_rate": 0.0,
-    "latency_p50": 6.884588312008418,
-    "latency_p95": 14.747374775342175,
+    "latency_p50": 6.534889146045316,
+    "latency_p95": 14.50442306859768,
     "cost_per_1000_docs_usd": null
   },
   {
@@ -77,10 +105,10 @@
     "pct_valid_json": 1.0,
     "finding_precision": 0.6,
     "finding_recall": 0.2608695652173913,
-    "overall_field_accuracy": 0.6547619047619048,
+    "overall_field_accuracy": 0.6428571428571429,
     "hallucination_rate": 0.0,
-    "latency_p50": 7.047895041992888,
-    "latency_p95": 12.941828498273386,
+    "latency_p50": 6.091201062488835,
+    "latency_p95": 13.342440733424153,
     "cost_per_1000_docs_usd": null
   },
   {
@@ -93,8 +121,8 @@
     "finding_recall": 0.2608695652173913,
     "overall_field_accuracy": 0.7023809523809523,
     "hallucination_rate": 0.0,
-    "latency_p50": 7.904470729001332,
-    "latency_p95": 15.276211887778482,
+    "latency_p50": 8.166709791461471,
+    "latency_p95": 14.562315309955737,
     "cost_per_1000_docs_usd": null
   },
   {
@@ -105,10 +133,38 @@
     "pct_valid_json": 1.0,
     "finding_precision": 0.6,
     "finding_recall": 0.2608695652173913,
-    "overall_field_accuracy": 0.6785714285714286,
+    "overall_field_accuracy": 0.7142857142857143,
     "hallucination_rate": 0.0,
-    "latency_p50": 7.160363666480407,
-    "latency_p95": 15.496788685052888,
+    "latency_p50": 7.3633936870028265,
+    "latency_p95": 16.39059600231121,
+    "cost_per_1000_docs_usd": null
+  },
+  {
+    "model": "ollama",
+    "prompt_version": "v3",
+    "sampling": "deterministic",
+    "model_usable": true,
+    "pct_valid_json": 1.0,
+    "finding_precision": 0.6,
+    "finding_recall": 0.2608695652173913,
+    "overall_field_accuracy": 0.7023809523809523,
+    "hallucination_rate": 0.0,
+    "latency_p50": 7.660853624984156,
+    "latency_p95": 14.277163249900331,
+    "cost_per_1000_docs_usd": null
+  },
+  {
+    "model": "ollama",
+    "prompt_version": "v3",
+    "sampling": "sampled",
+    "model_usable": true,
+    "pct_valid_json": 1.0,
+    "finding_precision": 0.6,
+    "finding_recall": 0.2608695652173913,
+    "overall_field_accuracy": 0.7023809523809523,
+    "hallucination_rate": 0.0,
+    "latency_p50": 8.399345729558263,
+    "latency_p95": 12.861557028780222,
     "cost_per_1000_docs_usd": null
   }
 ]

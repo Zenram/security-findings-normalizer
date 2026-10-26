@@ -17,7 +17,7 @@
         "source": "team_report",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Command injection in workflow URL helper",
+        "title": "Command injection vulnerability",
         "description": null,
         "finding_type": "command_injection",
         "severity": "high",
@@ -27,14 +27,14 @@
         "cve_ids": [],
         "affected_assets": [
           {
-            "asset": "workflow URL helper",
+            "asset": "helper function",
             "repository": "unknown",
             "environment": null
           }
         ],
         "team": null,
         "evidence": "The command-injection pattern is in a helper that opens a workflow URL.",
-        "extraction_notes": "team=unknown due to missing app/repo fields; severity=High from analyst note; count=1 of 7 High alerts mentioned; root cause=command injection; evidence from Sam's message."
+        "extraction_notes": "team=Dev inferred from context; severity=High from Alex's note; count=1; missing repo/app fields left as unknown"
       }
     ],
     "repaired": false,
@@ -42,9 +42,9 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 6.968860666034743,
+    "latency_seconds": 6.069424124900252,
     "input_tokens": 1953,
-    "output_tokens": 138
+    "output_tokens": 120
   },
   {
     "model": "ollama",
@@ -86,7 +86,7 @@
         ],
         "team": null,
         "evidence": "High-only scan found four alerts across two code repos, zero Critical. All are command-injection patterns from Python subprocess calls that invoke bash -c.",
-        "extraction_notes": "multiple alerts, same root cause; count kept in notes; team not explicitly mentioned"
+        "extraction_notes": "two call sites in repo A and two in repo B, all the same broad shell-injection pattern; no team inferred"
       }
     ],
     "repaired": false,
@@ -94,9 +94,9 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 7.248434332897887,
+    "latency_seconds": 7.7596601659897715,
     "input_tokens": 1980,
-    "output_tokens": 145
+    "output_tokens": 153
   },
   {
     "model": "ollama",
@@ -127,7 +127,7 @@
         "affected_assets": [],
         "team": "Data",
         "evidence": "Most of the volume is governance: stale repos, no default-branch protection, and no required reviewer. These repeat across the project.",
-        "extraction_notes": "count not specified, but multiple stale repos mentioned; team=Data from context"
+        "extraction_notes": "Count of 7 recurring root-cause groups mentioned; team inferred from context"
       }
     ],
     "repaired": false,
@@ -135,7 +135,7 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 5.756772374967113,
+    "latency_seconds": 5.369941042037681,
     "input_tokens": 1984,
     "output_tokens": 108
   },
@@ -154,12 +154,12 @@
     "status": "ok",
     "findings": [
       {
-        "source": "aspm",
+        "source": "cnapp",
         "source_record_id": null,
         "raw_reference": null,
         "title": "Base image vulnerability",
-        "description": null,
-        "finding_type": "vulnerable_base_image",
+        "description": "Potential CVE overlap: CVE-2026-23111, CVE-2026-27456, CVE-2026-31431, CVE-2026-43284, CVE-2026-43500, CVE-2026-53612, CVE-2026-53614",
+        "finding_type": "other",
         "severity": "unknown",
         "severity_raw": null,
         "status": "unknown",
@@ -191,9 +191,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 14.994570875074714,
+    "latency_seconds": 18.11371445900295,
     "input_tokens": 2282,
-    "output_tokens": 286
+    "output_tokens": 376
   },
   {
     "model": "ollama",
@@ -232,7 +232,7 @@
         ],
         "team": null,
         "evidence": "DiagSpill SCTP kernel exposure (CVE-2026-74469)\nPotentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)\nLocal exploitation needs no capability or unprivileged user namespace; verify vendor backports\nMitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
-        "extraction_notes": "cve_ids from header; kernel_vulnerability type inferred from context; team not explicitly mentioned"
+        "extraction_notes": "CVE-2026-74469 is directly linked to this finding; kernel is affected; no team inferred"
       }
     ],
     "repaired": false,
@@ -241,9 +241,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 15.907694165944122,
+    "latency_seconds": 14.284562333021313,
     "input_tokens": 2290,
-    "output_tokens": 283
+    "output_tokens": 290
   },
   {
     "model": "parser",
@@ -389,17 +389,17 @@
             "environment": null
           }
         ],
-        "team": null,
-        "evidence": "Image user should not be 'root'",
-        "extraction_notes": "Three separate Dockerfile misconfigurations; count kept in notes"
+        "team": "Data",
+        "evidence": "Image user should not be 'root' (Severity: HIGH, Status: FAIL)",
+        "extraction_notes": "multiple Dockerfile misconfigurations; count kept in notes; team inferred from data_app_4"
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 8.721864457940683,
+    "latency_seconds": 11.047779125045054,
     "input_tokens": 2211,
-    "output_tokens": 151
+    "output_tokens": 220
   },
   {
     "model": "ollama",
@@ -417,7 +417,7 @@
     "findings": [
       {
         "source": "aspm",
-        "source_record_id": null,
+        "source_record_id": "issue-7742",
         "raw_reference": null,
         "title": "Vulnerable OS package (CVE-2026-43284) in container base image",
         "description": "ASPM flags CVE-2026-43284 in the base image of data_app_2.",
@@ -436,17 +436,17 @@
             "environment": null
           }
         ],
-        "team": null,
+        "team": "Data",
         "evidence": "ASPM flags CVE-2026-43284 in the base image of data_app_2.",
-        "extraction_notes": "source=aspm; team=Data from data_app_2"
+        "extraction_notes": "team=Data from data_app_2"
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 8.714159665978514,
+    "latency_seconds": 9.486819166922942,
     "input_tokens": 1880,
-    "output_tokens": 174
+    "output_tokens": 203
   },
   {
     "model": "ollama",
@@ -489,7 +489,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 7.072293000062928,
+    "latency_seconds": 6.9671272080158815,
     "input_tokens": 1844,
     "output_tokens": 150
   }
