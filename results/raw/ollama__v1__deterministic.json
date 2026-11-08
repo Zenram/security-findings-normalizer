@@ -43,7 +43,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 13.899417957989499,
+    "latency_seconds": 14.366517749993363,
     "input_tokens": 1382,
     "output_tokens": 194
   },
@@ -100,7 +100,7 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 10.705752416979522,
+    "latency_seconds": 11.24563637500978,
     "input_tokens": 1409,
     "output_tokens": 232
   },
@@ -148,7 +148,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 4.827666917000897,
+    "latency_seconds": 4.990880833007395,
     "input_tokens": 1413,
     "output_tokens": 97
   },
@@ -196,7 +196,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 5.820702166995034,
+    "latency_seconds": 5.879869625001447,
     "input_tokens": 1711,
     "output_tokens": 105
   },
@@ -246,7 +246,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 14.999427250004373,
+    "latency_seconds": 14.475114208005834,
     "input_tokens": 1719,
     "output_tokens": 295
   },
@@ -392,7 +392,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 6.305168000049889,
+    "latency_seconds": 6.309109499998158,
     "input_tokens": 1640,
     "output_tokens": 119
   },
@@ -439,7 +439,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 6.764610292040743,
+    "latency_seconds": 6.765854166005738,
     "input_tokens": 1309,
     "output_tokens": 142
   },
@@ -484,7 +484,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 6.92573324998375,
+    "latency_seconds": 6.919314875005512,
     "input_tokens": 1273,
     "output_tokens": 150
   }
