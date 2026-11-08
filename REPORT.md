@@ -1,23 +1,21 @@
 # REPORT — Model & Prompt Comparison
 
-Generated from a full live run on **2026-10-26**, re-scored after the metrics
-validation audit (§9) on **2026-10-27**. Every number below is measured — no
-values are fabricated. Reproduce with `python3 main.py`; re-score existing raw
-outputs with `python3 main.py --rescore`; per-document outputs are in
-`results/raw/`.
+Generated from a full live run on **2026-11-08** (re-scored with the post-audit
+scorer, §9). Every number below is measured — no values are fabricated.
+Reproduce with `python3 main.py`; re-score existing raw outputs with
+`python3 main.py --rescore`; per-document outputs are in `results/raw/`.
 
-> **Audit note (2026-10-27):** a mentor follow-up audit (§9) found and fixed a
-> **matcher bug** (correct-but-reworded findings were scored as both missed AND
-> spurious, understating recall) and a **route-accounting issue** (the two
-> deterministic parser docs were folded into both models' scores). All tables
-> below reflect the corrected scorer. The earlier numbers in prior commits are
-> superseded.
+> **Audit note:** a mentor follow-up audit (§9) found and fixed a **matcher bug**
+> (correct-but-reworded findings were scored as both missed AND spurious,
+> understating recall) and a **route-accounting issue** (the two deterministic
+> parser docs were folded into both models' scores). All tables below reflect the
+> corrected scorer; the earlier pre-audit numbers in prior commits are superseded.
 
 > **Bottom line:** Production choice is **`gemini-3.5-flash`, prompt `v3`,
 > deterministic sampling** — 100% valid JSON, top recall (**95.2%** on the
 > LLM-path comparison) and precision (**87.0%**), the only config that correctly
 > splits entry 02, injection pass (the embedded attack did not affect the model),
-> ~$11 per 1000 docs. The structured **Ox ASPM source uses no model at all**
+> ~$10.5 per 1000 docs. The structured **Ox ASPM source uses no model at all**
 > (deterministic parser: fastest, free, exact). Switch to the local `qwen3:8b`
 > only if privacy rules forbid the cloud API — but first fix its recall (28.6%;
 > it still collapses multi-finding docs to one finding even with v3). Numbers are
@@ -82,18 +80,18 @@ in USD per 1000 documents.
 
 | Model | Prompt | Sampling | % valid JSON | Finding P | Finding R | Field acc | Hallucination | Latency p50 | Latency p95 | Cost / 1000 docs |
 |---|---|---|---|---|---|---|---|---|---|---|
-| gemini-3.5-flash | v1 | deterministic | 100% | 81.5% | 95.7% | 64.3% | 0.9% | 15.7s | 23.3s | $8.48 |
-| gemini-3.5-flash | v1 | sampled | 100% | 76.9% | 87.0% | 65.0% | 0.0% | 18.8s | 30.1s | $8.81 |
-| gemini-3.5-flash | v2 | deterministic | 100% | 87.5% | 91.3% | 64.3% | 0.0% | 14.4s | 19.2s | $8.80 |
-| gemini-3.5-flash | v2 | sampled | 100% | 81.5% | 95.7% | 64.6% | 0.0% | 16.0s | 29.9s | $9.19 |
-| gemini-3.5-flash | **v3** | deterministic | 100% | **88.0%** | **95.7%** | 64.3% | 1.8% | 15.2s | 22.7s | $10.82 |
-| gemini-3.5-flash | **v3** | sampled | 100% | **88.0%** | **95.7%** | 64.9% | 0.0% | 13.3s | 18.7s | $10.70 |
-| qwen3:8b | v1 | deterministic | 100% | 80.0% | 34.8% | 58.9% | 0.0% | 6.5s | 14.5s | n/a (local) |
-| qwen3:8b | v1 | sampled | 100% | 70.0% | 30.4% | 60.2% | 0.0% | 6.1s | 13.3s | n/a (local) |
-| qwen3:8b | v2 | deterministic | 100% | 80.0% | 34.8% | 65.2% | 0.0% | 8.2s | 14.6s | n/a (local) |
-| qwen3:8b | v2 | sampled | 100% | 80.0% | 34.8% | 67.0% | 0.0% | 7.4s | 16.4s | n/a (local) |
-| qwen3:8b | **v3** | deterministic | 100% | 80.0% | 34.8% | 65.2% | 0.0% | 7.7s | 14.3s | n/a (local) |
-| qwen3:8b | **v3** | sampled | 100% | 80.0% | 34.8% | 65.2% | 0.0% | 8.4s | 12.9s | n/a (local) |
+| gemini-3.5-flash | v1 | deterministic | 100% | 83.3% | 87.0% | 64.6% | 0.0% | 12.1s | 19.2s | $8.37 |
+| gemini-3.5-flash | v1 | sampled | 100% | 80.8% | 91.3% | 64.3% | 0.0% | 14.0s | 19.9s | $8.83 |
+| gemini-3.5-flash | v2 | deterministic | 100% | 83.3% | 87.0% | 65.7% | 0.0% | 10.7s | 15.7s | $8.95 |
+| gemini-3.5-flash | v2 | sampled | 100% | 88.0% | 95.7% | 64.9% | 0.0% | 11.7s | 18.7s | $9.06 |
+| gemini-3.5-flash | **v3** | deterministic | 100% | **88.0%** | **95.7%** | 64.6% | 0.0% | 12.9s | 15.4s | $10.50 |
+| gemini-3.5-flash | v3 | sampled | 100% | 87.5% | 91.3% | 64.3% | 0.0% | 13.0s | 17.8s | $10.31 |
+| qwen3:8b | v1 | deterministic | 100% | 80.0% | 34.8% | 58.9% | 0.0% | 6.5s | 14.4s | n/a (local) |
+| qwen3:8b | v1 | sampled | 100% | 80.0% | 34.8% | 58.9% | 0.0% | 6.6s | 12.0s | n/a (local) |
+| qwen3:8b | v2 | deterministic | 100% | 80.0% | 34.8% | 65.2% | 0.0% | 7.6s | 14.7s | n/a (local) |
+| qwen3:8b | v2 | sampled | 100% | 80.0% | 34.8% | 67.0% | 0.0% | 7.5s | 15.1s | n/a (local) |
+| qwen3:8b | **v3** | deterministic | 100% | 80.0% | 34.8% | 65.2% | 0.0% | 8.1s | 14.9s | n/a (local) |
+| qwen3:8b | **v3** | sampled | 100% | 80.0% | 34.8% | 64.3% | 0.0% | 8.3s | 13.5s | n/a (local) |
 
 **These are over all 10 golden docs (includes the 2 parser-path docs 06/07).**
 For the honest model-vs-model comparison, see the **LLM-path-only** table below
@@ -104,10 +102,11 @@ models and otherwise flatter the local model.
 
 | Model | Prompt | Sampling | Finding P | Finding R | Field acc |
 |---|---|---|---|---|---|
-| gemini-3.5-flash | **v3** | deterministic | **87.0%** | **95.2%** | 62.9% |
-| gemini-3.5-flash | v3 | sampled | 87.0% | 95.2% | 63.6% |
-| gemini-3.5-flash | v2 | deterministic | 86.4% | 90.5% | 62.8% |
-| gemini-3.5-flash | v1 | deterministic | 80.0% | 95.2% | 62.9% |
+| gemini-3.5-flash | **v3** | deterministic | **87.0%** | **95.2%** | 63.2% |
+| gemini-3.5-flash | v2 | sampled | 87.0% | 95.2% | 63.6% |
+| gemini-3.5-flash | v3 | sampled | 86.4% | 90.5% | 62.8% |
+| gemini-3.5-flash | v2 | deterministic | 81.8% | 85.7% | 64.3% |
+| gemini-3.5-flash | v1 | deterministic | 81.8% | 85.7% | 63.1% |
 | qwen3:8b | v3 | deterministic | 75.0% | 28.6% | 60.7% |
 | qwen3:8b | v2 | deterministic | 75.0% | 28.6% | 60.7% |
 | qwen3:8b | v1 | deterministic | 75.0% | 28.6% | 52.4% |
@@ -123,18 +122,18 @@ models and otherwise flatter the local model.
   invent a provider-equivalent price. Compare local on latency + the fact it
   runs on existing hardware at $0 marginal API cost.
 
-**Key reads (corrected after the §9 audit):**
-- **Both models: 100% valid JSON.** Hallucination near-zero throughout (Gemini
-  0.9% on v1/det and 1.8% on v3/det — one–two field instances on a 10-doc set;
-  0% everywhere else; qwen 0% across the board).
+**Key reads (post-audit scorer):**
+- **Both models: 100% valid JSON and 0.0% hallucination** across all 12 cells in
+  this run.
 - **Provider wins on BOTH recall and precision.** On the LLM path (§3a), Gemini
-  v3 reaches **95.2% recall / 87.0% precision** vs qwen **28.6% / 75.0%**. The
-  earlier report understated Gemini badly because of the matcher bug (§9 A1).
-- **qwen's apparent 60% precision was an artifact** of the parser docs (§9 A5):
-  on the LLM path it is 75%, below Gemini's 87%. Its real limit is **recall**
-  (~29%) — the single-finding collapse persists.
-- **Latency:** qwen ~2× faster (p50 6–8s vs 13–19s) at $0 API cost.
-- **Sampling (temp 0 vs 0.7):** small; deterministic is the reproducible default.
+  v3 reaches **95.2% recall / 87.0% precision** vs qwen **28.6% / 75.0%**. (The
+  pre-audit report understated Gemini badly because of the matcher bug — §9 A1.)
+- **qwen's apparent 80% all-docs precision is inflated** by the 2 parser docs
+  (§9 A5): on the LLM path it is 75%, below Gemini's 87%. Its real limit is
+  **recall** (28.6%) — the single-finding collapse persists.
+- **Latency:** qwen ~2× faster (p50 6–8s vs 11–14s) at $0 API cost.
+- **Sampling (temp 0 vs 0.7):** small and a bit noisy run-to-run; deterministic
+  is the reproducible default.
 
 ## 4. Prompt v1 → v2 effect (one-axis change)
 
@@ -157,25 +156,24 @@ two findings, while a header "candidate CVE overlap" list is NOT a finding). The
 v2 rules, schema, injection boundary, and examples A/B are carried over
 unchanged — so any metric delta is attributable to the enumerate procedure alone.
 
-- **Gemini v3 deterministic:** **finding precision up** (v2 86.4% → v3 87.0% on
-  the LLM path; 87.5% → 88.0% over all 10) with recall held at the top (95.2% LLM
-  / 95.7% all). The one concrete per-document change vs v2 is **entry 02**: v2
-  returned 1 merged finding, v3 correctly returns 2 (the repo A / repo B split).
-  Confirmed per-doc (§9 A2): entry 02 is the ONLY document that changed between
-  v2 and v3 for Gemini — the aggregate delta is that single, explainable swing,
-  not noise elsewhere. Cost is ~$10.8/1000 vs ~$8.8 for v2 (larger prompt).
-- **Gemini v3 sampled:** same P/R as deterministic (87.0% / 95.2% LLM) — v3 is
-  stable across sampling, unlike the earlier (mis-scored) read.
-- **qwen3:8b v3:** P/R/field **identical to v2, per-document** (§9 A2 verified it
-  is truly unchanged on every doc, not two offsetting changes). The enumerate
-  step did not break the 8B model's single-finding collapse — it still returns
-  one finding per doc. The procedure was followed (valid JSON, 0 hallucination),
-  but the model's capacity is the limit, not the prompt.
+- **Gemini v3 deterministic:** **finding precision up** (v2 81.8% → v3 87.0% on
+  the LLM path) and recall up (85.7% → 95.2%). Per-document, v3 improves two docs
+  vs v2: **entry 02** (v2 merged the repo A/B command-injection into 1 finding;
+  v3 correctly returns 2) and **entry 01** (v3 matches 3/3 vs v2's 2/3). Both are
+  multi-finding free-text cases the enumerate-then-extract step is designed to
+  help. Cost ~$10.5/1000 vs ~$9 for v2 (larger prompt).
+- **Gemini v3 sampled:** 86.4% P / 90.5% R — slightly below v3 deterministic this
+  run; sampling adds run-to-run variance, so deterministic is the pick.
+- **qwen3:8b v3:** P/R **identical to v2, per-document** (§9 A2 verified it is
+  truly unchanged on every doc). The enumerate step did not break the 8B model's
+  single-finding collapse — it still returns one finding per doc. The procedure
+  was followed (valid JSON, 0 hallucination), but the model's capacity is the
+  limit, not the prompt.
 
-Net: v3 is a **targeted win for Gemini** — it fixes the entry-02 split (the one
-case v1/v2 could not) and is the top config on the LLM-path comparison. It had no
-effect on qwen. The larger prompt costs ~25% more tokens; the precision gain and
-the fixed split justify it for the provider.
+Net: v3 is a **targeted win for Gemini** — it fixes the multi-finding under-split
+cases (entries 01, 02) that v1/v2 missed and is the top config on the LLM-path
+comparison. It had no effect on qwen. The larger prompt costs ~20% more tokens;
+the precision/recall gain justifies it for the provider.
 
 ## 6. Error analysis (5 real failures/patterns, from `results/raw/`)
 
@@ -265,12 +263,13 @@ deterministic output is more reproducible. For the structured ASPM source, **no
 model is used at all**
 — the deterministic parser is the production path (fastest, free, exact).
 
-The 1.8% hallucination on v3/deterministic (one–two field instances across 10
-docs) is noise, not a systematic pattern — most Gemini cells show 0%. Note this
-is a **field-level** metric over matched findings; wholly fabricated findings are
-caught by precision / the `spurious` count instead (see §9 A4). On a larger
-sample this would either wash out or be addressable with a post-extraction
-validation step.
+Hallucination_rate was 0.0% for the chosen config this run, yet it still emitted
+**3 spurious findings** (whole findings with no golden match — e.g. an invented
+"API spec missing global security declaration" on entry 03). This is the point of
+§9 A4: `hallucination_rate` is a **field-level** metric over matched findings;
+wholly fabricated findings are caught by precision / the `spurious` count instead.
+Read the two together. On a larger sample the spurious rate would be the signal
+to watch, addressable with a post-extraction grounding/validation step.
 
 **I would switch to the local model (`qwen3:8b`) if:** data residency / privacy
 rules forbid sending findings to a third-party API, or latency/cost at scale
@@ -328,9 +327,10 @@ the answer — the golden set still tests the model honestly.
 **A4 — hallucination_rate is field-level only (documented).** `hallucination_rate`
 counts invented *fields* over *matched* pairs; a **wholly fabricated finding** has
 no match → it is captured by **finding-level precision / the `spurious` count**,
-not by hallucination_rate. Example: gemini/v3/det has 1.8% field hallucination
-but 3 spurious findings (e.g. an invented "API spec without a global security
-declaration" on entry 03). **The two metrics must be read together** — precision
+not by hallucination_rate. Example: gemini/v3/det this run has **0% field
+hallucination but still 3 spurious findings** (e.g. an invented "API spec missing
+global security declaration" on entry 03) — concrete proof the two are
+independent. **The two metrics must be read together** — precision/`spurious`
 for "did it invent whole findings", hallucination_rate for "did it invent fields
 in real ones". The `spurious` count is in `results/metrics.json` per cell.
 

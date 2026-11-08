@@ -42,7 +42,7 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 14.018798458040692,
+    "latency_seconds": 14.09393266600091,
     "input_tokens": 2966,
     "output_tokens": 192
   },
@@ -94,7 +94,7 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 9.550791791989468,
+    "latency_seconds": 9.51070174999768,
     "input_tokens": 2993,
     "output_tokens": 194
   },
@@ -135,7 +135,7 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 4.710522625013255,
+    "latency_seconds": 4.629031041986309,
     "input_tokens": 2997,
     "output_tokens": 87
   },
@@ -183,7 +183,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 6.564961416996084,
+    "latency_seconds": 6.6173998749873135,
     "input_tokens": 3295,
     "output_tokens": 115
   },
@@ -233,7 +233,7 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 14.488552625058219,
+    "latency_seconds": 15.51107220799895,
     "input_tokens": 3303,
     "output_tokens": 288
   },
@@ -389,7 +389,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 7.798718499951065,
+    "latency_seconds": 8.139249625004595,
     "input_tokens": 3224,
     "output_tokens": 146
   },
@@ -436,7 +436,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 10.912055915920064,
+    "latency_seconds": 11.132026208011666,
     "input_tokens": 2893,
     "output_tokens": 229
   },
@@ -481,7 +481,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 7.522988750017248,
+    "latency_seconds": 8.029834124987246,
     "input_tokens": 2857,
     "output_tokens": 158
   }

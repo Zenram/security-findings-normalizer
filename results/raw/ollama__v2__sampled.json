@@ -34,7 +34,7 @@
         ],
         "team": null,
         "evidence": "The command-injection pattern is in a helper that opens a workflow URL.",
-        "extraction_notes": "team=Dev inferred from context; severity=High from Alex's note; count=1; missing repo/app fields left as unknown"
+        "extraction_notes": "team=Dev inferred from context; severity=High from Alex's note; count=1; source=team_report; affected_asset=helper function; finding_type=command_injection; missing repo/app fields left as unknown"
       }
     ],
     "repaired": false,
@@ -42,9 +42,9 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 6.069424124900252,
+    "latency_seconds": 7.033920291985851,
     "input_tokens": 1953,
-    "output_tokens": 120
+    "output_tokens": 138
   },
   {
     "model": "ollama",
@@ -94,7 +94,7 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 7.7596601659897715,
+    "latency_seconds": 7.5835301670013,
     "input_tokens": 1980,
     "output_tokens": 153
   },
@@ -127,7 +127,7 @@
         "affected_assets": [],
         "team": "Data",
         "evidence": "Most of the volume is governance: stale repos, no default-branch protection, and no required reviewer. These repeat across the project.",
-        "extraction_notes": "Count of 7 recurring root-cause groups mentioned; team inferred from context"
+        "extraction_notes": "count=7 recurring root-cause groups; team=Data from context"
       }
     ],
     "repaired": false,
@@ -135,9 +135,9 @@
     "normalization_flags": [
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 5.369941042037681,
+    "latency_seconds": 5.460018999991007,
     "input_tokens": 1984,
-    "output_tokens": 108
+    "output_tokens": 107
   },
   {
     "model": "ollama",
@@ -154,11 +154,11 @@
     "status": "ok",
     "findings": [
       {
-        "source": "cnapp",
+        "source": "aspm",
         "source_record_id": null,
         "raw_reference": null,
-        "title": "Base image vulnerability",
-        "description": "Potential CVE overlap: CVE-2026-23111, CVE-2026-27456, CVE-2026-31431, CVE-2026-43284, CVE-2026-43500, CVE-2026-53612, CVE-2026-53614",
+        "title": "Base image Ubuntu 24.04 potential CVE overlap",
+        "description": null,
         "finding_type": "other",
         "severity": "unknown",
         "severity_raw": null,
@@ -182,7 +182,7 @@
         ],
         "team": null,
         "evidence": "Potential CVE overlap: CVE-2026-23111, CVE-2026-27456, CVE-2026-31431, CVE-2026-43284, CVE-2026-43500, CVE-2026-53612, CVE-2026-53614",
-        "extraction_notes": "CVE references alone do not prove the image is vulnerable; scanner package-status details remain below"
+        "extraction_notes": "CVE references alone do not prove the image is vulnerable; scanner package-status details remain below."
       }
     ],
     "repaired": false,
@@ -191,9 +191,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 18.11371445900295,
+    "latency_seconds": 15.372531333006918,
     "input_tokens": 2282,
-    "output_tokens": 376
+    "output_tokens": 293
   },
   {
     "model": "ollama",
@@ -232,7 +232,7 @@
         ],
         "team": null,
         "evidence": "DiagSpill SCTP kernel exposure (CVE-2026-74469)\nPotentially vulnerable kernel 7.0.12-linuxkit with SCTP diagnostics reachable (sctp: loaded; sctp_diag: built-in)\nLocal exploitation needs no capability or unprivileged user namespace; verify vendor backports\nMitigation: update the kernel, or hard-disable both sctp and sctp_diag if SCTP is unused",
-        "extraction_notes": "CVE-2026-74469 is directly linked to this finding; kernel is affected; no team inferred"
+        "extraction_notes": "CVE-2026-74469 is directly associated with this finding; kernel_vulnerability is the closest category."
       }
     ],
     "repaired": false,
@@ -241,9 +241,9 @@
       "severity: no severity wording in source -> unknown",
       "status: no status wording in source -> unknown"
     ],
-    "latency_seconds": 14.284562333021313,
+    "latency_seconds": 14.6859824580024,
     "input_tokens": 2290,
-    "output_tokens": 290
+    "output_tokens": 292
   },
   {
     "model": "parser",
@@ -391,15 +391,15 @@
         ],
         "team": "Data",
         "evidence": "Image user should not be 'root' (Severity: HIGH, Status: FAIL)",
-        "extraction_notes": "multiple Dockerfile misconfigurations; count kept in notes; team inferred from data_app_4"
+        "extraction_notes": "Multiple Dockerfile misconfigurations across three Dockerfiles; team inferred from data_app_4"
       }
     ],
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 11.047779125045054,
+    "latency_seconds": 10.955928874987876,
     "input_tokens": 2211,
-    "output_tokens": 220
+    "output_tokens": 219
   },
   {
     "model": "ollama",
@@ -431,7 +431,7 @@
         ],
         "affected_assets": [
           {
-            "asset": null,
+            "asset": "base image",
             "repository": "data_app_2",
             "environment": null
           }
@@ -444,9 +444,9 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 9.486819166922942,
+    "latency_seconds": 10.462251666001976,
     "input_tokens": 1880,
-    "output_tokens": 203
+    "output_tokens": 205
   },
   {
     "model": "ollama",
@@ -489,7 +489,7 @@
     "repaired": false,
     "error": null,
     "normalization_flags": [],
-    "latency_seconds": 6.9671272080158815,
+    "latency_seconds": 7.395022625016281,
     "input_tokens": 1844,
     "output_tokens": 150
   }
