@@ -87,6 +87,8 @@ def run(config: RunConfig | None = None, results_dir: Path | None = None) -> dic
 
                 metrics = RunMetrics(model=model_id, prompt_version=prompt_version,
                                      sampling_name=sampling_name)
+                metrics_llm = RunMetrics(model=model_id, prompt_version=prompt_version,
+                                         sampling_name=sampling_name)
                 per_doc_results: list[dict] = []
 
                 # Proactive pacing for the provider model to respect free-tier RPM.
@@ -146,6 +148,11 @@ def run(config: RunConfig | None = None, results_dir: Path | None = None) -> dic
 
                     per_doc_results.append(result)
                     evaluate_result(metrics, result, entry.expected)
+                    # A5: the headline model comparison must exclude parser-path
+                    # docs (their findings are deterministic and identical for
+                    # both models — folding them in flatters/flattens the compare).
+                    if result.get("route") != "parser":
+                        evaluate_result(metrics_llm, result, entry.expected)
 
                 # persist per-document raw results for this grid cell
                 (raw_dir / f"{cell}.json").write_text(
@@ -156,6 +163,8 @@ def run(config: RunConfig | None = None, results_dir: Path | None = None) -> dic
                 mdict["cost"] = cost_summary(model_id, mdict)
                 mdict["model_usable"] = model_usable
                 mdict["skip_reason"] = reason
+                # A5: LLM-path-only metrics = the honest model-vs-model comparison.
+                mdict["llm_path_only"] = metrics_llm.to_dict()
                 all_metrics.append(mdict)
 
     payload = {"generated_at": _utc_now(), "grid": all_metrics}
@@ -169,6 +178,7 @@ def _write_report_data(results_dir: Path, payload: dict) -> None:
     """Compact feed for REPORT.md (Stage 4). Only real cells with data."""
     rows = []
     for m in payload["grid"]:
+        llm = m.get("llm_path_only", {})
         rows.append({
             "model": m["model"],
             "prompt_version": m["prompt_version"],
@@ -182,6 +192,11 @@ def _write_report_data(results_dir: Path, payload: dict) -> None:
             "latency_p50": m["latency_p50"],
             "latency_p95": m["latency_p95"],
             "cost_per_1000_docs_usd": m["cost"].get("cost_per_1000_docs_usd"),
+            # A5: LLM-path-only (headline model comparison, excludes parser docs)
+            "llm_finding_precision": llm.get("finding_precision"),
+            "llm_finding_recall": llm.get("finding_recall"),
+            "llm_overall_field_accuracy": llm.get("overall_field_accuracy"),
+            "llm_documents": llm.get("documents"),
         })
     (results_dir / "REPORT_DATA.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
 
@@ -197,7 +212,7 @@ def _fmt(v, pct=False):
 
 
 def _print_summary(all_metrics: list[dict]) -> None:
-    print("\n================ SUMMARY ================")
+    print("\n================ SUMMARY (all 10 golden docs) ================")
     header = f"{'cell':38} {'valid':>7} {'P':>6} {'R':>6} {'field':>7} {'halluc':>7} {'p50':>7} {'p95':>7}"
     print(header)
     print("-" * len(header))
@@ -211,9 +226,69 @@ def _print_summary(all_metrics: list[dict]) -> None:
               f"{_fmt(m['hallucination_rate'], pct=True):>7} "
               f"{_fmt(m['latency_p50']):>7} "
               f"{_fmt(m['latency_p95']):>7}")
+    print("\n===== LLM-PATH ONLY (model comparison — excludes parser docs 06/07) =====")
+    print(f"{'cell':38} {'P':>6} {'R':>6} {'field':>7} {'docs':>5}")
+    print("-" * 65)
+    for m in all_metrics:
+        llm = m.get("llm_path_only", {})
+        cell = f"{m['model']}/{m['prompt_version']}/{m['sampling']}"
+        print(f"{cell:38} "
+              f"{_fmt(llm.get('finding_precision'), pct=True):>6} "
+              f"{_fmt(llm.get('finding_recall'), pct=True):>6} "
+              f"{_fmt(llm.get('overall_field_accuracy'), pct=True):>7} "
+              f"{str(llm.get('documents','')):>5}")
     print("=========================================")
     print("Full metrics: results/metrics.json | per-doc: results/raw/ | "
           "report feed: results/REPORT_DATA.json")
+
+
+def rescore(results_dir: Path | None = None) -> dict:
+    """Recompute metrics from existing results/raw/*.json WITHOUT calling models.
+
+    Use after changing the scorer (e.g. matcher weights) or to apply route-split
+    metrics to an existing run. Reads the golden set for expected findings and
+    the per-doc raw outputs; rewrites metrics.json + REPORT_DATA.json.
+    """
+    from src.golden import load_golden_set
+
+    results_dir = results_dir or RESULTS_DIR
+    raw_dir = results_dir / "raw"
+    golden = {e.entry_id: e for e in load_golden_set()}
+
+    all_metrics: list[dict] = []
+    for raw_file in sorted(raw_dir.glob("*.json")):
+        cell = raw_file.stem
+        try:
+            model_id, prompt_version, sampling_name = cell.split("__")
+        except ValueError:
+            continue  # skip non-cell files
+        per_doc = json.loads(raw_file.read_text(encoding="utf-8"))
+        metrics = RunMetrics(model=model_id, prompt_version=prompt_version,
+                             sampling_name=sampling_name)
+        metrics_llm = RunMetrics(model=model_id, prompt_version=prompt_version,
+                                 sampling_name=sampling_name)
+        for result in per_doc:
+            eid = result.get("source_id")
+            if eid not in golden:
+                continue
+            evaluate_result(metrics, result, golden[eid].expected)
+            if result.get("route") != "parser":
+                evaluate_result(metrics_llm, result, golden[eid].expected)
+
+        mdict = metrics.to_dict()
+        mdict["cost"] = cost_summary(model_id, mdict)
+        mdict["model_usable"] = True
+        mdict["skip_reason"] = None
+        mdict["llm_path_only"] = metrics_llm.to_dict()
+        all_metrics.append(mdict)
+        print(f"rescored {cell}: all R={_fmt(mdict['finding_recall'], pct=True)} "
+              f"| LLM-path R={_fmt(mdict['llm_path_only']['finding_recall'], pct=True)}")
+
+    payload = {"generated_at": _utc_now(), "rescored": True, "grid": all_metrics}
+    (results_dir / "metrics.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    _write_report_data(results_dir, payload)
+    _print_summary(all_metrics)
+    return payload
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
@@ -231,6 +306,9 @@ def build_arg_parser() -> argparse.ArgumentParser:
                         "Uses the production config (first model/prompt/sampling).")
     p.add_argument("--corpus-only", action="store_true",
                    help="Process ONLY the raw corpus (skip the golden grid).")
+    p.add_argument("--rescore", action="store_true",
+                   help="Recompute metrics from existing results/raw/*.json "
+                        "without calling any model (applies scorer/route changes).")
     return p
 
 
@@ -385,6 +463,10 @@ def main(argv: list[str] | None = None) -> int:
         config.prompt_versions = args.prompts
     if args.sampling:
         config.sampling_configs = args.sampling
+
+    if args.rescore:
+        rescore()
+        return 0
 
     if args.corpus_only:
         run_corpus(config)

@@ -147,3 +147,45 @@ def test_evaluate_result_aggregates_metrics():
     assert d["finding_recall"] == 1.0
     assert d["latency_p50"] == 0.5
     assert d["overall_field_accuracy"] is not None
+
+
+# --- A1 regression: reworded same-finding must match (not missed+spurious) ----
+
+def test_reworded_same_finding_matches():
+    """Audit A1: a correct-but-reworded free-text finding (same finding_type,
+    similar title, no CVE/stable-id, no shared asset token) must MATCH, not be
+    double-counted as one missed + one spurious."""
+    from src.evaluate import match_findings
+
+    expected = [{
+        "title": "Stale repositories across the project",
+        "finding_type": "stale_repository",
+        "cve_ids": [], "affected_assets": [],
+    }]
+    predicted = [{
+        "title": "Stale repositories",
+        "finding_type": "stale_repository",
+        "cve_ids": [], "affected_assets": [],
+    }]
+    mr = match_findings(predicted, expected)
+    assert len(mr.pairs) == 1, "reworded same finding should match"
+    assert not mr.missed_exp and not mr.spurious_pred
+
+
+def test_different_findings_do_not_falsely_match():
+    """The looser weights must NOT collapse two genuinely different findings."""
+    from src.evaluate import match_findings
+
+    expected = [{
+        "title": "SQL injection in export endpoint",
+        "finding_type": "sql_injection",
+        "cve_ids": [], "affected_assets": [{"repository": "app_a"}],
+    }]
+    predicted = [{
+        "title": "Missing branch protection on default branch",
+        "finding_type": "branch_protection_missing",
+        "cve_ids": [], "affected_assets": [{"repository": "app_b"}],
+    }]
+    mr = match_findings(predicted, expected)
+    assert len(mr.pairs) == 0, "different type + different title must not match"
+    assert len(mr.missed_exp) == 1 and len(mr.spurious_pred) == 1

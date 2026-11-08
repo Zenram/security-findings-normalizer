@@ -83,11 +83,14 @@ def match_score(pred: dict, exp: dict) -> float:
     pa, ea = _asset_tokens(pred), _asset_tokens(exp)
     if pa and ea and (pa & ea):
         score += 0.2
-    # finding_type agreement.
+    # finding_type agreement. Weighted strongly: for free-text sources (team
+    # reports, LinPEAS) with no CVE/stable id and often no shared asset token,
+    # an exact category match plus a reworded-but-similar title is the main
+    # signal that two findings are the same issue (audit A1).
     if _norm(pred.get("finding_type")) == _norm(exp.get("finding_type")):
-        score += 0.15
+        score += 0.30
     # Title similarity (always contributes).
-    score += 0.25 * _ratio(pred.get("title"), exp.get("title"))
+    score += 0.35 * _ratio(pred.get("title"), exp.get("title"))
     return min(score, 1.0)
 
 
