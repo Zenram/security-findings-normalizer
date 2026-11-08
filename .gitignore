@@ -10,6 +10,22 @@ data/real/
 !data/golden/
 !data/README.md
 
+# === RAG corpus (Part 2) ===
+# Rule: commit what CANNOT be re-fetched; ignore what the script re-downloads.
+# Ignore everything directly under data/corpus/ ...
+data/corpus/*
+# ...but keep the dir and the two committed files reachable:
+!data/corpus/cve_list.txt
+!data/corpus/manifest.json
+!data/corpus/standard/
+# Inside standard/, ignore the downloaded NIST PDFs but keep our 2 own files:
+data/corpus/standard/*
+!data/corpus/standard/HIPAA.md
+!data/corpus/standard/SOC2_Guide_on_AWS.md
+# best_practice/ and cve/ are fully re-created by scripts/fetch_corpus.py from
+# cve_list.txt + URLs, so they stay ignored (not re-listed = covered by
+# data/corpus/* above).
+
 # === Run outputs ===
 # Course requires model outputs in the repo, so commit the scored results and
 # raw per-doc outputs, but keep transient run logs out.
