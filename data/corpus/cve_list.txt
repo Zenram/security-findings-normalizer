@@ -1,0 +1,12 @@
+# Real CVEs from our findings (golden + LinPEAS), resolvable on NVD.
+# Synthetic CVE-2026-* are intentionally excluded (not real; generate locally).
+CVE-2019-13139
+CVE-2019-5021
+CVE-2019-5736
+CVE-2021-4034
+CVE-2021-41091
+CVE-2022-0847
+CVE-2023-4911
+CVE-2025-15467
+CVE-2025-39964
+CVE-2025-9074
