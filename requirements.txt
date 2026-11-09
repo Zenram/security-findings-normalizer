@@ -18,3 +18,12 @@ python-dotenv==1.2.2
 
 # Tests
 pytest==9.0.3
+
+# --- Part 2 (RAG) — Step 1: ingestion + chunking -----------------------------
+# Document loaders per format. PDF text extraction, HTML cleaning. CSV/MD/TXT
+# are handled with the stdlib. Pinned low bounds for reproducibility; these ship
+# prebuilt wheels on the dev machine's Python (3.14/3.15).
+pypdf>=5.1,<6                 # PDF text extraction (standards + best_practice)
+beautifulsoup4>=4.12,<5       # HTML cleaning (OWASP/CISA pages)
+charset-normalizer>=3.3,<4    # robust encoding detection for noisy TXT (LinPEAS)
+tiktoken>=0.8,<1              # token counting for chunk sizing (cl100k_base)

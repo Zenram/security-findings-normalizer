@@ -143,3 +143,70 @@ comparison, source traceability, evaluation vs golden set.
 
 Out of scope (later Parts): correlation/deduplication, historical tracking,
 RAG (Part 2), agent (Part 3), production service (Part 4).
+
+---
+
+## Part 2 — RAG (in progress, branch `part-2-rag`)
+
+Part 2 answers questions over the security corpus with cited sources. See
+`src/rag/README.md` for the module map and `hm2_plan.md` for the full plan.
+
+### Step 1 — Corpus & chunking (done)
+
+Ingests **51 source files across 5 formats** into clean, deduplicated chunks:
+
+```bash
+python3 main.py --ingest             # -> data/rag/chunks.jsonl + manifest + report
+python3 -m src.rag.check_ingest      # structural self-check (11 checks)
+```
+
+| doc_type | files | format |
+|---|---|---|
+| `standard` | 5 | PDF, MD |
+| `best_practice` | 17 | PDF, HTML |
+| `cve` | 10 | MD |
+| `team_report` | 10 | TXT |
+| `scanner_linpeas` | 5 | TXT |
+| `alert_aspm` | 2 | CSV (row = finding) |
+| `alert_cnapp` | 2 | CSV (row = finding) |
+
+**Real numbers (latest run):** 51 files → **3,209 chunks** (3,176 structure-aware
+prose chunks + 33 CSV record chunks). 0 extraction errors, 0 OCR-required.
+
+### Chunking: strategy + the required comparison
+
+The pipeline uses **structure-aware chunking for prose** and **record-as-chunk
+for CSV alerts**, and runs a **fixed-size baseline** over the same prose docs so
+the choice is measured, not asserted.
+
+- **Prose (standards, best-practice, CVE, reports, LinPEAS):** split on headings
+  into sections, then pack whole blocks (paragraphs, list groups, table blocks)
+  up to a 512-token cap with a **block-level** 64-token overlap. A paragraph or a
+  table row is never cut mid-content; each chunk carries its heading path in
+  `section`. A single block larger than the cap is split on safe boundaries
+  (table rows, or a token window for pathological unbroken text).
+- **CSV (Ox ASPM, Orca CNAPP):** each alert row is one atomic `record` chunk —
+  splitting an alert would destroy the record, so rows are exempt from the token
+  cap. Identical rows within a file are dropped (content hash).
+- **Dedup:** normalized content hash across prose files (exact duplicates), and
+  per-row for CSV.
+
+**Measured comparison** (same prose documents, lower is better for the first two):
+
+| Strategy | Chunks | Mid-sentence starts | Cut tables | Avg tokens | Keeps section |
+|---|---|---|---|---|---|
+| **Structure-aware** | 3,176 | 957 | 472 | 349 | 3,031 |
+| Fixed-size 512/64 | 2,503 | 1,314 | 697 | 508 | 0 (none) |
+
+Structure-aware wins on both quality metrics (27% fewer mid-sentence starts, 32%
+fewer cut tables) and is the only strategy that preserves section context for
+citations. The remaining absolute counts are dominated by **PDF extraction
+artifacts** (pypdf emits control-ID names like `(1) ACCOUNT MANAGEMENT | …`
+containing stray `|`, and wraps sentences) — these affect *both* strategies
+equally, so the head-to-head comparison is still fair. On the clean formats
+(MD/HTML/CSV) structure-aware produces near-zero mid-sentence/cut-table chunks.
+
+> **Still open for Step 2 (architecture):** the embedding model + vector store
+> (A3). The plan recommends the course-lesson stack (Qdrant + fastembed + BM25 +
+> RRF); this is a major architecture choice flagged for the maintainer / AI
+> Solution Architect, not decided solo.
