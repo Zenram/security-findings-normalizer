@@ -1,0 +1,69 @@
+{
+  "pipeline_version": "rag-ingest-v1",
+  "generated": "2026-11-09T14:05:11+00:00",
+  "totals": {
+    "files": 51,
+    "ok": 51,
+    "exact_duplicate": 0,
+    "ocr_required": 0,
+    "error": 0,
+    "chunks": 3209,
+    "prose_chunks": 3176,
+    "record_chunks": 33
+  },
+  "by_doc_type": {
+    "standard": {
+      "files": 5,
+      "chunks": 1406
+    },
+    "best_practice": {
+      "files": 17,
+      "chunks": 1422
+    },
+    "cve": {
+      "files": 10,
+      "chunks": 76
+    },
+    "team_report": {
+      "files": 10,
+      "chunks": 10
+    },
+    "scanner_linpeas": {
+      "files": 5,
+      "chunks": 262
+    },
+    "alert_aspm": {
+      "files": 2,
+      "chunks": 13
+    },
+    "alert_cnapp": {
+      "files": 2,
+      "chunks": 20
+    }
+  },
+  "formats": [
+    "csv",
+    "html",
+    "md",
+    "pdf",
+    "txt"
+  ],
+  "chunking_comparison": {
+    "structure_aware": {
+      "chunks": 3176,
+      "starts_mid_sentence": 957,
+      "cut_tables": 472,
+      "avg_tokens": 349,
+      "max_tokens": 577,
+      "with_section": 3031
+    },
+    "fixed_size": {
+      "chunks": 2503,
+      "starts_mid_sentence": 1314,
+      "cut_tables": 697,
+      "avg_tokens": 508,
+      "max_tokens": 515,
+      "with_section": 0
+    }
+  }
+}
