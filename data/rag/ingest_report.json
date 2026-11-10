@@ -1,6 +1,6 @@
 {
   "pipeline_version": "rag-ingest-v1",
-  "generated": "2026-11-09T14:05:11+00:00",
+  "generated": "2026-11-10T07:22:00+00:00",
   "totals": {
     "files": 51,
     "ok": 51,
