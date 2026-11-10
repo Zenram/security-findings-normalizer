@@ -58,3 +58,26 @@ downloadable corpus files.
 ```
 
 `doc_type` is the graded metadata filter used in Step 2 retrieval.
+
+## Step 2 — Index & hybrid search (done)
+
+| File | Purpose |
+|---|---|
+| `embed.py` | fastembed wrapper (`paraphrase-multilingual-MiniLM-L12-v2`, 384-dim) with a persistent content-hash embedding cache. Lazy model load. |
+| `index.py` | Build/load the Qdrant collection from `chunks.jsonl` (in-memory or on-disk). Full chunk payload stored so metadata filters + citations work. |
+| `retrieve.py` | Hybrid retriever: dense (Qdrant cosine) + sparse (BM25) fused with RRF, `doc_type`/`format` filter, three modes (`vector` / `hybrid` / `hybrid_rerank`). |
+| `eval_retrieval.py` | Measure recall@k / MRR over the 3 modes against `evals/retrieval_questions.jsonl`. Entry: `python3 main.py --eval-retrieval`. |
+
+```python
+from src.rag.retrieve import Retriever
+r = Retriever(mode="hybrid")                       # builds the in-memory index
+hits = r.search("What is CVE-2021-4034?", k=5, doc_types=["cve"])
+hits[0]["source"], hits[0]["section"], hits[0]["score"], hits[0]["cosine"]
+```
+
+Each hit carries full citation metadata (`source`, `doc_type`, `section`,
+`title`) plus `score` (ranking) and `cosine` (dense similarity). Step 3's
+answerer routes `hits` text into the Part-1 Gemini/Ollama adapters.
+
+**Measured:** hybrid reaches recall@3 = 1.00 (best); see `REPORT_PART2.md` §4.
+Stack runs on **Python 3.13** (`onnxruntime` has no 3.15 wheel).

@@ -56,8 +56,9 @@ only for the cloud model; the local model instead needs Ollama (`ollama serve`
 ## Setup
 
 ```bash
-# Python 3.11+ (tested on 3.14). A venv is recommended.
-python3 -m venv .venv && source .venv/bin/activate
+# Part 1 runs on Python 3.11+. Part 2 (RAG) requires Python 3.13: fastembed
+# pulls onnxruntime, which has NO wheel for Python 3.14/3.15 yet.
+python3.13 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 cp .env.example .env               # then set GEMINI_API_KEY and (optional) prices
@@ -210,3 +211,24 @@ equally, so the head-to-head comparison is still fair. On the clean formats
 > (A3). The plan recommends the course-lesson stack (Qdrant + fastembed + BM25 +
 > RRF); this is a major architecture choice flagged for the maintainer / AI
 > Solution Architect, not decided solo.
+
+### Step 2 — Index & hybrid search (done)
+
+Approved stack (A3): **fastembed + Qdrant + BM25 + RRF**, all local/free.
+
+```bash
+python3 main.py --eval-retrieval     # build index + measure recall@k/MRR (3 modes)
+```
+
+- **Embeddings:** fastembed `paraphrase-multilingual-MiniLM-L12-v2` (384-dim,
+  local, cached). **Vector store:** Qdrant in-process (no server).
+- **Hybrid retrieval:** dense (Qdrant cosine) + BM25, fused with RRF, with a
+  `doc_type`/`format` metadata filter and 3 modes (`vector`/`hybrid`/`hybrid_rerank`).
+- **Measured (15-question set):** hybrid reaches **recall@3 = 1.00** (best),
+  beating vector-only, which misses a free-text team-report question. Full table
+  + error analysis in `REPORT_PART2.md`.
+
+> **Environment:** the stack requires **Python 3.13** — `onnxruntime` (a
+> fastembed dependency) has no wheel for Python 3.15. The project `.venv` is
+> pinned to 3.13; see Setup. Retrieved context routes into the existing
+> Gemini/Ollama adapters for Step 3.

@@ -27,3 +27,11 @@ pypdf>=5.1,<6                 # PDF text extraction (standards + best_practice)
 beautifulsoup4>=4.12,<5       # HTML cleaning (OWASP/CISA pages)
 charset-normalizer>=3.3,<4    # robust encoding detection for noisy TXT (LinPEAS)
 tiktoken>=0.8,<1              # token counting for chunk sizing (cl100k_base)
+
+# --- Part 2 (RAG) — Step 2: embeddings + hybrid retrieval --------------------
+# Approved stack (A3): fastembed (local embeddings) + Qdrant (vector store) +
+# BM25 + RRF. fastembed pulls onnxruntime, which has NO wheel for Python 3.15 —
+# the project venv is therefore pinned to Python 3.13 (see README "Setup").
+qdrant-client>=1.12,<2        # vector store (in-memory / local file)
+fastembed>=0.5,<1             # local embeddings: paraphrase-multilingual-MiniLM-L12-v2 (384-dim)
+rank-bm25>=0.2.2,<1           # sparse lexical retrieval (BM25Okapi)

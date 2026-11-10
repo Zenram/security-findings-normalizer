@@ -13,6 +13,10 @@ Part 2 (RAG) — Step 1 ingestion:
 
     python3 main.py --ingest                # ingest data/corpus + chosen raw -> data/rag/
 
+Part 2 (RAG) — Step 2 retrieval measurement:
+
+    python3 main.py --eval-retrieval        # recall@k / MRR over 3 retrieval modes
+
 Writes real, non-fabricated results. A model that is unreachable (no API key /
 Ollama not running) produces clearly-marked failed rows, not invented numbers.
 """
@@ -33,6 +37,12 @@ if __name__ == "__main__":
         from src.rag.ingest import main as ingest_main
 
         raise SystemExit(ingest_main())
+
+    if "--eval-retrieval" in sys.argv:
+        sys.argv.remove("--eval-retrieval")
+        from src.rag.eval_retrieval import main as eval_retrieval_main
+
+        raise SystemExit(eval_retrieval_main())
 
     from src.runner import main  # noqa: E402
 
