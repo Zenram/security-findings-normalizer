@@ -56,3 +56,27 @@ one and record the change here.
   latency and token cost from the larger prompt, and any over-splitting (recall
   up but precision down) from the enumerate step being too eager — the
   DEDUPLICATE/GROUP step and Example C are there to counter that.
+
+---
+
+# RAG answerer prompts (Part 2, Step 3)
+
+Separate prompt family from extraction: `rag_answer_vN.md`, loaded via
+`src/prompts.render_rag_prompt`. Two placeholders injected as data inside
+explicit boundaries: `{sources}` (numbered retrieved chunks) and `{question}`.
+Referenced by name in every logged answer (`RagAnswer.prompt_version`).
+
+## rag_answer_v1 — baseline cited answerer
+- **Goal:** answer a question using ONLY the retrieved sources, cite doc +
+  section per claim, and refuse honestly when the answer is not in the sources.
+- **Approach:** numbered sources `[S1]..[Sn]`; strict JSON output
+  `{found, answer, citations}`; rules forbidding outside knowledge, invented
+  citations, and guessing; an explicit "I don't know / not in the documents"
+  path (`found=false`, empty citations).
+- **Injection safety:** sources wrapped in `<sources>` boundaries and declared
+  untrusted data — the model is told not to obey instructions embedded in source
+  text (carries the Part-1 data-not-instructions boundary into RAG).
+- **Enforced in code (`src/rag/answer.py`), not just asked for:** citations are
+  validated against the real source labels (invented labels dropped); a `found`
+  answer with no valid citation is downgraded to not-found; empty/unparseable
+  output becomes an honest refusal; context is assembled under a token budget.

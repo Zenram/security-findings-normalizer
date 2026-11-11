@@ -81,3 +81,29 @@ answerer routes `hits` text into the Part-1 Gemini/Ollama adapters.
 
 **Measured:** hybrid reaches recall@3 = 1.00 (best); see `REPORT_PART2.md` §4.
 Stack runs on **Python 3.13** (`onnxruntime` has no 3.15 wheel).
+
+## Step 3 — RAG with sources (done)
+
+| File | Purpose |
+|---|---|
+| `answer.py` | `RagAnswerer`: retrieve → numbered context under a token budget → model answers only from context → parse `{found, answer, citations}` → validate citations → honest "I don't know". Routes through the Part-1 Gemini/Ollama adapters. |
+| `ask.py` | CLI: `python3 main.py --ask "…" [--model gemini|ollama] [--doc-types cve,…] [--k N]`. |
+| `prompts/rag_answer_v1.md` | Answerer prompt: cite doc+section per claim, strict JSON, "I don't know" path, data-not-instructions boundary. Logged in `prompts/CHANGELOG.md`. |
+
+```python
+from src.rag.answer import RagAnswerer
+a = RagAnswerer(model="gemini", prompt_version="v1", k=5)
+ans = a.answer("How should least privilege be enforced for IAM roles?")
+ans.found, ans.answer, ans.citations        # citations map back to retrieved chunks
+```
+
+**Graded behaviors enforced in code (not just prompted):**
+- cite doc + section per claim — citations validated against real source labels;
+- context assembled under a **token budget** (`DEFAULT_CONTEXT_BUDGET_TOKENS`);
+- explicit **"I don't know / not in the documents"** when retrieval is empty, the
+  model refuses, output is unparseable, or an answer cites nothing real
+  (ungrounded → downgraded to not-found);
+- injection resistance carried over from Part 1 (sources are untrusted data).
+
+Verified live on both models: grounded questions return cited answers; synthetic
+`CVE-2026-*` and off-topic questions correctly refuse. See `REPORT_PART2.md` §7.

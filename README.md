@@ -232,3 +232,20 @@ python3 main.py --eval-retrieval     # build index + measure recall@k/MRR (3 mod
 > fastembed dependency) has no wheel for Python 3.15. The project `.venv` is
 > pinned to 3.13; see Setup. Retrieved context routes into the existing
 > Gemini/Ollama adapters for Step 3.
+
+### Step 3 — RAG with sources (done)
+
+Answer questions over the corpus with cited sources and an honest "I don't know".
+
+```bash
+python3 main.py --ask "How should least privilege be enforced for IAM roles?"
+python3 main.py --ask "What is CVE-2019-5736?" --model ollama --doc-types cve
+```
+
+- Retrieve (hybrid) → numbered context under a **token budget** → model answers
+  **only from context** → structured `{found, answer, citations}` → citations
+  validated against real sources → explicit **"I don't know / not in the
+  documents"** when unsupported. Prompt `prompts/rag_answer_v1.md`.
+- Runs on Gemini or Ollama via the same answerer. Verified live: grounded
+  questions cite doc+section; synthetic `CVE-2026-*` and off-topic questions
+  refuse. See `REPORT_PART2.md` §7.
