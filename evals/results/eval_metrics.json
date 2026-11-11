@@ -1,13 +1,15 @@
 {
-  "generated": "2026-11-11T09:42:27+00:00",
+  "generated": "2026-11-11T10:58:27+00:00",
   "cases": 23,
-  "judged": false,
+  "judged": true,
   "metrics": {
     "pass": 0.913,
     "facts": 0.8824,
     "source_cited": 0.8824,
     "abstain": 1.0,
     "false_abstain": 0.1176,
+    "judge": 0.913,
+    "faithful": 0.4667,
     "by_kind": {
       "answerable": 0.8824,
       "no_answer": 1.0,
@@ -18,7 +20,15 @@
       "q08"
     ]
   },
-  "calibration": null,
+  "calibration": {
+    "agreement": 0.957,
+    "false_pass": 0.0,
+    "false_fail": 0.043,
+    "disagreements": [
+      "q11"
+    ],
+    "n": 23
+  },
   "rows": [
     {
       "id": "q01",
@@ -26,7 +36,7 @@
       "answer": {
         "question": "What privilege escalation vulnerability affects pkexec in polkit, and what is its common name?",
         "found": true,
-        "answer": "The privilege escalation vulnerability affecting polkit's pkexec is designated as CVE-2021-4034 [S1, S2]. It occurs because pkexec does not handle the calling parameters count correctly and ends up executing environment variables as commands, allowing unprivileged users to execute arbitrary code and gain administrative rights [S1]. It is referenced as \"pwnkit\" in vendor/third-party advisory files [S2].",
+        "answer": "The vulnerability affecting polkit's pkexec utility (CVE-2021-4034) is a local privilege escalation vulnerability caused by pkexec failing to correctly handle the calling parameters count, resulting in it executing environment variables as commands to run arbitrary code and grant administrative rights to unprivileged users [S1]. It is commonly referred to as \"pwnkit\" in reference documentation [S2].",
         "citations": [
           "S1",
           "S2"
@@ -88,9 +98,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 8.343226666969713,
+        "latency_seconds": 7.229047583008651,
         "input_tokens": 2622,
-        "output_tokens": 129,
+        "output_tokens": 122,
         "error": null
       },
       "det": {
@@ -98,7 +108,12 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "The vulnerability is commonly referred to as 'pwnkit' in reference documentation."
+      ]
     },
     {
       "id": "q02",
@@ -106,7 +121,7 @@
       "answer": {
         "question": "How does the runc container escape in CVE-2019-5736 allow host compromise?",
         "found": true,
-        "answer": "CVE-2019-5736 allows attackers to overwrite the host runc binary and obtain host root access due to file-descriptor mishandling related to /proc/self/exe [S1]. Attackers leverage this by executing a command as root inside either: (1) a new container using an attacker-controlled image, or (2) an existing container to which the attacker previously had write access and can attach using docker exec [S1].",
+        "answer": "CVE-2019-5736 allows attackers to overwrite the host runc binary and obtain host root access by leveraging the ability to execute a command as root within a container (either a new container with an attacker-controlled image or an existing container to which the attacker had write access that can be attached with docker exec) [S1]. This host compromise occurs due to file-descriptor mishandling related to /proc/self/exe [S1].",
         "citations": [
           "S1"
         ],
@@ -167,7 +182,7 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 4.105147709022276,
+        "latency_seconds": 2.702618582989089,
         "input_tokens": 2452,
         "output_tokens": 128,
         "error": null
@@ -177,7 +192,10 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
     },
     {
       "id": "q03",
@@ -185,9 +203,10 @@
       "answer": {
         "question": "What is the Dirty Pipe vulnerability and which component does it affect?",
         "found": true,
-        "answer": "The Dirty Pipe vulnerability (CVE-2022-0847) affects the Linux kernel, specifically due to a flaw where the \"flags\" member of the new pipe buffer structure lacks proper initialization in the copy_page_to_iter_pipe and push_pipe functions [S2]. This allows an unprivileged local user to write to pages in the page cache backed by read-only files, allowing them to escalate their privileges on the system [S2].",
+        "answer": "The Dirty Pipe vulnerability (CVE-2022-0847) [S3] affects the Linux kernel [S2]. It is a flaw where the \"flags\" member of the new pipe buffer structure lacks proper initialization in the `copy_page_to_iter_pipe` and `push_pipe` functions, allowing it to contain stale values [S2]. An unprivileged local user can exploit this flaw to write to pages in the page cache backed by read-only files and escalate their privileges on the system [S2].",
         "citations": [
-          "S2"
+          "S2",
+          "S3"
         ],
         "cited_sources": [
           {
@@ -196,6 +215,13 @@
             "source": "data/corpus/cve/CVE-2022-0847.md",
             "doc_type": "cve",
             "section": "CVE-2022-0847 > Description"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2022-0847.md#6",
+            "source": "data/corpus/cve/CVE-2022-0847.md",
+            "doc_type": "cve",
+            "section": "CVE-2022-0847 > References"
           }
         ],
         "sources": [
@@ -239,9 +265,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 3.8868752919952385,
+        "latency_seconds": 6.732461167033762,
         "input_tokens": 2243,
-        "output_tokens": 129,
+        "output_tokens": 151,
         "error": null
       },
       "det": {
@@ -249,7 +275,12 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "The Dirty Pipe vulnerability is identified as CVE-2022-0847."
+      ]
     },
     {
       "id": "q04",
@@ -257,7 +288,7 @@
       "answer": {
         "question": "Which glibc vulnerability is known as Looney Tunables and how is it triggered?",
         "found": true,
-        "answer": "CVE-2023-4911 is the glibc vulnerability known as 'Looney Tunables' [S3]. It is triggered by a buffer overflow in the GNU C Library's dynamic loader ld.so while processing the GLIBC_TUNABLES environment variable, allowing a local attacker to use maliciously crafted GLIBC_TUNABLES environment variables when launching binaries with SUID permission [S2].",
+        "answer": "CVE-2023-4911 is known as \"Looney Tunables\" [S3]. It is a buffer overflow in the GNU C Library's dynamic loader `ld.so` [S2]. It is triggered by a local attacker using maliciously crafted `GLIBC_TUNABLES` environment variables when launching binaries with SUID permission to execute code with elevated privileges [S2].",
         "citations": [
           "S2",
           "S3"
@@ -326,9 +357,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 3.730155915953219,
+        "latency_seconds": 3.269938208977692,
         "input_tokens": 2688,
-        "output_tokens": 122,
+        "output_tokens": 121,
         "error": null
       },
       "det": {
@@ -336,7 +367,10 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
     },
     {
       "id": "q05",
@@ -344,7 +378,7 @@
       "answer": {
         "question": "According to OWASP, what is the top web application security risk in the 2021 Top 10?",
         "found": false,
-        "answer": "I am sorry, but the provided documents do not contain information identifying the specific top web application security risk in the OWASP Top 10:2021.",
+        "answer": "I am sorry, but the provided sources do not contain information on what the specific top web application security risk is in the OWASP Top 10:2021.",
         "citations": [],
         "cited_sources": [],
         "sources": [
@@ -395,9 +429,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 4.236969291989226,
+        "latency_seconds": 3.3553042910061777,
         "input_tokens": 1637,
-        "output_tokens": 56,
+        "output_tokens": 50,
         "error": null
       },
       "det": {
@@ -405,7 +439,8 @@
         "facts_present": false,
         "abstained": null,
         "passed": false
-      }
+      },
+      "judge": false
     },
     {
       "id": "q06",
@@ -413,7 +448,7 @@
       "answer": {
         "question": "What is server-side request forgery (SSRF) and where does it sit in the OWASP Top 10 2021?",
         "found": true,
-        "answer": "Server-Side Request Forgery (SSRF) flaws occur whenever a web application fetches a remote resource without validating the user-supplied URL, allowing an attacker to coerce the application to send a crafted request to an unexpected destination [S2]. In the OWASP Top 10 2021, it is categorized as A10:2021 [S2], [S4].",
+        "answer": "Server-Side Request Forgery (SSRF) flaws occur whenever a web application fetches a remote resource without validating the user-supplied URL, allowing an attacker to coerce the application to send a crafted request to an unexpected destination [S2]. In the OWASP Top 10 2021, it is positioned as category A10:2021 [S4].",
         "citations": [
           "S2",
           "S4"
@@ -482,9 +517,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 5.053795957996044,
+        "latency_seconds": 5.356891457980964,
         "input_tokens": 1191,
-        "output_tokens": 120,
+        "output_tokens": 117,
         "error": null
       },
       "det": {
@@ -492,7 +527,12 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "In the OWASP Top 10 2021, SSRF is positioned as category A10:2021."
+      ]
     },
     {
       "id": "q07",
@@ -500,7 +540,7 @@
       "answer": {
         "question": "What are the major risk areas NIST SP 800-190 identifies for application container security?",
         "found": true,
-        "answer": "NIST SP 800-190 identifies major risks across the core components of container technologies: images, registries, orchestrators, containers, and host OSs [S1]. Specifically, it considers two primary types of risks:\n1. Compromise of an image or container [S1].\n2. Misuse of a container to attack other containers, the host OS, other hosts, etc [S1].",
+        "answer": "NIST SP 800-190 identifies major risks for the core components of container technologies: images, registries, orchestrators, containers, and host OSs [S1]. Within these core components, it considers two primary types of risks: 1) compromise of an image or container, and 2) misuse of a container to attack other containers, the host OS, or other hosts [S1].",
         "citations": [
           "S1"
         ],
@@ -561,9 +601,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 4.718237292021513,
+        "latency_seconds": 3.029257000016514,
         "input_tokens": 2142,
-        "output_tokens": 121,
+        "output_tokens": 118,
         "error": null
       },
       "det": {
@@ -571,7 +611,12 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "NIST SP 800-190 identifies major risks for the core components of container technologies: images, registries, orchestrators, containers, and host OSs."
+      ]
     },
     {
       "id": "q08",
@@ -579,7 +624,7 @@
       "answer": {
         "question": "What are the core tenets of a Zero Trust Architecture per NIST SP 800-207?",
         "found": false,
-        "answer": "I am sorry, but the provided documents do not contain the core tenets of a Zero Trust Architecture.",
+        "answer": "The provided documents do not contain the specific list or details of the core tenets of Zero Trust Architecture (NIST SP 800-207 Section 2.1).",
         "citations": [],
         "cited_sources": [],
         "sources": [
@@ -630,9 +675,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 5.438310457975604,
+        "latency_seconds": 5.8240207500057295,
         "input_tokens": 2484,
-        "output_tokens": 42,
+        "output_tokens": 60,
         "error": null
       },
       "det": {
@@ -640,7 +685,8 @@
         "facts_present": false,
         "abstained": null,
         "passed": false
-      }
+      },
+      "judge": false
     },
     {
       "id": "q09",
@@ -648,7 +694,7 @@
       "answer": {
         "question": "What password and authenticator guidance does NIST SP 800-63B give on authenticator assurance levels?",
         "found": true,
-        "answer": "NIST SP 800-63B provides the following guidance regarding authenticator assurance levels (AALs):\n\n- **AAL Overview and Selection**: A claimant must be authenticated with at least a given level of strength to satisfy a specific AAL [S3]. Agencies must select a minimum of AAL2 when self-asserted PII or other personal information is made available online [S3].\n- **AAL1 Authenticators**: Requires either single-factor or multi-factor authentication through a secure protocol [S3]. Permitted authenticator types include Memorized Secrets, Look-Up Secrets, Out-of-Band Devices, Single- or Multi-Factor OTP Devices, and Single- or Multi-Factor Cryptographic Software/Devices [S1].\n- **AAL2 Authenticators**: At least one authenticator used at AAL2 must be replay resistant and should demonstrate authentication intent [S5]. Unlocking a device (such as a smartphone using a PIN or biometric) shall not be counted as an authentication factor [S5]. Biometric factors used at AAL2 must meet specified performance requirements [S5].\n- **Cryptography and FIPS Validation**: Cryptographic authenticators at AAL1 and AAL2 must use approved cryptography [S2, S5]. Verifiers (and AAL2 authenticators procured by government agencies) must meet FIPS 140 Level 1 requirements [S2, S5].\n- **Endpoint Security and Protected Channels**: Software-based authenticators may attempt to detect platform/endpoint compromise and should not complete authentication operations if compromise is detected [S2, S5]. Communication between claimant and verifier must occur over an authenticated protected channel [S2, S5].",
+        "answer": "NIST SP 800-63B provides the following guidance regarding Authenticator Assurance Levels (AAL):\n\n- **General & Selection**: Claimants must be authenticated with at least a given level of strength to be recognized as a subscriber [S3]. Agencies must select a minimum of AAL2 when self-asserted PII or personal information is made available online [S3].\n- **AAL1 Requirements**: AAL1 requires single-factor or multi-factor authentication to prove possession and control of an authenticator bound to the subscriber's account [S3]. Permitted authenticator types include Memorized Secrets, Look-Up Secrets, Out-of-Band Devices, Single-Factor or Multi-Factor OTP Devices, and Single-Factor or Multi-Factor Cryptographic Software/Devices [S1]. Cryptographic authenticators must use approved cryptography, and communication between claimant and verifier must be via an authenticated protected channel [S2]. Verifiers operated by government agencies must be FIPS 140 Level 1 validated [S2]. Software-based authenticators may attempt to detect endpoint compromise and should not complete the operation if detected [S2].\n- **AAL2 Requirements**: Cryptographic authenticators must use approved cryptography, and authenticators procured by government agencies must be FIPS 140 Level 1 validated [S5]. At least one authenticator used at AAL2 must be replay resistant, and authentication should demonstrate authentication intent [S5]. Unlocking a device (e.g., smartphone using a PIN or biometric) shall not be considered an authentication factor [S5]. Biometric factors used at AAL2 must meet specific performance requirements [S5]. Government-operated verifiers must also meet FIPS 140 Level 1 requirements, and communication must be via an authenticated protected channel [S5].",
         "citations": [
           "S1",
           "S2",
@@ -733,9 +779,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 9.317199915996753,
+        "latency_seconds": 19.794580666988622,
         "input_tokens": 1961,
-        "output_tokens": 415,
+        "output_tokens": 437,
         "error": null
       },
       "det": {
@@ -743,7 +789,12 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "NIST SP 800-63B provides guidance regarding Authenticator Assurance Levels (AAL)."
+      ]
     },
     {
       "id": "q10",
@@ -751,7 +802,7 @@
       "answer": {
         "question": "Which AWS Config rule helps enforce encryption at rest for Amazon EBS volumes in the HIPAA guidance?",
         "found": true,
-        "answer": "The AWS Config rules that help enforce encryption at rest for Amazon EBS volumes in the HIPAA guidance are `ec2-ebs-encryption-by-default` [S1] and `encrypted-volumes` [S4].",
+        "answer": "In the HIPAA guidance, the AWS Config rules ec2-ebs-encryption-by-default [S1] and encrypted-volumes [S4] help ensure encryption at rest is enabled for Amazon Elastic Block Store (Amazon EBS) volumes.",
         "citations": [
           "S1",
           "S4"
@@ -813,9 +864,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 3.2627557079540566,
+        "latency_seconds": 3.032545875001233,
         "input_tokens": 2711,
-        "output_tokens": 84,
+        "output_tokens": 87,
         "error": null
       },
       "det": {
@@ -823,7 +874,10 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
     },
     {
       "id": "q11",
@@ -831,7 +885,7 @@
       "answer": {
         "question": "What does the SOC 2 guidance on AWS describe mapping controls to?",
         "found": true,
-        "answer": "The guidance describes mapping physical access responsibilities to SOC 2 criteria (such as CC6.4 and CC6.5) [S1]. Broadly, the control mapping translates high-level SOC 2 control criteria into specific, actionable responsibilities, technical implementations, and supporting evidence within the customer's AWS environment [S2]. The mapping tables detail SOC 2 control objectives, customer responsibilities in AWS, external controls, and associated points of focus [S2].",
+        "answer": "The SOC 2 guidance on AWS describes mapping high-level SOC 2 control criteria to actionable customer responsibilities, technical implementations using AWS services, supporting organizational policies and procedures outside of AWS, and evidence within the customer's AWS environment [S2]. Additionally, control mapping tables map areas such as physical access responsibilities to specific SOC 2 criteria (e.g., CC6.4 and CC6.5), describing SOC 2 control objectives, customer responsibilities in AWS, external controls, and associated points of focus [S1, S2].",
         "citations": [
           "S1",
           "S2"
@@ -900,9 +954,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 6.45303337497171,
+        "latency_seconds": 5.353157832985744,
         "input_tokens": 2462,
-        "output_tokens": 135,
+        "output_tokens": 151,
         "error": null
       },
       "det": {
@@ -910,86 +964,81 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
     },
     {
       "id": "q12",
       "kind": "answerable",
       "answer": {
-        "question": "What root causes did the dev team's September report attribute the High alerts to?",
+        "question": "Why are official Alpine Linux Docker images affected by a NULL root password issue, per CVE-2019-5021?",
         "found": true,
-        "answer": "The Dev team's September 14 reports attribute the High alerts to the following root causes:\n\n- Cloud/SAST report: command injection, raw SQL in test support, and stale repositories [S1].\n- Source-code security report: four distinct root causes consisting of two credential findings (a committed package-feed credential and a hard-coded integration credential), logging (interpolated error text in a log statement), and missing antiforgery attributes [S4].",
+        "answer": "Official Alpine Linux Docker images (since v3.3) are affected because they contain a NULL password for the root user, which appears to be the result of a regression introduced in December 2015 [S1]. As a result, systems using affected versions of the container that rely on Linux PAM or another mechanism using the system shadow file as an authentication database may accept a NULL password for root [S1].",
         "citations": [
-          "S1",
-          "S4"
+          "S1"
         ],
         "cited_sources": [
           {
             "label": "S1",
-            "chunk_id": "data/raw/team_reports/team_report_dev_2026-09-14.txt#0",
-            "source": "data/raw/team_reports/team_report_dev_2026-09-14.txt",
-            "doc_type": "team_report",
-            "section": ""
-          },
-          {
-            "label": "S4",
-            "chunk_id": "data/raw/team_reports/team_report_dev_ox_2026-09-14.txt#0",
-            "source": "data/raw/team_reports/team_report_dev_ox_2026-09-14.txt",
-            "doc_type": "team_report",
-            "section": ""
+            "chunk_id": "data/corpus/cve/CVE-2019-5021.md#1",
+            "source": "data/corpus/cve/CVE-2019-5021.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5021 > Description"
           }
         ],
         "sources": [
           {
             "label": "S1",
-            "chunk_id": "data/raw/team_reports/team_report_dev_2026-09-14.txt#0",
-            "source": "data/raw/team_reports/team_report_dev_2026-09-14.txt",
-            "doc_type": "team_report",
-            "section": ""
+            "chunk_id": "data/corpus/cve/CVE-2019-5021.md#1",
+            "source": "data/corpus/cve/CVE-2019-5021.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5021 > Description"
           },
           {
             "label": "S2",
-            "chunk_id": "data/corpus/best_practice/NIST.SP.800-61r2.pdf#122",
-            "source": "data/corpus/best_practice/NIST.SP.800-61r2.pdf",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#74",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
             "doc_type": "best_practice",
-            "section": "Bureau Drive (Mail Stop 8930), Gaithersburg, MD 20899-8930 > How would the team identify who had been performing the vulnerability scans?"
+            "section": "Description L1 L2 L3 CWE NIST § > Verify password credential recovery does not reveal the current"
           },
           {
             "label": "S3",
-            "chunk_id": "data/corpus/best_practice/NIST.SP.800-61r2.pdf#110",
-            "source": "data/corpus/best_practice/NIST.SP.800-61r2.pdf",
-            "doc_type": "best_practice",
-            "section": "Bureau Drive (Mail Stop 8930), Gaithersburg, MD 20899-8930 > Granular Information Sharing > Technical Information"
+            "chunk_id": "data/corpus/cve/CVE-2019-5021.md#4",
+            "source": "data/corpus/cve/CVE-2019-5021.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5021 > Affected products (CPE)"
           },
           {
             "label": "S4",
-            "chunk_id": "data/raw/team_reports/team_report_dev_ox_2026-09-14.txt#0",
-            "source": "data/raw/team_reports/team_report_dev_ox_2026-09-14.txt",
-            "doc_type": "team_report",
-            "section": ""
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#55",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE NIST § > Verify that there are no periodic credential rotation or password"
           },
           {
             "label": "S5",
-            "chunk_id": "data/corpus/best_practice/NIST.SP.800-61r2.pdf#63",
-            "source": "data/corpus/best_practice/NIST.SP.800-61r2.pdf",
-            "doc_type": "best_practice",
-            "section": "Bureau Drive (Mail Stop 8930), Gaithersburg, MD 20899-8930 > Detection and Analysis > Incident Analysis"
+            "chunk_id": "data/corpus/cve/CVE-2019-5021.md#5",
+            "source": "data/corpus/cve/CVE-2019-5021.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5021 > References"
           }
         ],
         "retrieved": [
-          "data/raw/team_reports/team_report_dev_2026-09-14.txt#0",
-          "data/corpus/best_practice/NIST.SP.800-61r2.pdf#122",
-          "data/corpus/best_practice/NIST.SP.800-61r2.pdf#110",
-          "data/raw/team_reports/team_report_dev_ox_2026-09-14.txt#0",
-          "data/corpus/best_practice/NIST.SP.800-61r2.pdf#63"
+          "data/corpus/cve/CVE-2019-5021.md#1",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#74",
+          "data/corpus/cve/CVE-2019-5021.md#4",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#55",
+          "data/corpus/cve/CVE-2019-5021.md#5"
         ],
         "dropped_citations": [],
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 7.245523499965202,
-        "input_tokens": 2539,
-        "output_tokens": 138,
+        "latency_seconds": 3.0221510829869658,
+        "input_tokens": 1457,
+        "output_tokens": 117,
         "error": null
       },
       "det": {
@@ -997,78 +1046,81 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
     },
     {
       "id": "q13",
       "kind": "answerable",
       "answer": {
-        "question": "On the Alpine container lab, what did LinPEAS observe about the workload's user?",
+        "question": "How does CVE-2019-13139 allow command execution during a docker build?",
         "found": true,
-        "answer": "LinPEAS observed that the observed workload runs as root (uid=0(root) gid=0(root) groups=0(root)) with no non-root user configured [S1]. It flagged this as an unnecessary root execution where non-root migration was not applied, noting it as a configuration observation rather than a CVE or proof of container escape [S1].",
+        "answer": "CVE-2019-13139 allows command execution when an attacker is able to supply or manipulate the build path for the \"docker build\" command [S1]. An issue in how \"docker build\" processes remote git URLs leads to command injection into the underlying \"git clone\" command because a git ref can be misinterpreted as a flag [S1]. This results in code execution in the context of the user running the \"docker build\" command [S1].",
         "citations": [
           "S1"
         ],
         "cited_sources": [
           {
             "label": "S1",
-            "chunk_id": "data/raw/oss_scanner/linpeas/linpeas_alpine_3.20_sanitized.txt#0",
-            "source": "data/raw/oss_scanner/linpeas/linpeas_alpine_3.20_sanitized.txt",
-            "doc_type": "scanner_linpeas",
-            "section": ""
+            "chunk_id": "data/corpus/cve/CVE-2019-13139.md#1",
+            "source": "data/corpus/cve/CVE-2019-13139.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-13139 > Description"
           }
         ],
         "sources": [
           {
             "label": "S1",
-            "chunk_id": "data/raw/oss_scanner/linpeas/linpeas_alpine_3.20_sanitized.txt#0",
-            "source": "data/raw/oss_scanner/linpeas/linpeas_alpine_3.20_sanitized.txt",
-            "doc_type": "scanner_linpeas",
-            "section": ""
+            "chunk_id": "data/corpus/cve/CVE-2019-13139.md#1",
+            "source": "data/corpus/cve/CVE-2019-13139.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-13139 > Description"
           },
           {
             "label": "S2",
-            "chunk_id": "data/raw/oss_scanner/linpeas/linpeas_ubuntu_22.04_sanitized.txt#0",
-            "source": "data/raw/oss_scanner/linpeas/linpeas_ubuntu_22.04_sanitized.txt",
-            "doc_type": "scanner_linpeas",
-            "section": ""
+            "chunk_id": "data/corpus/cve/CVE-2019-5736.md#1",
+            "source": "data/corpus/cve/CVE-2019-5736.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5736 > Description"
           },
           {
             "label": "S3",
-            "chunk_id": "data/corpus/standard/NIST.SP.800-53r5.pdf#548",
-            "source": "data/corpus/standard/NIST.SP.800-53r5.pdf",
-            "doc_type": "standard",
-            "section": "The > SYSTEM AND SERVICES ACQUISITION"
+            "chunk_id": "data/corpus/cve/CVE-2025-9074.md#1",
+            "source": "data/corpus/cve/CVE-2025-9074.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-9074 > Description"
           },
           {
             "label": "S4",
-            "chunk_id": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt#3",
-            "source": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt",
-            "doc_type": "scanner_linpeas",
-            "section": ""
+            "chunk_id": "data/corpus/cve/CVE-2019-13139.md#3",
+            "source": "data/corpus/cve/CVE-2019-13139.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-13139 > Weaknesses (CWE)"
           },
           {
             "label": "S5",
-            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#23",
-            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
-            "doc_type": "best_practice",
-            "section": "Introduction to Application Containers > Hosts (run and stop containers as directed by the orchestrator)"
+            "chunk_id": "data/corpus/cve/CVE-2019-13139.md#5",
+            "source": "data/corpus/cve/CVE-2019-13139.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-13139 > References"
           }
         ],
         "retrieved": [
-          "data/raw/oss_scanner/linpeas/linpeas_alpine_3.20_sanitized.txt#0",
-          "data/raw/oss_scanner/linpeas/linpeas_ubuntu_22.04_sanitized.txt#0",
-          "data/corpus/standard/NIST.SP.800-53r5.pdf#548",
-          "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt#3",
-          "data/corpus/best_practice/NIST.SP.800-190.pdf#23"
+          "data/corpus/cve/CVE-2019-13139.md#1",
+          "data/corpus/cve/CVE-2019-5736.md#1",
+          "data/corpus/cve/CVE-2025-9074.md#1",
+          "data/corpus/cve/CVE-2019-13139.md#3",
+          "data/corpus/cve/CVE-2019-13139.md#5"
         ],
         "dropped_citations": [],
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 3.1257376670255326,
-        "input_tokens": 2612,
-        "output_tokens": 109,
+        "latency_seconds": 3.298838082992006,
+        "input_tokens": 1556,
+        "output_tokens": 130,
         "error": null
       },
       "det": {
@@ -1076,150 +1128,81 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
     },
     {
       "id": "q14",
       "kind": "answerable",
       "answer": {
-        "question": "Which Ox ASPM alert flags a missing antiforgery token, and what weakness class is it?",
+        "question": "What does CVE-2025-9074 let a local container do to the Docker Engine API?",
         "found": true,
-        "answer": "The Ox ASPM alert that flags a missing antiforgery token is \"Missing Antiforgery C# API Exposed\" (Issue ID: issue-9804) [S3]. Its weakness class is CWE-352: Cross-Site Request Forgery (CSRF) [S3].",
-        "citations": [
-          "S3"
-        ],
-        "cited_sources": [
-          {
-            "label": "S3",
-            "chunk_id": "data/raw/aspm/ox_issues_active_sanitized.csv#0",
-            "source": "data/raw/aspm/ox_issues_active_sanitized.csv",
-            "doc_type": "alert_aspm",
-            "section": "Missing Antiforgery C# API Exposed"
-          }
-        ],
-        "sources": [
-          {
-            "label": "S1",
-            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#17",
-            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
-            "doc_type": "best_practice",
-            "section": ""
-          },
-          {
-            "label": "S2",
-            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#7",
-            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
-            "doc_type": "best_practice",
-            "section": ""
-          },
-          {
-            "label": "S3",
-            "chunk_id": "data/raw/aspm/ox_issues_active_sanitized.csv#0",
-            "source": "data/raw/aspm/ox_issues_active_sanitized.csv",
-            "doc_type": "alert_aspm",
-            "section": "Missing Antiforgery C# API Exposed"
-          },
-          {
-            "label": "S4",
-            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#10",
-            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
-            "doc_type": "best_practice",
-            "section": ""
-          }
-        ],
-        "retrieved": [
-          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#17",
-          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#7",
-          "data/raw/aspm/ox_issues_active_sanitized.csv#0",
-          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#10",
-          "data/raw/team_reports/team_report_dev_ox_2026-09-14.txt#0"
-        ],
-        "dropped_citations": [],
-        "model": "gemini",
-        "prompt_version": "v1",
-        "sampling": "deterministic",
-        "latency_seconds": 2.5080765829770826,
-        "input_tokens": 2294,
-        "output_tokens": 96,
-        "error": null
-      },
-      "det": {
-        "source_cited": true,
-        "facts_present": true,
-        "abstained": null,
-        "passed": true
-      }
-    },
-    {
-      "id": "q15",
-      "kind": "answerable",
-      "answer": {
-        "question": "What does the Orca alert recommend about reviewers on the default branch?",
-        "found": true,
-        "answer": "The Orca alert recommends taking the following steps to require reviewers on the default branch:\n1. Go to project settings -> Repositories -> select the repository -> Policies [S1].\n2. Under the default branch, enable 'Require a minimum number of reviewers' [S1].\n3. Set the minimum number of reviewers to at least 1 [S1].",
+        "answer": "CVE-2025-9074 allows local running Linux containers to access the Docker Engine API via the configured Docker subnet (at 192.168.65.7:2375 by default) [S1]. This can lead to the execution of a wide range of privileged commands to the Docker Engine API, including controlling other containers, creating new ones, and managing images [S1]. Additionally, in certain situations (such as Docker Desktop for Windows with WSL backend), it allows mounting the host drive with the same privileges as the user running Docker Desktop [S1].",
         "citations": [
           "S1"
         ],
         "cited_sources": [
           {
             "label": "S1",
-            "chunk_id": "data/raw/cnapp/orca_alerts_open_sep_oct_sanitized.csv#0",
-            "source": "data/raw/cnapp/orca_alerts_open_sep_oct_sanitized.csv",
-            "doc_type": "alert_cnapp",
-            "section": "Default Branch Should Require at Least One Code Reviewer"
+            "chunk_id": "data/corpus/cve/CVE-2025-9074.md#1",
+            "source": "data/corpus/cve/CVE-2025-9074.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-9074 > Description"
           }
         ],
         "sources": [
           {
             "label": "S1",
-            "chunk_id": "data/raw/cnapp/orca_alerts_open_sep_oct_sanitized.csv#0",
-            "source": "data/raw/cnapp/orca_alerts_open_sep_oct_sanitized.csv",
-            "doc_type": "alert_cnapp",
-            "section": "Default Branch Should Require at Least One Code Reviewer"
+            "chunk_id": "data/corpus/cve/CVE-2025-9074.md#1",
+            "source": "data/corpus/cve/CVE-2025-9074.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-9074 > Description"
           },
           {
             "label": "S2",
-            "chunk_id": "data/corpus/standard/NIST.SP.800-53r5.pdf#183",
-            "source": "data/corpus/standard/NIST.SP.800-53r5.pdf",
-            "doc_type": "standard",
-            "section": "The > AUDIT AND ACCOUNTABILITY"
+            "chunk_id": "data/corpus/cve/CVE-2019-5736.md#1",
+            "source": "data/corpus/cve/CVE-2019-5736.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5736 > Description"
           },
           {
             "label": "S3",
-            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#217",
-            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
-            "doc_type": "best_practice",
-            "section": "Forbidden"
+            "chunk_id": "data/corpus/cve/CVE-2021-41091.md#1",
+            "source": "data/corpus/cve/CVE-2021-41091.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-41091 > Description"
           },
           {
             "label": "S4",
-            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#19",
-            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#23",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
             "doc_type": "best_practice",
-            "section": ""
+            "section": "Introduction to Application Containers > Hosts (run and stop containers as directed by the orchestrator)"
           },
           {
             "label": "S5",
-            "chunk_id": "data/raw/team_reports/team_report_data_2026-10-14.txt#0",
-            "source": "data/raw/team_reports/team_report_data_2026-10-14.txt",
-            "doc_type": "team_report",
-            "section": ""
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#27",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Introduction to Application Containers > Hosts (run and stop containers as directed by the orchestrator) > Container Deployment and Management"
           }
         ],
         "retrieved": [
-          "data/raw/cnapp/orca_alerts_open_sep_oct_sanitized.csv#0",
-          "data/corpus/standard/NIST.SP.800-53r5.pdf#183",
-          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#217",
-          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#19",
-          "data/raw/team_reports/team_report_data_2026-10-14.txt#0"
+          "data/corpus/cve/CVE-2025-9074.md#1",
+          "data/corpus/cve/CVE-2019-5736.md#1",
+          "data/corpus/cve/CVE-2021-41091.md#1",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#23",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#27"
         ],
         "dropped_citations": [],
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 2.7390407500206493,
-        "input_tokens": 2512,
-        "output_tokens": 111,
+        "latency_seconds": 4.734614791988861,
+        "input_tokens": 2064,
+        "output_tokens": 157,
         "error": null
       },
       "det": {
@@ -1227,7 +1210,104 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "CVE-2025-9074 allows local running Linux containers to access the Docker Engine API via the configured Docker subnet (at 192.168.65.7:2375 by default)."
+      ]
+    },
+    {
+      "id": "q15",
+      "kind": "answerable",
+      "answer": {
+        "question": "What does OWASP A02:2021 Cryptographic Failures cover?",
+        "found": true,
+        "answer": "OWASP A02:2021 Cryptographic Failures (previously known as Sensitive Data Exposure) focuses on failures related to cryptography (or lack thereof), which often lead to the exposure of sensitive data [S3]. Notable Common Weakness Enumerations (CWEs) included under this category are CWE-259: Use of Hard-coded Password, CWE-327: Broken or Risky Crypto Algorithm, and CWE-331: Insufficient Entropy [S3], alongside various other mapped CWEs covering issues like cleartext transmission, weak password encoding, and improper verification of cryptographic signatures [S4].",
+        "citations": [
+          "S3",
+          "S4"
+        ],
+        "cited_sources": [
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#0",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > Overview"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#7",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > List of Mapped CWEs"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#6",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > References"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/OWASP_Top10_2021_overview.html#2",
+            "source": "data/corpus/best_practice/OWASP_Top10_2021_overview.html",
+            "doc_type": "best_practice",
+            "section": "OWASP Top 10:2021 > Getting Started > The Top 10:2021 List"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#0",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > Overview"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#7",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > List of Mapped CWEs"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#3",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > How to Prevent"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#6",
+          "data/corpus/best_practice/OWASP_Top10_2021_overview.html#2",
+          "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#0",
+          "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#7",
+          "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#3"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 5.57395141600864,
+        "input_tokens": 2176,
+        "output_tokens": 167,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "The category is named OWASP A02:2021 Cryptographic Failures and was previously known as Sensitive Data Exposure."
+      ]
     },
     {
       "id": "q16",
@@ -1235,7 +1315,7 @@
       "answer": {
         "question": "What does CVE-2021-41091 concern regarding Docker data directory permissions?",
         "found": true,
-        "answer": "CVE-2021-41091 concerns a bug in Moby (Docker Engine) where the data directory (typically `/var/lib/docker`) contained subdirectories with insufficiently restricted permissions [S1]. This allowed unprivileged Linux users to traverse directory contents and execute programs [S1]. If containers contained executables with extended permission bits (such as `setuid`), unprivileged Linux users could discover and execute them; if an unprivileged host user's UID collided with a container file's owner/group, that user could discover, read, and modify those files [S1].",
+        "answer": "CVE-2021-41091 concerns a bug in Moby (Docker Engine) where the data directory (typically `/var/lib/docker`) contained subdirectories with insufficiently restricted permissions [S1]. This allowed unprivileged Linux users on the host to traverse directory contents and execute programs [S1]. If containers contained executable programs with extended permission bits (such as `setuid`), unprivileged Linux users could discover and execute them [S1]. Furthermore, if the UID of an unprivileged Linux user on the host collided with the file owner or group inside a container, that user could discover, read, and modify those files [S1].",
         "citations": [
           "S1"
         ],
@@ -1296,9 +1376,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 4.293158125015907,
+        "latency_seconds": 3.9067665829788893,
         "input_tokens": 1780,
-        "output_tokens": 156,
+        "output_tokens": 167,
         "error": null
       },
       "det": {
@@ -1306,7 +1386,10 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
     },
     {
       "id": "q17",
@@ -1314,7 +1397,7 @@
       "answer": {
         "question": "What is the recommended maximum number of Kubernetes nodes per cluster in our corpus?",
         "found": false,
-        "answer": "I am sorry, but the provided sources do not contain information regarding a recommended maximum number of Kubernetes nodes per cluster.",
+        "answer": "I am sorry, but the provided sources do not contain information about the recommended maximum number of Kubernetes nodes per cluster.",
         "citations": [],
         "cited_sources": [],
         "sources": [
@@ -1365,7 +1448,7 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 2.9727340000099503,
+        "latency_seconds": 2.6383915840415284,
         "input_tokens": 1265,
         "output_tokens": 45,
         "error": null
@@ -1375,7 +1458,8 @@
         "facts_present": null,
         "abstained": true,
         "passed": true
-      }
+      },
+      "judge": true
     },
     {
       "id": "q18",
@@ -1427,7 +1511,7 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 2.369245916022919,
+        "latency_seconds": 2.6485167919890955,
         "input_tokens": 2589,
         "output_tokens": 50,
         "error": null
@@ -1437,7 +1521,8 @@
         "facts_present": null,
         "abstained": true,
         "passed": true
-      }
+      },
+      "judge": true
     },
     {
       "id": "q19",
@@ -1445,7 +1530,7 @@
       "answer": {
         "question": "What is the best recipe for chocolate chip cookies?",
         "found": false,
-        "answer": "I am sorry, but the provided documents do not contain information about a recipe for chocolate chip cookies.",
+        "answer": "I am sorry, but the provided documents do not contain information about chocolate chip cookie recipes.",
         "citations": [],
         "cited_sources": [],
         "sources": [
@@ -1489,9 +1574,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 2.238910040992778,
+        "latency_seconds": 1.699556500010658,
         "input_tokens": 2371,
-        "output_tokens": 34,
+        "output_tokens": 40,
         "error": null
       },
       "det": {
@@ -1499,7 +1584,8 @@
         "facts_present": null,
         "abstained": true,
         "passed": true
-      }
+      },
+      "judge": true
     },
     {
       "id": "q20",
@@ -1507,7 +1593,7 @@
       "answer": {
         "question": "What is CVE-2026-0965 and what is its CVSS base score?",
         "found": false,
-        "answer": "I am sorry, but the provided documents do not contain information about CVE-2026-0965 or its CVSS base score.",
+        "answer": "I am sorry, but the provided documents do not contain information about CVE-2026-0965.",
         "citations": [],
         "cited_sources": [],
         "sources": [
@@ -1551,9 +1637,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 5.567707290989347,
+        "latency_seconds": 4.925803457968868,
         "input_tokens": 2785,
-        "output_tokens": 53,
+        "output_tokens": 48,
         "error": null
       },
       "det": {
@@ -1561,7 +1647,8 @@
         "facts_present": null,
         "abstained": true,
         "passed": true
-      }
+      },
+      "judge": true
     },
     {
       "id": "q21",
@@ -1569,7 +1656,7 @@
       "answer": {
         "question": "Summarize the official NVD advisory for CVE-2026-13221 including affected versions.",
         "found": false,
-        "answer": "I am sorry, but the provided documents do not contain information about CVE-2026-13221.",
+        "answer": "I could not find information about CVE-2026-13221 in the provided documents.",
         "citations": [],
         "cited_sources": [],
         "sources": [
@@ -1620,9 +1707,9 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 2.526004500046838,
+        "latency_seconds": 2.307313208002597,
         "input_tokens": 1193,
-        "output_tokens": 40,
+        "output_tokens": 45,
         "error": null
       },
       "det": {
@@ -1630,7 +1717,8 @@
         "facts_present": null,
         "abstained": true,
         "passed": true
-      }
+      },
+      "judge": true
     },
     {
       "id": "q22",
@@ -1638,7 +1726,7 @@
       "answer": {
         "question": "According to NIST SP 800-207, what is the mandated password rotation period in days?",
         "found": false,
-        "answer": "I am sorry, but the provided sources do not contain information about a mandated password rotation period in NIST SP 800-207.",
+        "answer": "I am sorry, but the provided documents do not contain information about a mandated password rotation period in NIST SP 800-207.",
         "citations": [],
         "cited_sources": [],
         "sources": [
@@ -1689,7 +1777,7 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 2.9871428750338964,
+        "latency_seconds": 3.5664895409718156,
         "input_tokens": 2230,
         "output_tokens": 52,
         "error": null
@@ -1699,7 +1787,8 @@
         "facts_present": null,
         "abstained": true,
         "passed": true
-      }
+      },
+      "judge": true
     },
     {
       "id": "q23",
@@ -1768,7 +1857,7 @@
         "model": "gemini",
         "prompt_version": "v1",
         "sampling": "deterministic",
-        "latency_seconds": 3.2886216249899007,
+        "latency_seconds": 3.118583791947458,
         "input_tokens": 2073,
         "output_tokens": 73,
         "error": null
@@ -1778,7 +1867,12 @@
         "facts_present": true,
         "abstained": null,
         "passed": true
-      }
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "NIST SP 800-61 describes the major phases of the incident response process."
+      ]
     }
   ]
 }

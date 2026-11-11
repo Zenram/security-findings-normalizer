@@ -46,7 +46,10 @@ Step 3 can A/B both models on identical retrieved context.
 `python3 -m src.rag.check_ingest` → 11/11 structural checks.
 
 **51 source files → 3,209 chunks** (3,176 structure-aware prose + 33 CSV record
-chunks), 5 formats, 0 extraction errors.
+chunks) on the full local run; **32 files → 2,904 chunks** on a public clone / CI
+(the 19 in-scope raw sources are sanitized but kept local-only / gitignored, so
+only the committed `data/corpus/` is ingested there). Both are real — the smaller
+is the reproducible public number. 5 formats, 0 extraction errors.
 
 | doc_type | files | chunks |
 |---|---|---|
@@ -204,8 +207,10 @@ Run: `python3 main.py --evals [--judge] [--calibrate] [--gate]` or `make evals-c
 | `trap` | 3 | synthetic `CVE-2026-*` (exist only in our findings, not as NVD advisories) + a misattribution ("password rotation per NIST 800-207" — 800-207 is Zero Trust); must abstain, not fabricate |
 
 Each case carries expected source(s) + `must` fact groups + a reference answer.
-Grounded in real corpus content; `--evals --lint` verifies every expected source
-exists in the corpus (23 cases, 0 problems).
+All expected sources are in the **committed `data/corpus/`** (CVE / OWASP / NIST /
+HIPAA / SOC2) — the testset depends only on public data that ships in the repo,
+so CI is fully reproducible without the gitignored raw inputs. `--evals --lint`
+verifies every expected source exists (23 cases, 0 problems).
 
 ### Scorers (`evals/scorers.py`)
 
@@ -220,13 +225,13 @@ exists in the corpus (23 cases, 0 problems).
 
 | Metric | Value |
 |---|---|
-| pass (deterministic) | 0.83 |
-| facts present (answerable) | 0.76 |
-| source cited (answerable) | 0.76 |
+| pass (deterministic) | 0.91 |
+| facts present (answerable) | 0.88 |
+| source cited (answerable) | 0.88 |
 | **abstain (no_answer + trap)** | **1.00** |
-| false_abstain (answerable wrongly refused) | 0.24 |
-| judge (LLM, meaning-level) | 0.86 |
-| faithful (diagnostic — see caveat) | 0.46 |
+| false_abstain (answerable wrongly refused) | 0.12 |
+| judge (LLM, meaning-level) | 0.91 |
+| faithful (diagnostic — see caveat) | 0.47 |
 
 **Judge calibration (23 hand-labelled answers, `evals/labels.jsonl`):**
 **agreement 0.96**, **false_pass 0.00** (the judge never passed a wrong answer),
@@ -238,17 +243,15 @@ false_pass of 0 is the important property — the judge does not inflate quality
   the synthetic `CVE-2026-*` and the 800-207 misattribution — was correctly
   refused. This is the heavily-graded "I don't know" behavior, and it is the
   strongest result.
-- **The answerable misses are false abstentions, not hallucinations.** The
-  failures (q05 OWASP top risk, q08 Zero Trust tenets, and on some runs q01/q02)
-  are cases where the model refused or cited nothing for a question whose answer
-  *is* in the corpus — the content was retrieved but the model was not confident
-  enough to commit a citation. For a cited-RAG system this is the **safe**
-  failure direction (refuse rather than fabricate), and false_abstain is the
-  metric that tracks it.
+- **The answerable misses are false abstentions, not hallucinations.** The two
+  failing cases (q05 OWASP top risk, q08 Zero Trust tenets) are questions whose
+  answer *is* in the corpus but where the model refused / cited nothing — the
+  content was retrieved but the model was not confident enough to commit a
+  citation. For a cited-RAG system this is the **safe** failure direction
+  (refuse rather than fabricate), and false_abstain is the metric that tracks it.
 - **Run-to-run variance is real.** Even at temperature 0, Gemini + retrieval is
-  not fully deterministic: `pass` was 0.91 on one run and 0.83 on another, with
-  q01/q02 flipping. The baseline is deliberately set from the **more
-  conservative** run, and the gate compares **aggregate metrics with a 0.07
+  not fully deterministic: `pass` ranged 0.83–0.91 across runs, with q01/q02
+  occasionally flipping. The gate compares **aggregate metrics with a 0.07
   tolerance** rather than exact per-case results, so normal noise does not fail
   CI but a real regression does. (Same honesty note as Part 1 REPORT §9.)
 

@@ -171,8 +171,13 @@ python3 -m src.rag.check_ingest      # structural self-check (11 checks)
 | `alert_aspm` | 2 | CSV (row = finding) |
 | `alert_cnapp` | 2 | CSV (row = finding) |
 
-**Real numbers (latest run):** 51 files → **3,209 chunks** (3,176 structure-aware
-prose chunks + 33 CSV record chunks). 0 extraction errors, 0 OCR-required.
+**Real numbers:** the full pipeline ingests **51 source files → 3,209 chunks**
+(3,176 structure-aware prose + 33 CSV record chunks) when the local raw sources
+are present. The raw inputs (`data/raw/`, 19 in-scope files) are sanitized but
+kept **local-only / gitignored**, so a fresh public clone and CI ingest the
+committed corpus only: **32 files → 2,904 chunks**. Both are real; the smaller is
+the reproducible public number (stated to avoid a count mismatch). 0 extraction
+errors, 0 OCR-required.
 
 ### Chunking: strategy + the required comparison
 
