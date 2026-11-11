@@ -17,6 +17,11 @@ Part 2 (RAG) — Step 2 retrieval measurement:
 
     python3 main.py --eval-retrieval        # recall@k / MRR over 3 retrieval modes
 
+Part 2 (RAG) — Step 3 ask (answer with sources):
+
+    python3 main.py --ask "How should least privilege be enforced?"
+    python3 main.py --ask "What is CVE-2021-4034?" --model ollama
+
 Writes real, non-fabricated results. A model that is unreachable (no API key /
 Ollama not running) produces clearly-marked failed rows, not invented numbers.
 """
@@ -43,6 +48,12 @@ if __name__ == "__main__":
         from src.rag.eval_retrieval import main as eval_retrieval_main
 
         raise SystemExit(eval_retrieval_main())
+
+    if "--ask" in sys.argv:
+        sys.argv.remove("--ask")
+        from src.rag.ask import main as ask_main
+
+        raise SystemExit(ask_main())
 
     from src.runner import main  # noqa: E402
 

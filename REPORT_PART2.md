@@ -3,9 +3,9 @@
 Separate from the Part-1 `REPORT.md` (which stays frozen under review). Every
 number here is measured — reproduce with the commands shown. Branch `part-2-rag`.
 
-> **Status:** Step 1 (corpus & chunking) and Step 2 (index & hybrid search) done
-> and measured. Steps 3 (RAG answerer + citations + "I don't know") and 4
-> (eval set + scorers + CI) are next.
+> **Status:** Step 1 (corpus & chunking), Step 2 (index & hybrid search), and
+> Step 3 (RAG answerer + citations + "I don't know") done. Step 4 (eval set +
+> scorers + CI gate) is next.
 
 ## Contents
 
@@ -15,6 +15,7 @@ number here is measured — reproduce with the commands shown. Branch `part-2-ra
 4. [Retrieval quality (recall@k / MRR)](#4-retrieval-quality-recallk--mrr)
 5. [Error analysis](#5-error-analysis)
 6. [Choice + next steps](#6-choice--next-steps)
+7. [Step 3 — RAG with sources](#7-step-3--rag-with-sources)
 
 ## 1. Stack
 
@@ -148,3 +149,42 @@ explicit **"I don't know / not in the documents"** path for weak retrieval.
 Route the context into the Gemini/Ollama adapters. (Step 4: ≥20-question eval set
 with no-answer + trap questions, deterministic + calibrated-judge + faithfulness
 scorers, CI gate.)
+
+## 7. Step 3 — RAG with sources
+
+`src/rag/answer.py` (`RagAnswerer`) + `python3 main.py --ask "..."`. Pipeline:
+retrieve (Step 2 hybrid) → build numbered context `[S1]..[Sn]` under a token
+budget → model answers ONLY from context → parse `{found, answer, citations}` →
+validate citations → honest refusal when unsupported. Prompt:
+`prompts/rag_answer_v1.md` (logged in `prompts/CHANGELOG.md`). Runs on either
+model via the Part-1 adapters.
+
+**Graded behaviors — enforced in code, not just prompted:**
+- **Cite doc + section per claim.** Citations are validated against the real
+  source labels; invented labels (e.g. `[S9]` when 5 sources were given) are
+  dropped. Each cited label maps back to a retrieved chunk (doc + section).
+- **Context token budget.** `build_context` packs numbered sources up to
+  `DEFAULT_CONTEXT_BUDGET_TOKENS` (2000); a chunk that doesn't fit is skipped.
+- **"I don't know" path.** Honest refusal (`found=false`, empty citations) when:
+  nothing is retrieved; the model refuses; output is unparseable; OR the model
+  claims an answer but cites nothing real (ungrounded → downgraded to not-found).
+- **Injection resistance.** Sources are wrapped as untrusted data; the Part-1
+  data-not-instructions boundary carries into RAG.
+
+**Live behavior (2026-11-10, verified on both models):**
+
+| Question | Model | Result |
+|---|---|---|
+| "How should least privilege be enforced for IAM roles?" | gemini-3.5-flash | **found**, cited `[S3][S5]` → HIPAA.md, 5.3s |
+| "What is the runc container escape in CVE-2019-5736?" (`--doc-types cve`) | qwen3:8b | **found**, cited `[S1]` → CVE-2019-5736.md, 13.4s |
+| "What is CVE-2026-99999 and its CVSS score?" (synthetic trap) | gemini-3.5-flash | **not found** — refused, no fabricated score |
+| "Best recipe for chocolate chip cookies?" (off-topic) | gemini-3.5-flash | **not found** — refused honestly |
+
+The synthetic-CVE trap is the important one: retrieval returned *other* real CVE
+advisories as near neighbours, and the answerer still refused rather than answer
+about the wrong CVE — exactly the "I don't know" behaviour Step 4 will measure
+with the `CVE-2026-*` trap questions.
+
+**Next (Step 4):** ≥20-question eval set (incl. no-answer + `CVE-2026-*` traps),
+deterministic + calibrated-LLM-judge + faithfulness scorers, CI gate that fails
+below threshold.
