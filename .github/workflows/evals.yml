@@ -1,0 +1,64 @@
+# RAG eval gate (Part 2 Step 4).
+# Runs on PRs / pushes that touch the RAG code, prompts, testset or baseline.
+# - Offline stages (lint testset, unit tests) run with no key, no cost.
+# - The judged gate calls Gemini (GEMINI_API_KEY repo secret) over the bounded
+#   testset and FAILS the build if metrics drop below evals/baseline.json.
+#
+# Setup: add GEMINI_API_KEY under Settings -> Secrets and variables -> Actions
+# (Repository secret). Billing must be enabled on that key.
+name: evals
+
+on:
+  pull_request:
+    paths:
+      - "src/rag/**"
+      - "prompts/rag_answer_*.md"
+      - "prompts/judge_*.md"
+      - "prompts/faithfulness_*.md"
+      - "evals/**"
+      - "requirements.txt"
+      - ".github/workflows/evals.yml"
+  push:
+    branches: [part-2-rag, master]
+    paths:
+      - "src/rag/**"
+      - "evals/**"
+      - "prompts/rag_answer_*.md"
+  workflow_dispatch: {}
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"      # onnxruntime/fastembed have no 3.14/3.15 wheel yet
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Unit tests (offline, free)
+        run: python -m pytest -q
+
+      - name: Build the chunk index input (offline, free)
+        run: python main.py --ingest
+
+      - name: Lint the testset (offline, free)
+        run: python main.py --evals --lint
+
+      - name: Judged evals + gate (uses GEMINI_API_KEY)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python main.py --evals --judge --gate
+
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-metrics
+          path: evals/results/eval_metrics.json

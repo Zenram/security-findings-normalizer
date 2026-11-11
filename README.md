@@ -171,8 +171,13 @@ python3 -m src.rag.check_ingest      # structural self-check (11 checks)
 | `alert_aspm` | 2 | CSV (row = finding) |
 | `alert_cnapp` | 2 | CSV (row = finding) |
 
-**Real numbers (latest run):** 51 files → **3,209 chunks** (3,176 structure-aware
-prose chunks + 33 CSV record chunks). 0 extraction errors, 0 OCR-required.
+**Real numbers:** the full pipeline ingests **51 source files → 3,209 chunks**
+(3,176 structure-aware prose + 33 CSV record chunks) when the local raw sources
+are present. The raw inputs (`data/raw/`, 19 in-scope files) are sanitized but
+kept **local-only / gitignored**, so a fresh public clone and CI ingest the
+committed corpus only: **32 files → 2,904 chunks**. Both are real; the smaller is
+the reproducible public number (stated to avoid a count mismatch). 0 extraction
+errors, 0 OCR-required.
 
 ### Chunking: strategy + the required comparison
 
@@ -249,3 +254,27 @@ python3 main.py --ask "What is CVE-2019-5736?" --model ollama --doc-types cve
 - Runs on Gemini or Ollama via the same answerer. Verified live: grounded
   questions cite doc+section; synthetic `CVE-2026-*` and off-topic questions
   refuse. See `REPORT_PART2.md` §7.
+
+### Step 4 — Test set & evals in CI (done)
+
+A 23-question eval set + scorers + a CI gate that fails on quality regressions.
+
+```bash
+python3 main.py --evals --lint              # check the testset (free, no model)
+python3 main.py --evals                      # deterministic scorers (free)
+python3 main.py --evals --judge --calibrate  # + LLM judge + faithfulness + calibration (paid)
+python3 main.py --evals --judge --gate       # CI gate (or: make evals-ci)
+```
+
+- **Test set** (`evals/testset.jsonl`): 17 answerable + 3 no-answer + 3 trap
+  (synthetic `CVE-2026-*` + a misattribution), human-written with expected
+  source + facts + reference.
+- **Scorers:** deterministic (source cited / facts present / abstained) +
+  **calibrated LLM-judge** (agreement 0.96, false_pass 0.00 vs 23 hand labels) +
+  faithfulness (diagnostic).
+- **Result:** abstain **1.00** on every no-answer/trap question; judge 0.86;
+  answerable misses are safe false-abstentions, not fabrications.
+- **CI** (`.github/workflows/evals.yml`): Python 3.13; offline stages free; the
+  judged gate uses the `GEMINI_API_KEY` repo secret and fails if metrics drop
+  >0.07 below `evals/baseline.json`. One full judged run costs < $0.05.
+  See `evals/README.md` and `REPORT_PART2.md` §8.

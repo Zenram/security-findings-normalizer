@@ -72,3 +72,30 @@ def render_rag_prompt(version: str, sources: str, question: str) -> str:
                 f"RAG prompt '{version}' is missing the required {token} placeholder."
             )
     return template.replace("{sources}", sources).replace("{question}", question)
+
+
+# --- Part 2 (RAG) eval prompts (judge, faithfulness) -------------------------
+# Loaded by name (e.g. "judge_v1", "faithfulness_v1"); rendered by replacing
+# explicit {tokens} only (templates contain JSON braces). Versioned like the rest.
+
+
+@lru_cache(maxsize=None)
+def _read_named_prompt_file(name: str) -> str:
+    path = PROMPTS_DIR / f"{name}.md"
+    if not path.exists():
+        raise PromptNotFound(f"Prompt '{name}' not found at {path}.")
+    return path.read_text(encoding="utf-8")
+
+
+def render_named_prompt(name: str, **fields: str) -> str:
+    """Render prompt file `{name}.md`, replacing each `{field}` token with its
+    value. Only the explicit tokens are replaced (templates contain JSON braces)."""
+    template = _read_named_prompt_file(name)
+    for token, value in fields.items():
+        placeholder = "{" + token + "}"
+        if placeholder not in template:
+            raise PromptNotFound(
+                f"Prompt '{name}' is missing the required {placeholder} placeholder."
+            )
+        template = template.replace(placeholder, value)
+    return template

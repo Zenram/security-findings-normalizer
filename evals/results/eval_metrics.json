@@ -1,0 +1,1878 @@
+{
+  "generated": "2026-11-11T10:58:27+00:00",
+  "cases": 23,
+  "judged": true,
+  "metrics": {
+    "pass": 0.913,
+    "facts": 0.8824,
+    "source_cited": 0.8824,
+    "abstain": 1.0,
+    "false_abstain": 0.1176,
+    "judge": 0.913,
+    "faithful": 0.4667,
+    "by_kind": {
+      "answerable": 0.8824,
+      "no_answer": 1.0,
+      "trap": 1.0
+    },
+    "failed": [
+      "q05",
+      "q08"
+    ]
+  },
+  "calibration": {
+    "agreement": 0.957,
+    "false_pass": 0.0,
+    "false_fail": 0.043,
+    "disagreements": [
+      "q11"
+    ],
+    "n": 23
+  },
+  "rows": [
+    {
+      "id": "q01",
+      "kind": "answerable",
+      "answer": {
+        "question": "What privilege escalation vulnerability affects pkexec in polkit, and what is its common name?",
+        "found": true,
+        "answer": "The vulnerability affecting polkit's pkexec utility (CVE-2021-4034) is a local privilege escalation vulnerability caused by pkexec failing to correctly handle the calling parameters count, resulting in it executing environment variables as commands to run arbitrary code and grant administrative rights to unprivileged users [S1]. It is commonly referred to as \"pwnkit\" in reference documentation [S2].",
+        "citations": [
+          "S1",
+          "S2"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2021-4034.md#1",
+            "source": "data/corpus/cve/CVE-2021-4034.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-4034 > Description"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2021-4034.md#6",
+            "source": "data/corpus/cve/CVE-2021-4034.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-4034 > References"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2021-4034.md#1",
+            "source": "data/corpus/cve/CVE-2021-4034.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-4034 > Description"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2021-4034.md#6",
+            "source": "data/corpus/cve/CVE-2021-4034.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-4034 > References"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#168",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": "Forbidden"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/raw/oss_scanner/linpeas/linpeas_ubuntu_24.04_sanitized.txt#28",
+            "source": "data/raw/oss_scanner/linpeas/linpeas_ubuntu_24.04_sanitized.txt",
+            "doc_type": "scanner_linpeas",
+            "section": "CONFIG_KASAN is not set"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/cve/CVE-2021-4034.md#1",
+          "data/corpus/cve/CVE-2021-4034.md#6",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#168",
+          "data/raw/oss_scanner/linpeas/linpeas_ubuntu_24.04_sanitized.txt#28",
+          "data/corpus/standard/NIST.SP.800-53B.pdf#27"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 7.229047583008651,
+        "input_tokens": 2622,
+        "output_tokens": 122,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "The vulnerability is commonly referred to as 'pwnkit' in reference documentation."
+      ]
+    },
+    {
+      "id": "q02",
+      "kind": "answerable",
+      "answer": {
+        "question": "How does the runc container escape in CVE-2019-5736 allow host compromise?",
+        "found": true,
+        "answer": "CVE-2019-5736 allows attackers to overwrite the host runc binary and obtain host root access by leveraging the ability to execute a command as root within a container (either a new container with an attacker-controlled image or an existing container to which the attacker had write access that can be attached with docker exec) [S1]. This host compromise occurs due to file-descriptor mishandling related to /proc/self/exe [S1].",
+        "citations": [
+          "S1"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2019-5736.md#1",
+            "source": "data/corpus/cve/CVE-2019-5736.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5736 > Description"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2019-5736.md#1",
+            "source": "data/corpus/cve/CVE-2019-5736.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5736 > Description"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt#156",
+            "source": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt",
+            "doc_type": "scanner_linpeas",
+            "section": "CONFIG_KASAN is not set"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2019-5736.md#10",
+            "source": "data/corpus/cve/CVE-2019-5736.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5736 > References"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#219",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": "Forbidden > OPTIONS"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt#13",
+            "source": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt",
+            "doc_type": "scanner_linpeas",
+            "section": "CONFIG_KASAN is not set"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/cve/CVE-2019-5736.md#1",
+          "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt#156",
+          "data/corpus/cve/CVE-2019-5736.md#10",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#219",
+          "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt#13"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 2.702618582989089,
+        "input_tokens": 2452,
+        "output_tokens": 128,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
+    },
+    {
+      "id": "q03",
+      "kind": "answerable",
+      "answer": {
+        "question": "What is the Dirty Pipe vulnerability and which component does it affect?",
+        "found": true,
+        "answer": "The Dirty Pipe vulnerability (CVE-2022-0847) [S3] affects the Linux kernel [S2]. It is a flaw where the \"flags\" member of the new pipe buffer structure lacks proper initialization in the `copy_page_to_iter_pipe` and `push_pipe` functions, allowing it to contain stale values [S2]. An unprivileged local user can exploit this flaw to write to pages in the page cache backed by read-only files and escalate their privileges on the system [S2].",
+        "citations": [
+          "S2",
+          "S3"
+        ],
+        "cited_sources": [
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2022-0847.md#1",
+            "source": "data/corpus/cve/CVE-2022-0847.md",
+            "doc_type": "cve",
+            "section": "CVE-2022-0847 > Description"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2022-0847.md#6",
+            "source": "data/corpus/cve/CVE-2022-0847.md",
+            "doc_type": "cve",
+            "section": "CVE-2022-0847 > References"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#42",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": ""
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2022-0847.md#1",
+            "source": "data/corpus/cve/CVE-2022-0847.md",
+            "doc_type": "cve",
+            "section": "CVE-2022-0847 > Description"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2022-0847.md#6",
+            "source": "data/corpus/cve/CVE-2022-0847.md",
+            "doc_type": "cve",
+            "section": "CVE-2022-0847 > References"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#57",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Countermeasures for Major Risks > Image Countermeasures > Image vulnerabilities"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#42",
+          "data/corpus/cve/CVE-2022-0847.md#1",
+          "data/corpus/cve/CVE-2022-0847.md#6",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#57",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#96"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 6.732461167033762,
+        "input_tokens": 2243,
+        "output_tokens": 151,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "The Dirty Pipe vulnerability is identified as CVE-2022-0847."
+      ]
+    },
+    {
+      "id": "q04",
+      "kind": "answerable",
+      "answer": {
+        "question": "Which glibc vulnerability is known as Looney Tunables and how is it triggered?",
+        "found": true,
+        "answer": "CVE-2023-4911 is known as \"Looney Tunables\" [S3]. It is a buffer overflow in the GNU C Library's dynamic loader `ld.so` [S2]. It is triggered by a local attacker using maliciously crafted `GLIBC_TUNABLES` environment variables when launching binaries with SUID permission to execute code with elevated privileges [S2].",
+        "citations": [
+          "S2",
+          "S3"
+        ],
+        "cited_sources": [
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2023-4911.md#1",
+            "source": "data/corpus/cve/CVE-2023-4911.md",
+            "doc_type": "cve",
+            "section": "CVE-2023-4911 > Description"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2023-4911.md#6",
+            "source": "data/corpus/cve/CVE-2023-4911.md",
+            "doc_type": "cve",
+            "section": "CVE-2023-4911 > References"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#42",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": ""
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2023-4911.md#1",
+            "source": "data/corpus/cve/CVE-2023-4911.md",
+            "doc_type": "cve",
+            "section": "CVE-2023-4911 > Description"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2023-4911.md#6",
+            "source": "data/corpus/cve/CVE-2023-4911.md",
+            "doc_type": "cve",
+            "section": "CVE-2023-4911 > References"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-92.pdf#26",
+            "source": "data/corpus/best_practice/NIST.SP.800-92.pdf",
+            "doc_type": "best_practice",
+            "section": "GLBA requires financial institutions to protect their"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#308",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": "Directory 6,921,269,248 byte disponibili"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#42",
+          "data/corpus/cve/CVE-2023-4911.md#1",
+          "data/corpus/cve/CVE-2023-4911.md#6",
+          "data/corpus/best_practice/NIST.SP.800-92.pdf#26",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#308"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.269938208977692,
+        "input_tokens": 2688,
+        "output_tokens": 121,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
+    },
+    {
+      "id": "q05",
+      "kind": "answerable",
+      "answer": {
+        "question": "According to OWASP, what is the top web application security risk in the 2021 Top 10?",
+        "found": false,
+        "answer": "I am sorry, but the provided sources do not contain information on what the specific top web application security risk is in the OWASP Top 10:2021.",
+        "citations": [],
+        "cited_sources": [],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/OWASP_Top10_2021_overview.html#0",
+            "source": "data/corpus/best_practice/OWASP_Top10_2021_overview.html",
+            "doc_type": "best_practice",
+            "section": "OWASP Top 10:2021"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#30",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": ""
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#218",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE > OWASP Mobile Top 10 Risks: https://owasp.org/www-project-mobile-top-10/"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_Top10_2021_overview.html#1",
+            "source": "data/corpus/best_practice/OWASP_Top10_2021_overview.html",
+            "doc_type": "best_practice",
+            "section": "OWASP Top 10:2021 > Getting Started"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-218.pdf#61",
+            "source": "data/corpus/best_practice/NIST.SP.800-218.pdf",
+            "doc_type": "best_practice",
+            "section": "The Secure Software Development Framework"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/OWASP_Top10_2021_overview.html#0",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#30",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#218",
+          "data/corpus/best_practice/OWASP_Top10_2021_overview.html#1",
+          "data/corpus/best_practice/NIST.SP.800-218.pdf#61"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.3553042910061777,
+        "input_tokens": 1637,
+        "output_tokens": 50,
+        "error": null
+      },
+      "det": {
+        "source_cited": false,
+        "facts_present": false,
+        "abstained": null,
+        "passed": false
+      },
+      "judge": false
+    },
+    {
+      "id": "q06",
+      "kind": "answerable",
+      "answer": {
+        "question": "What is server-side request forgery (SSRF) and where does it sit in the OWASP Top 10 2021?",
+        "found": true,
+        "answer": "Server-Side Request Forgery (SSRF) flaws occur whenever a web application fetches a remote resource without validating the user-supplied URL, allowing an attacker to coerce the application to send a crafted request to an unexpected destination [S2]. In the OWASP Top 10 2021, it is positioned as category A10:2021 [S4].",
+        "citations": [
+          "S2",
+          "S4"
+        ],
+        "cited_sources": [
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/OWASP_A10_SSRF.html#1",
+            "source": "data/corpus/best_practice/OWASP_A10_SSRF.html",
+            "doc_type": "best_practice",
+            "section": "A10:2021 – Server-Side Request Forgery (SSRF) > Description"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_A10_SSRF.html#0",
+            "source": "data/corpus/best_practice/OWASP_A10_SSRF.html",
+            "doc_type": "best_practice",
+            "section": "A10:2021 – Server-Side Request Forgery (SSRF) > Overview"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/OWASP_A10_SSRF.html#7",
+            "source": "data/corpus/best_practice/OWASP_A10_SSRF.html",
+            "doc_type": "best_practice",
+            "section": "A10:2021 – Server-Side Request Forgery (SSRF) > References"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/OWASP_A10_SSRF.html#1",
+            "source": "data/corpus/best_practice/OWASP_A10_SSRF.html",
+            "doc_type": "best_practice",
+            "section": "A10:2021 – Server-Side Request Forgery (SSRF) > Description"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_A10_SSRF.html#8",
+            "source": "data/corpus/best_practice/OWASP_A10_SSRF.html",
+            "doc_type": "best_practice",
+            "section": "A10:2021 – Server-Side Request Forgery (SSRF) > List of Mapped CWEs"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_A10_SSRF.html#0",
+            "source": "data/corpus/best_practice/OWASP_A10_SSRF.html",
+            "doc_type": "best_practice",
+            "section": "A10:2021 – Server-Side Request Forgery (SSRF) > Overview"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/OWASP_A10_SSRF.html#2",
+            "source": "data/corpus/best_practice/OWASP_A10_SSRF.html",
+            "doc_type": "best_practice",
+            "section": "A10:2021 – Server-Side Request Forgery (SSRF) > How to Prevent"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/OWASP_A10_SSRF.html#7",
+          "data/corpus/best_practice/OWASP_A10_SSRF.html#1",
+          "data/corpus/best_practice/OWASP_A10_SSRF.html#8",
+          "data/corpus/best_practice/OWASP_A10_SSRF.html#0",
+          "data/corpus/best_practice/OWASP_A10_SSRF.html#2"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 5.356891457980964,
+        "input_tokens": 1191,
+        "output_tokens": 117,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "In the OWASP Top 10 2021, SSRF is positioned as category A10:2021."
+      ]
+    },
+    {
+      "id": "q07",
+      "kind": "answerable",
+      "answer": {
+        "question": "What are the major risk areas NIST SP 800-190 identifies for application container security?",
+        "found": true,
+        "answer": "NIST SP 800-190 identifies major risks for the core components of container technologies: images, registries, orchestrators, containers, and host OSs [S1]. Within these core components, it considers two primary types of risks: 1) compromise of an image or container, and 2) misuse of a container to attack other containers, the host OS, or other hosts [S1].",
+        "citations": [
+          "S1"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#32",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Major Risks for Core Components of Container Technologies"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#32",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Major Risks for Core Components of Container Technologies"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-204.pdf#11",
+            "source": "data/corpus/best_practice/NIST.SP.800-204.pdf",
+            "doc_type": "best_practice",
+            "section": "Introduction > Relationship to other NIST Guidance Documents"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#82",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Countermeasures for Major Risks > Hardware Countermeasures"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#105",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Conclusion"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#48",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Major Risks for Core Components of Container Technologies > Container Risks > Insecure container runtime configurations"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#32",
+          "data/corpus/best_practice/NIST.SP.800-204.pdf#11",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#82",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#105",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#48"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.029257000016514,
+        "input_tokens": 2142,
+        "output_tokens": 118,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "NIST SP 800-190 identifies major risks for the core components of container technologies: images, registries, orchestrators, containers, and host OSs."
+      ]
+    },
+    {
+      "id": "q08",
+      "kind": "answerable",
+      "answer": {
+        "question": "What are the core tenets of a Zero Trust Architecture per NIST SP 800-207?",
+        "found": false,
+        "answer": "The provided documents do not contain the specific list or details of the core tenets of Zero Trust Architecture (NIST SP 800-207 Section 2.1).",
+        "citations": [],
+        "cited_sources": [],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-207.pdf#16",
+            "source": "data/corpus/standard/NIST.SP.800-207.pdf",
+            "doc_type": "standard",
+            "section": "Zero Trust Basics"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-207.pdf#0",
+            "source": "data/corpus/standard/NIST.SP.800-207.pdf",
+            "doc_type": "standard",
+            "section": ""
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-207.pdf#73",
+            "source": "data/corpus/standard/NIST.SP.800-207.pdf",
+            "doc_type": "standard",
+            "section": "Migrating to a Zero Trust Architecture > Pure Zero Trust Architecture"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-207.pdf#65",
+            "source": "data/corpus/standard/NIST.SP.800-207.pdf",
+            "doc_type": "standard",
+            "section": "Zero Trust Architecture and Possible Interactions with Existing Federal > Zero Trust and NIST Privacy Framework"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-207.pdf#14",
+            "source": "data/corpus/standard/NIST.SP.800-207.pdf",
+            "doc_type": "standard",
+            "section": "Introduction > History of Zero Trust Efforts Related to Federal Agencies"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/standard/NIST.SP.800-207.pdf#16",
+          "data/corpus/standard/NIST.SP.800-207.pdf#0",
+          "data/corpus/standard/NIST.SP.800-207.pdf#73",
+          "data/corpus/standard/NIST.SP.800-207.pdf#65",
+          "data/corpus/standard/NIST.SP.800-207.pdf#14"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 5.8240207500057295,
+        "input_tokens": 2484,
+        "output_tokens": 60,
+        "error": null
+      },
+      "det": {
+        "source_cited": false,
+        "facts_present": false,
+        "abstained": null,
+        "passed": false
+      },
+      "judge": false
+    },
+    {
+      "id": "q09",
+      "kind": "answerable",
+      "answer": {
+        "question": "What password and authenticator guidance does NIST SP 800-63B give on authenticator assurance levels?",
+        "found": true,
+        "answer": "NIST SP 800-63B provides the following guidance regarding Authenticator Assurance Levels (AAL):\n\n- **General & Selection**: Claimants must be authenticated with at least a given level of strength to be recognized as a subscriber [S3]. Agencies must select a minimum of AAL2 when self-asserted PII or personal information is made available online [S3].\n- **AAL1 Requirements**: AAL1 requires single-factor or multi-factor authentication to prove possession and control of an authenticator bound to the subscriber's account [S3]. Permitted authenticator types include Memorized Secrets, Look-Up Secrets, Out-of-Band Devices, Single-Factor or Multi-Factor OTP Devices, and Single-Factor or Multi-Factor Cryptographic Software/Devices [S1]. Cryptographic authenticators must use approved cryptography, and communication between claimant and verifier must be via an authenticated protected channel [S2]. Verifiers operated by government agencies must be FIPS 140 Level 1 validated [S2]. Software-based authenticators may attempt to detect endpoint compromise and should not complete the operation if detected [S2].\n- **AAL2 Requirements**: Cryptographic authenticators must use approved cryptography, and authenticators procured by government agencies must be FIPS 140 Level 1 validated [S5]. At least one authenticator used at AAL2 must be replay resistant, and authentication should demonstrate authentication intent [S5]. Unlocking a device (e.g., smartphone using a PIN or biometric) shall not be considered an authentication factor [S5]. Biometric factors used at AAL2 must meet specific performance requirements [S5]. Government-operated verifiers must also meet FIPS 140 Level 1 requirements, and communication must be via an authenticated protected channel [S5].",
+        "citations": [
+          "S1",
+          "S2",
+          "S3",
+          "S5"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#16",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Authenticator Assurance Levels > Permitted Authenticator Types"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#17",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Authenticator Assurance Levels > Authenticator and Verifier Requirements"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#15",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Authenticator Assurance Levels"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#22",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Authenticator Assurance Levels > Authenticator and Verifier Requirements"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#16",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Authenticator Assurance Levels > Permitted Authenticator Types"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#17",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Authenticator Assurance Levels > Authenticator and Verifier Requirements"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#15",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Authenticator Assurance Levels"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-53r5.pdf#297",
+            "source": "data/corpus/standard/NIST.SP.800-53r5.pdf",
+            "doc_type": "standard",
+            "section": "The > IDENTIFICATION AND AUTHENTICATION"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#22",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Authenticator Assurance Levels > Authenticator and Verifier Requirements"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/NIST.SP.800-63b.pdf#16",
+          "data/corpus/best_practice/NIST.SP.800-63b.pdf#17",
+          "data/corpus/best_practice/NIST.SP.800-63b.pdf#15",
+          "data/corpus/standard/NIST.SP.800-53r5.pdf#297",
+          "data/corpus/best_practice/NIST.SP.800-63b.pdf#22"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 19.794580666988622,
+        "input_tokens": 1961,
+        "output_tokens": 437,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "NIST SP 800-63B provides guidance regarding Authenticator Assurance Levels (AAL)."
+      ]
+    },
+    {
+      "id": "q10",
+      "kind": "answerable",
+      "answer": {
+        "question": "Which AWS Config rule helps enforce encryption at rest for Amazon EBS volumes in the HIPAA guidance?",
+        "found": true,
+        "answer": "In the HIPAA guidance, the AWS Config rules ec2-ebs-encryption-by-default [S1] and encrypted-volumes [S4] help ensure encryption at rest is enabled for Amazon Elastic Block Store (Amazon EBS) volumes.",
+        "citations": [
+          "S1",
+          "S4"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/standard/HIPAA.md#154",
+            "source": "data/corpus/standard/HIPAA.md",
+            "doc_type": "standard",
+            "section": "Operational Best Practices for HIPAA Security"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/standard/HIPAA.md#124",
+            "source": "data/corpus/standard/HIPAA.md",
+            "doc_type": "standard",
+            "section": "Operational Best Practices for HIPAA Security"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/standard/HIPAA.md#154",
+            "source": "data/corpus/standard/HIPAA.md",
+            "doc_type": "standard",
+            "section": "Operational Best Practices for HIPAA Security"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/standard/HIPAA.md#125",
+            "source": "data/corpus/standard/HIPAA.md",
+            "doc_type": "standard",
+            "section": "Operational Best Practices for HIPAA Security"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/standard/HIPAA.md#156",
+            "source": "data/corpus/standard/HIPAA.md",
+            "doc_type": "standard",
+            "section": "Operational Best Practices for HIPAA Security"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/standard/HIPAA.md#124",
+            "source": "data/corpus/standard/HIPAA.md",
+            "doc_type": "standard",
+            "section": "Operational Best Practices for HIPAA Security"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/standard/HIPAA.md#154",
+          "data/corpus/standard/HIPAA.md#125",
+          "data/corpus/standard/HIPAA.md#156",
+          "data/corpus/standard/HIPAA.md#124",
+          "data/corpus/standard/HIPAA.md#155"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.032545875001233,
+        "input_tokens": 2711,
+        "output_tokens": 87,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
+    },
+    {
+      "id": "q11",
+      "kind": "answerable",
+      "answer": {
+        "question": "What does the SOC 2 guidance on AWS describe mapping controls to?",
+        "found": true,
+        "answer": "The SOC 2 guidance on AWS describes mapping high-level SOC 2 control criteria to actionable customer responsibilities, technical implementations using AWS services, supporting organizational policies and procedures outside of AWS, and evidence within the customer's AWS environment [S2]. Additionally, control mapping tables map areas such as physical access responsibilities to specific SOC 2 criteria (e.g., CC6.4 and CC6.5), describing SOC 2 control objectives, customer responsibilities in AWS, external controls, and associated points of focus [S1, S2].",
+        "citations": [
+          "S1",
+          "S2"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/standard/SOC2_Guide_on_AWS.md#39",
+            "source": "data/corpus/standard/SOC2_Guide_on_AWS.md",
+            "doc_type": "standard",
+            "section": "Applying SOC 2 TSC in AWS environments > **CC6 series: Logical and Physical Access Controls**"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/standard/SOC2_Guide_on_AWS.md#16",
+            "source": "data/corpus/standard/SOC2_Guide_on_AWS.md",
+            "doc_type": "standard",
+            "section": "Applying SOC 2 TSC in AWS environments"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/standard/SOC2_Guide_on_AWS.md#39",
+            "source": "data/corpus/standard/SOC2_Guide_on_AWS.md",
+            "doc_type": "standard",
+            "section": "Applying SOC 2 TSC in AWS environments > **CC6 series: Logical and Physical Access Controls**"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/standard/SOC2_Guide_on_AWS.md#16",
+            "source": "data/corpus/standard/SOC2_Guide_on_AWS.md",
+            "doc_type": "standard",
+            "section": "Applying SOC 2 TSC in AWS environments"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/standard/SOC2_Guide_on_AWS.md#10",
+            "source": "data/corpus/standard/SOC2_Guide_on_AWS.md",
+            "doc_type": "standard",
+            "section": "SOC 2 in AWS context"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/standard/SOC2_Guide_on_AWS.md#15",
+            "source": "data/corpus/standard/SOC2_Guide_on_AWS.md",
+            "doc_type": "standard",
+            "section": "AWS Shared Responsibility model and its role in SOC 2 > Implement suppor6ng policies, procedures, and technical configura6ons"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/standard/SOC2_Guide_on_AWS.md#7",
+            "source": "data/corpus/standard/SOC2_Guide_on_AWS.md",
+            "doc_type": "standard",
+            "section": "Understanding the SOC 2 framework"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/standard/SOC2_Guide_on_AWS.md#39",
+          "data/corpus/standard/SOC2_Guide_on_AWS.md#16",
+          "data/corpus/standard/SOC2_Guide_on_AWS.md#10",
+          "data/corpus/standard/SOC2_Guide_on_AWS.md#15",
+          "data/corpus/standard/SOC2_Guide_on_AWS.md#7"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 5.353157832985744,
+        "input_tokens": 2462,
+        "output_tokens": 151,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
+    },
+    {
+      "id": "q12",
+      "kind": "answerable",
+      "answer": {
+        "question": "Why are official Alpine Linux Docker images affected by a NULL root password issue, per CVE-2019-5021?",
+        "found": true,
+        "answer": "Official Alpine Linux Docker images (since v3.3) are affected because they contain a NULL password for the root user, which appears to be the result of a regression introduced in December 2015 [S1]. As a result, systems using affected versions of the container that rely on Linux PAM or another mechanism using the system shadow file as an authentication database may accept a NULL password for root [S1].",
+        "citations": [
+          "S1"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2019-5021.md#1",
+            "source": "data/corpus/cve/CVE-2019-5021.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5021 > Description"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2019-5021.md#1",
+            "source": "data/corpus/cve/CVE-2019-5021.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5021 > Description"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#74",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE NIST § > Verify password credential recovery does not reveal the current"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2019-5021.md#4",
+            "source": "data/corpus/cve/CVE-2019-5021.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5021 > Affected products (CPE)"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#55",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE NIST § > Verify that there are no periodic credential rotation or password"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/cve/CVE-2019-5021.md#5",
+            "source": "data/corpus/cve/CVE-2019-5021.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5021 > References"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/cve/CVE-2019-5021.md#1",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#74",
+          "data/corpus/cve/CVE-2019-5021.md#4",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#55",
+          "data/corpus/cve/CVE-2019-5021.md#5"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.0221510829869658,
+        "input_tokens": 1457,
+        "output_tokens": 117,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
+    },
+    {
+      "id": "q13",
+      "kind": "answerable",
+      "answer": {
+        "question": "How does CVE-2019-13139 allow command execution during a docker build?",
+        "found": true,
+        "answer": "CVE-2019-13139 allows command execution when an attacker is able to supply or manipulate the build path for the \"docker build\" command [S1]. An issue in how \"docker build\" processes remote git URLs leads to command injection into the underlying \"git clone\" command because a git ref can be misinterpreted as a flag [S1]. This results in code execution in the context of the user running the \"docker build\" command [S1].",
+        "citations": [
+          "S1"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2019-13139.md#1",
+            "source": "data/corpus/cve/CVE-2019-13139.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-13139 > Description"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2019-13139.md#1",
+            "source": "data/corpus/cve/CVE-2019-13139.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-13139 > Description"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2019-5736.md#1",
+            "source": "data/corpus/cve/CVE-2019-5736.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5736 > Description"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2025-9074.md#1",
+            "source": "data/corpus/cve/CVE-2025-9074.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-9074 > Description"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/cve/CVE-2019-13139.md#3",
+            "source": "data/corpus/cve/CVE-2019-13139.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-13139 > Weaknesses (CWE)"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/cve/CVE-2019-13139.md#5",
+            "source": "data/corpus/cve/CVE-2019-13139.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-13139 > References"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/cve/CVE-2019-13139.md#1",
+          "data/corpus/cve/CVE-2019-5736.md#1",
+          "data/corpus/cve/CVE-2025-9074.md#1",
+          "data/corpus/cve/CVE-2019-13139.md#3",
+          "data/corpus/cve/CVE-2019-13139.md#5"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.298838082992006,
+        "input_tokens": 1556,
+        "output_tokens": 130,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
+    },
+    {
+      "id": "q14",
+      "kind": "answerable",
+      "answer": {
+        "question": "What does CVE-2025-9074 let a local container do to the Docker Engine API?",
+        "found": true,
+        "answer": "CVE-2025-9074 allows local running Linux containers to access the Docker Engine API via the configured Docker subnet (at 192.168.65.7:2375 by default) [S1]. This can lead to the execution of a wide range of privileged commands to the Docker Engine API, including controlling other containers, creating new ones, and managing images [S1]. Additionally, in certain situations (such as Docker Desktop for Windows with WSL backend), it allows mounting the host drive with the same privileges as the user running Docker Desktop [S1].",
+        "citations": [
+          "S1"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2025-9074.md#1",
+            "source": "data/corpus/cve/CVE-2025-9074.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-9074 > Description"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2025-9074.md#1",
+            "source": "data/corpus/cve/CVE-2025-9074.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-9074 > Description"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2019-5736.md#1",
+            "source": "data/corpus/cve/CVE-2019-5736.md",
+            "doc_type": "cve",
+            "section": "CVE-2019-5736 > Description"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2021-41091.md#1",
+            "source": "data/corpus/cve/CVE-2021-41091.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-41091 > Description"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#23",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Introduction to Application Containers > Hosts (run and stop containers as directed by the orchestrator)"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#27",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Introduction to Application Containers > Hosts (run and stop containers as directed by the orchestrator) > Container Deployment and Management"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/cve/CVE-2025-9074.md#1",
+          "data/corpus/cve/CVE-2019-5736.md#1",
+          "data/corpus/cve/CVE-2021-41091.md#1",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#23",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#27"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 4.734614791988861,
+        "input_tokens": 2064,
+        "output_tokens": 157,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "CVE-2025-9074 allows local running Linux containers to access the Docker Engine API via the configured Docker subnet (at 192.168.65.7:2375 by default)."
+      ]
+    },
+    {
+      "id": "q15",
+      "kind": "answerable",
+      "answer": {
+        "question": "What does OWASP A02:2021 Cryptographic Failures cover?",
+        "found": true,
+        "answer": "OWASP A02:2021 Cryptographic Failures (previously known as Sensitive Data Exposure) focuses on failures related to cryptography (or lack thereof), which often lead to the exposure of sensitive data [S3]. Notable Common Weakness Enumerations (CWEs) included under this category are CWE-259: Use of Hard-coded Password, CWE-327: Broken or Risky Crypto Algorithm, and CWE-331: Insufficient Entropy [S3], alongside various other mapped CWEs covering issues like cleartext transmission, weak password encoding, and improper verification of cryptographic signatures [S4].",
+        "citations": [
+          "S3",
+          "S4"
+        ],
+        "cited_sources": [
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#0",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > Overview"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#7",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > List of Mapped CWEs"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#6",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > References"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/OWASP_Top10_2021_overview.html#2",
+            "source": "data/corpus/best_practice/OWASP_Top10_2021_overview.html",
+            "doc_type": "best_practice",
+            "section": "OWASP Top 10:2021 > Getting Started > The Top 10:2021 List"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#0",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > Overview"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#7",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > List of Mapped CWEs"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#3",
+            "source": "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html",
+            "doc_type": "best_practice",
+            "section": "A02:2021 – Cryptographic Failures > How to Prevent"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#6",
+          "data/corpus/best_practice/OWASP_Top10_2021_overview.html#2",
+          "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#0",
+          "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#7",
+          "data/corpus/best_practice/OWASP_A02_Cryptographic_Failures.html#3"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 5.57395141600864,
+        "input_tokens": 2176,
+        "output_tokens": 167,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "The category is named OWASP A02:2021 Cryptographic Failures and was previously known as Sensitive Data Exposure."
+      ]
+    },
+    {
+      "id": "q16",
+      "kind": "answerable",
+      "answer": {
+        "question": "What does CVE-2021-41091 concern regarding Docker data directory permissions?",
+        "found": true,
+        "answer": "CVE-2021-41091 concerns a bug in Moby (Docker Engine) where the data directory (typically `/var/lib/docker`) contained subdirectories with insufficiently restricted permissions [S1]. This allowed unprivileged Linux users on the host to traverse directory contents and execute programs [S1]. If containers contained executable programs with extended permission bits (such as `setuid`), unprivileged Linux users could discover and execute them [S1]. Furthermore, if the UID of an unprivileged Linux user on the host collided with the file owner or group inside a container, that user could discover, read, and modify those files [S1].",
+        "citations": [
+          "S1"
+        ],
+        "cited_sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2021-41091.md#1",
+            "source": "data/corpus/cve/CVE-2021-41091.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-41091 > Description"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2021-41091.md#1",
+            "source": "data/corpus/cve/CVE-2021-41091.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-41091 > Description"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2021-41091.md#0",
+            "source": "data/corpus/cve/CVE-2021-41091.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-41091"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_A01_Broken_Access_Control.html#5",
+            "source": "data/corpus/best_practice/OWASP_A01_Broken_Access_Control.html",
+            "doc_type": "best_practice",
+            "section": "A01:2021 – Broken Access Control > List of Mapped CWEs"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/cve/CVE-2025-9074.md#1",
+            "source": "data/corpus/cve/CVE-2025-9074.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-9074 > Description"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/cve/CVE-2021-4034.md#0",
+            "source": "data/corpus/cve/CVE-2021-4034.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-4034"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/cve/CVE-2021-41091.md#1",
+          "data/corpus/cve/CVE-2021-41091.md#0",
+          "data/corpus/best_practice/OWASP_A01_Broken_Access_Control.html#5",
+          "data/corpus/cve/CVE-2025-9074.md#1",
+          "data/corpus/cve/CVE-2021-4034.md#0"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.9067665829788893,
+        "input_tokens": 1780,
+        "output_tokens": 167,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": true,
+      "unsupported": []
+    },
+    {
+      "id": "q17",
+      "kind": "no_answer",
+      "answer": {
+        "question": "What is the recommended maximum number of Kubernetes nodes per cluster in our corpus?",
+        "found": false,
+        "answer": "I am sorry, but the provided sources do not contain information about the recommended maximum number of Kubernetes nodes per cluster.",
+        "citations": [],
+        "cited_sources": [],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#45",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Major Risks for Core Components of Container Technologies > Orchestrator Risks > Orchestrator node trust"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/CISA_Kubernetes_Hardening_Guidance.html#0",
+            "source": "data/corpus/best_practice/CISA_Kubernetes_Hardening_Guidance.html",
+            "doc_type": "best_practice",
+            "section": "Updated: Kubernetes Hardening Guide"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#70",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE NIST § > Verify that if PBKDF2 is used, the iteration count SHOULD be as large"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#95",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE NIST § > Verify that the challenge nonce is at least 64 bits in length, and"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#22",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Introduction to Application Containers > Container Technology Architecture"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#45",
+          "data/corpus/best_practice/CISA_Kubernetes_Hardening_Guidance.html#0",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#70",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#95",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#22"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 2.6383915840415284,
+        "input_tokens": 1265,
+        "output_tokens": 45,
+        "error": null
+      },
+      "det": {
+        "source_cited": null,
+        "facts_present": null,
+        "abstained": true,
+        "passed": true
+      },
+      "judge": true
+    },
+    {
+      "id": "q18",
+      "kind": "no_answer",
+      "answer": {
+        "question": "What is our company's annual cloud security budget for 2027?",
+        "found": false,
+        "answer": "I am sorry, but the provided documents do not contain information regarding the company's annual cloud security budget for 2027.",
+        "citations": [],
+        "cited_sources": [],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-53r5.pdf#741",
+            "source": "data/corpus/standard/NIST.SP.800-53r5.pdf",
+            "doc_type": "standard",
+            "section": "The > SUPPLY CHAIN RISK MANAGEMENT"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/standard/SOC2_Guide_on_AWS.md#61",
+            "source": "data/corpus/standard/SOC2_Guide_on_AWS.md",
+            "doc_type": "standard",
+            "section": "Category specific criteria and AWS guidance > **P series: Privacy**"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/standard/HIPAA.md#1",
+            "source": "data/corpus/standard/HIPAA.md",
+            "doc_type": "standard",
+            "section": "Operational Best Practices for HIPAA Security"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-218.pdf#64",
+            "source": "data/corpus/best_practice/NIST.SP.800-218.pdf",
+            "doc_type": "best_practice",
+            "section": "The Secure Software Development Framework"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/standard/NIST.SP.800-53r5.pdf#741",
+          "data/corpus/standard/SOC2_Guide_on_AWS.md#61",
+          "data/corpus/standard/HIPAA.md#1",
+          "data/corpus/best_practice/NIST.SP.800-218.pdf#64",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#0"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 2.6485167919890955,
+        "input_tokens": 2589,
+        "output_tokens": 50,
+        "error": null
+      },
+      "det": {
+        "source_cited": null,
+        "facts_present": null,
+        "abstained": true,
+        "passed": true
+      },
+      "judge": true
+    },
+    {
+      "id": "q19",
+      "kind": "no_answer",
+      "answer": {
+        "question": "What is the best recipe for chocolate chip cookies?",
+        "found": false,
+        "answer": "I am sorry, but the provided documents do not contain information about chocolate chip cookie recipes.",
+        "citations": [],
+        "cited_sources": [],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#182",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": "Forbidden"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#173",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": "Forbidden"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#175",
+            "source": "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf",
+            "doc_type": "best_practice",
+            "section": "Forbidden"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-63b.pdf#94",
+            "source": "data/corpus/best_practice/NIST.SP.800-63b.pdf",
+            "doc_type": "best_practice",
+            "section": "Session Management > SHALL NOT be available to insecure communications between the host and > Browser Cookies"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#182",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#173",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#175",
+          "data/corpus/best_practice/OWASP_Testing_Guide_v4.pdf#87",
+          "data/corpus/best_practice/NIST.SP.800-63b.pdf#94"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 1.699556500010658,
+        "input_tokens": 2371,
+        "output_tokens": 40,
+        "error": null
+      },
+      "det": {
+        "source_cited": null,
+        "facts_present": null,
+        "abstained": true,
+        "passed": true
+      },
+      "judge": true
+    },
+    {
+      "id": "q20",
+      "kind": "trap",
+      "answer": {
+        "question": "What is CVE-2026-0965 and what is its CVSS base score?",
+        "found": false,
+        "answer": "I am sorry, but the provided documents do not contain information about CVE-2026-0965.",
+        "citations": [],
+        "cited_sources": [],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2025-39964.md#2",
+            "source": "data/corpus/cve/CVE-2025-39964.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-39964 > CVSS"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/raw/aspm/ox_issues_active_sanitized.csv#1",
+            "source": "data/raw/aspm/ox_issues_active_sanitized.csv",
+            "doc_type": "alert_aspm",
+            "section": "alpine@3.22.2 base image (Dockerfile) 80 CVEs Public Exploit EPSS Medium"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2022-0847.md#2",
+            "source": "data/corpus/cve/CVE-2022-0847.md",
+            "doc_type": "cve",
+            "section": "CVE-2022-0847 > CVSS"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt#0",
+            "source": "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt",
+            "doc_type": "scanner_linpeas",
+            "section": ""
+          }
+        ],
+        "retrieved": [
+          "data/corpus/cve/CVE-2025-39964.md#2",
+          "data/raw/aspm/ox_issues_active_sanitized.csv#1",
+          "data/corpus/cve/CVE-2022-0847.md#2",
+          "data/raw/oss_scanner/linpeas/linpeas_debian_13_python3.9_slim_sanitized.txt#0",
+          "data/corpus/cve/CVE-2025-15467.md#2"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 4.925803457968868,
+        "input_tokens": 2785,
+        "output_tokens": 48,
+        "error": null
+      },
+      "det": {
+        "source_cited": null,
+        "facts_present": null,
+        "abstained": true,
+        "passed": true
+      },
+      "judge": true
+    },
+    {
+      "id": "q21",
+      "kind": "trap",
+      "answer": {
+        "question": "Summarize the official NVD advisory for CVE-2026-13221 including affected versions.",
+        "found": false,
+        "answer": "I could not find information about CVE-2026-13221 in the provided documents.",
+        "citations": [],
+        "cited_sources": [],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/cve/CVE-2021-4034.md#0",
+            "source": "data/corpus/cve/CVE-2021-4034.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-4034"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/cve/CVE-2025-15467.md#0",
+            "source": "data/corpus/cve/CVE-2025-15467.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-15467"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/cve/CVE-2022-0847.md#0",
+            "source": "data/corpus/cve/CVE-2022-0847.md",
+            "doc_type": "cve",
+            "section": "CVE-2022-0847"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/cve/CVE-2021-41091.md#0",
+            "source": "data/corpus/cve/CVE-2021-41091.md",
+            "doc_type": "cve",
+            "section": "CVE-2021-41091"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/cve/CVE-2025-39964.md#0",
+            "source": "data/corpus/cve/CVE-2025-39964.md",
+            "doc_type": "cve",
+            "section": "CVE-2025-39964"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/cve/CVE-2021-4034.md#0",
+          "data/corpus/cve/CVE-2025-15467.md#0",
+          "data/corpus/cve/CVE-2022-0847.md#0",
+          "data/corpus/cve/CVE-2021-41091.md#0",
+          "data/corpus/cve/CVE-2025-39964.md#0"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 2.307313208002597,
+        "input_tokens": 1193,
+        "output_tokens": 45,
+        "error": null
+      },
+      "det": {
+        "source_cited": null,
+        "facts_present": null,
+        "abstained": true,
+        "passed": true
+      },
+      "judge": true
+    },
+    {
+      "id": "q22",
+      "kind": "trap",
+      "answer": {
+        "question": "According to NIST SP 800-207, what is the mandated password rotation period in days?",
+        "found": false,
+        "answer": "I am sorry, but the provided documents do not contain information about a mandated password rotation period in NIST SP 800-207.",
+        "citations": [],
+        "cited_sources": [],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#57",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE NIST § > Verify that the user can choose to either temporarily view the"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#55",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE NIST § > Verify that there are no periodic credential rotation or password"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-207.pdf#1",
+            "source": "data/corpus/standard/NIST.SP.800-207.pdf",
+            "doc_type": "standard",
+            "section": ""
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#65",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE NIST § > Verify system generated initial passwords or activation codes"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#44",
+            "source": "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf",
+            "doc_type": "best_practice",
+            "section": "Description L1 L2 L3 CWE > Verify the application does not use unsupported, insecure, or deprecated"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#57",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#55",
+          "data/corpus/standard/NIST.SP.800-207.pdf#1",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#65",
+          "data/corpus/best_practice/OWASP_ASVS_4.0.3.pdf#44"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.5664895409718156,
+        "input_tokens": 2230,
+        "output_tokens": 52,
+        "error": null
+      },
+      "det": {
+        "source_cited": null,
+        "facts_present": null,
+        "abstained": true,
+        "passed": true
+      },
+      "judge": true
+    },
+    {
+      "id": "q23",
+      "kind": "answerable",
+      "answer": {
+        "question": "What incident handling phases does NIST SP 800-61 describe?",
+        "found": true,
+        "answer": "NIST SP 800-61 describes the major phases of the incident response process as preparation, detection and analysis, containment, eradication and recovery, and post-incident activity [S3].",
+        "citations": [
+          "S3"
+        ],
+        "cited_sources": [
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-61r2.pdf#46",
+            "source": "data/corpus/best_practice/NIST.SP.800-61r2.pdf",
+            "doc_type": "best_practice",
+            "section": "Bureau Drive (Mail Stop 8930), Gaithersburg, MD 20899-8930 > Handling an Incident"
+          }
+        ],
+        "sources": [
+          {
+            "label": "S1",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-53r5.pdf#317",
+            "source": "data/corpus/standard/NIST.SP.800-53r5.pdf",
+            "doc_type": "standard",
+            "section": "The > INCIDENT RESPONSE"
+          },
+          {
+            "label": "S2",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-190.pdf#102",
+            "source": "data/corpus/best_practice/NIST.SP.800-190.pdf",
+            "doc_type": "best_practice",
+            "section": "Conclusion"
+          },
+          {
+            "label": "S3",
+            "chunk_id": "data/corpus/best_practice/NIST.SP.800-61r2.pdf#46",
+            "source": "data/corpus/best_practice/NIST.SP.800-61r2.pdf",
+            "doc_type": "best_practice",
+            "section": "Bureau Drive (Mail Stop 8930), Gaithersburg, MD 20899-8930 > Handling an Incident"
+          },
+          {
+            "label": "S4",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-53r5.pdf#322",
+            "source": "data/corpus/standard/NIST.SP.800-53r5.pdf",
+            "doc_type": "standard",
+            "section": "The > When required by system changes; and"
+          },
+          {
+            "label": "S5",
+            "chunk_id": "data/corpus/standard/NIST.SP.800-53r5.pdf#329",
+            "source": "data/corpus/standard/NIST.SP.800-53r5.pdf",
+            "doc_type": "standard",
+            "section": "The > When required by system changes; and"
+          }
+        ],
+        "retrieved": [
+          "data/corpus/standard/NIST.SP.800-53r5.pdf#317",
+          "data/corpus/best_practice/NIST.SP.800-190.pdf#102",
+          "data/corpus/best_practice/NIST.SP.800-61r2.pdf#46",
+          "data/corpus/standard/NIST.SP.800-53r5.pdf#322",
+          "data/corpus/standard/NIST.SP.800-53r5.pdf#329"
+        ],
+        "dropped_citations": [],
+        "model": "gemini",
+        "prompt_version": "v1",
+        "sampling": "deterministic",
+        "latency_seconds": 3.118583791947458,
+        "input_tokens": 2073,
+        "output_tokens": 73,
+        "error": null
+      },
+      "det": {
+        "source_cited": true,
+        "facts_present": true,
+        "abstained": null,
+        "passed": true
+      },
+      "judge": true,
+      "faithful": false,
+      "unsupported": [
+        "NIST SP 800-61 describes the major phases of the incident response process."
+      ]
+    }
+  ]
+}

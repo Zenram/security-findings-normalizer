@@ -55,6 +55,12 @@ if __name__ == "__main__":
 
         raise SystemExit(ask_main())
 
+    if "--evals" in sys.argv:
+        sys.argv.remove("--evals")
+        from evals.run_evals import main as evals_main
+
+        raise SystemExit(evals_main())
+
     from src.runner import main  # noqa: E402
 
     raise SystemExit(main())
