@@ -67,7 +67,16 @@ def load_testset() -> list[dict]:
 def lint(cases: list[dict]) -> list[str]:
     problems: list[str] = []
     seen_ids: set[str] = set()
-    valid_sources = {c["source"] for c in load_chunks()}
+    # Validate expected_sources against the built corpus when it is available.
+    # If chunks.jsonl is not present yet (e.g. lint run before ingest), skip the
+    # source-existence check rather than crashing — lint must still check the
+    # rest of the testset. The CI workflow runs ingest before lint anyway.
+    try:
+        valid_sources: set[str] | None = {c["source"] for c in load_chunks()}
+    except FileNotFoundError:
+        valid_sources = None
+        problems.append("note: chunks.jsonl absent — skipping expected_source checks "
+                        "(run `python3 main.py --ingest` first)")
     kinds: dict[str, int] = {}
     for c in cases:
         cid = c.get("id", "?")
@@ -87,9 +96,10 @@ def lint(cases: list[dict]) -> list[str]:
         elif kind == "answerable":
             if not c.get("expected_sources"):
                 problems.append(f"{cid}: answerable case needs expected_sources")
-            for src in c.get("expected_sources", []):
-                if src not in valid_sources:
-                    problems.append(f"{cid}: expected_source not in corpus: {src}")
+            if valid_sources is not None:
+                for src in c.get("expected_sources", []):
+                    if src not in valid_sources:
+                        problems.append(f"{cid}: expected_source not in corpus: {src}")
         else:
             problems.append(f"{cid}: unknown kind '{kind}'")
     for k, n in kinds.items():
@@ -266,9 +276,11 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.lint:
         problems = lint(load_testset())
+        # "note:" lines are informational (e.g. corpus not built yet), not failures.
+        real_problems = [p for p in problems if not p.startswith("note:")]
         print("\n".join(problems) or "testset OK")
-        print(f"\n{len(load_testset())} cases, {len(problems)} problem(s)")
-        return 1 if problems else 0
+        print(f"\n{len(load_testset())} cases, {len(real_problems)} problem(s)")
+        return 1 if real_problems else 0
 
     rows, metrics = run(args.judge, args.model, args.prompt, args.k)
     calibration = run_calibration(args.model) if (args.judge and args.calibrate) else None
