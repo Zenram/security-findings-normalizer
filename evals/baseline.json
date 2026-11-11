@@ -1,0 +1,15 @@
+{
+  "pass": 0.8261,
+  "facts": 0.7647,
+  "source_cited": 0.7647,
+  "abstain": 1.0,
+  "false_abstain": 0.2353,
+  "judge": 0.8636,
+  "faithful": 0.4615,
+  "failed": [
+    "q01",
+    "q02",
+    "q05",
+    "q08"
+  ]
+}

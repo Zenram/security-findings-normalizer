@@ -80,3 +80,28 @@ Referenced by name in every logged answer (`RagAnswer.prompt_version`).
   validated against the real source labels (invented labels dropped); a `found`
   answer with no valid citation is downgraded to not-found; empty/unparseable
   output becomes an honest refusal; context is assembled under a token budget.
+
+---
+
+# Eval prompts (Part 2, Step 4)
+
+Loaded via `src/prompts.render_named_prompt`. Used by `evals/scorers.py`, not by
+the answerer. Fields injected as data by explicit-token replacement.
+
+## judge_v1 — LLM-as-judge (correctness)
+- **Goal:** meaning-level grade of an answer vs a hand-written reference —
+  `correct` / `incorrect` with a one-sentence reason.
+- **Key rule:** for no-answer/trap references, an answer is `correct` only if it
+  also abstains; fabricating facts for such a question is `incorrect`.
+- **Calibrated:** run against 23 hand labels (`evals/labels.jsonl`) →
+  agreement 0.96, false_pass 0.00, false_fail 0.04. A false_pass of 0 means the
+  judge never credited a wrong answer, so metrics built on it are not inflated.
+
+## faithfulness_v1 — groundedness check
+- **Goal:** decompose an answer into claims and mark each supported / not by the
+  sources; catches answers that add facts beyond the retrieved context.
+- **Status:** DIAGNOSTIC only, **excluded from the CI gate.** The current prompt
+  marks paraphrased summary sentences as unsupported even when the content is in
+  the cited context (verified manually), so it under-reports faithfulness. A
+  stronger version (cross-chunk claim crediting) is future work. A miscalibrated
+  metric must not gate the build.

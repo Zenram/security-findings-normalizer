@@ -107,3 +107,27 @@ ans.found, ans.answer, ans.citations        # citations map back to retrieved ch
 
 Verified live on both models: grounded questions return cited answers; synthetic
 `CVE-2026-*` and off-topic questions correctly refuse. See `REPORT_PART2.md` §7.
+
+## Step 4 — Test set & evals in CI (done)
+
+| Path | Purpose |
+|---|---|
+| `evals/testset.jsonl` | 23 human-written Q (17 answerable, 3 no-answer, 3 trap) with expected source + facts + reference. |
+| `evals/labels.jsonl` | 23 hand-graded `correct` labels for judge calibration. |
+| `evals/scorers.py` | deterministic (source/facts/abstain) + LLM-judge + faithfulness. |
+| `evals/run_evals.py` | run answerer over testset → metrics → calibrate judge → CI gate. |
+| `evals/baseline.json` | frozen metrics the gate compares against. |
+| `.github/workflows/evals.yml` | CI on Python 3.13; offline stages free, judged gate via `GEMINI_API_KEY` secret. |
+
+```bash
+python3 main.py --evals --lint                 # free: check the testset
+python3 main.py --evals                         # free: deterministic scorers
+python3 main.py --evals --judge --calibrate     # paid: judge + faithfulness + calibration
+python3 main.py --evals --judge --gate          # CI gate (make evals-ci)
+```
+
+**Measured (baseline judged run):** abstain **1.00** on all no-answer/trap
+questions, judge 0.86, **judge calibration agreement 0.96 / false_pass 0.00**.
+Answerable misses are safe false-abstentions, not hallucinations. Faithfulness is
+reported as a diagnostic (excluded from the gate — see `REPORT_PART2.md` §8).
+CI gate fails if aggregate metrics drop >0.07 below baseline. See `evals/README.md`.
