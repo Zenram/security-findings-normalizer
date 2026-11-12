@@ -26,7 +26,7 @@ and fast (~0.1s). 37 tests total.
 ## What is intentionally NOT tested here
 
 - **Live model quality** (Gemini/Ollama output accuracy) — that is measured by
-  the real run (`python3 main.py` → `results/` + `REPORT.md`), not by unit tests,
+  the real run (`python3 main.py` → `results/` + `REPORT_PART1.md`), not by unit tests,
   because it needs live models and is non-deterministic.
 - Network/quota/billing behavior — exercised during real runs, not in CI.
 

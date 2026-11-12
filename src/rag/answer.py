@@ -43,8 +43,8 @@ DEFAULT_MAX_OUTPUT_TOKENS = 600
 
 NOT_FOUND_MESSAGE = "I could not find this in the documents available to you."
 
-# Below this fused retrieval score the top hit is treated as too weak to answer
-# from (triggers the honest refusal before any model call). 0 disables the gate.
+# Below this fused retrieval score the top hit is too weak to answer from
+# (triggers refusal before any model call). 0 disables the gate.
 MIN_RETRIEVAL_SCORE = 0.0
 
 
@@ -242,8 +242,7 @@ class RagAnswerer:
         answer_text = str(parsed.get("answer", "")).strip()
         citations, dropped = _normalize_labels(parsed.get("citations", []), valid_labels)
 
-        # Honest refusal #2: the model claims an answer but cites nothing real.
-        # An ungrounded "answer" is not trustworthy -> downgrade to not-found.
+        # Honest refusal #2: model claims an answer but cites nothing real -> not-found.
         if found and not citations:
             found = False
             answer_text = NOT_FOUND_MESSAGE

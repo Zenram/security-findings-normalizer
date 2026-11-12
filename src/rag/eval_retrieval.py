@@ -88,8 +88,7 @@ def run() -> dict:
     chunks = load_chunks()
     max_k = max(K_VALUES)
 
-    # Build the index ONCE and share the client + embedder across all modes, so
-    # the only thing that varies between modes is the retrieval algorithm.
+    # Build the index once, shared across modes, so only the algorithm varies.
     embedder = Embedder()
     client = QdrantClient(location=":memory:")
     build_collection(client, chunks, embedder)

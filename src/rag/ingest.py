@@ -59,14 +59,12 @@ CORPUS_DIR = REPO_ROOT / "data" / "corpus"
 RAW_DIR = REPO_ROOT / "data" / "raw"
 OUT_DIR = REPO_ROOT / "data" / "rag"
 
-# A PDF page with fewer usable characters than this has no real text layer
-# (scanned image) — we flag it for OCR instead of indexing an empty page.
+# A PDF page with fewer usable chars than this has no real text layer -> flag for OCR.
 MIN_CHARS_PER_PAGE = 50
 
 
 # --- Source registry ---------------------------------------------------------
-# (glob relative to its base dir, base dir, doc_type). Order defines manifest
-# order. CSV doc_types are handled row-per-chunk; everything else is prose.
+# CSV doc_types are chunked row-per-record; everything else is prose.
 
 @dataclass(frozen=True)
 class SourceSet:
@@ -338,8 +336,8 @@ def run() -> dict:
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
     docs: list[Doc] = []
-    # For the required fixed-vs-structure comparison, accumulate prose chunks
-    # under both strategies (CSV records are excluded — they are not windowed).
+    # Accumulate prose chunks under both strategies for the fixed-vs-structure
+    # comparison (CSV records excluded — not windowed).
     fixed_all: list[Chunk] = []
     structure_all: list[Chunk] = []
 
@@ -477,8 +475,7 @@ def run() -> dict:
         },
         "by_doc_type": by_type,
         "formats": sorted({d.fmt for d in docs}),
-        # The graded comparison: production (structure-aware) vs fixed-size
-        # baseline over the SAME prose documents.
+        # The graded comparison: structure-aware vs fixed-size baseline (same prose docs).
         "chunking_comparison": {
             "structure_aware": chunk_stats(structure_all),
             "fixed_size": chunk_stats(fixed_all),

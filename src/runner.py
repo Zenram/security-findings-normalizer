@@ -10,7 +10,7 @@ rows are recorded as failed with the reason — the run does not invent output.
 Outputs under results/:
   results/raw/<model>__<prompt>__<sampling>.json   per-document extraction results
   results/metrics.json                              aggregated metrics per grid cell
-  results/REPORT_DATA.json                          compact table feed for REPORT.md
+  results/REPORT_DATA.json                          compact table feed for REPORT_PART1.md
 """
 
 from __future__ import annotations
@@ -175,7 +175,7 @@ def run(config: RunConfig | None = None, results_dir: Path | None = None) -> dic
 
 
 def _write_report_data(results_dir: Path, payload: dict) -> None:
-    """Compact feed for REPORT.md (Stage 4). Only real cells with data."""
+    """Compact feed for REPORT_PART1.md (Stage 4). Only real cells with data."""
     rows = []
     for m in payload["grid"]:
         llm = m.get("llm_path_only", {})

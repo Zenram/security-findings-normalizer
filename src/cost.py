@@ -74,7 +74,7 @@ def cost_summary(model_id: str, metrics_dict: dict) -> dict:
         "note": (
             "Local cost is NOT a provider-equivalent price. Compare on measured "
             "latency (p50/p95) and throughput instead. Any machine/amortization "
-            "cost must be stated explicitly in REPORT.md, not fabricated here."
+            "cost must be stated explicitly in REPORT_PART1.md, not fabricated here."
         ),
         "latency_p50_seconds": metrics_dict.get("latency_p50"),
         "latency_p95_seconds": metrics_dict.get("latency_p95"),
