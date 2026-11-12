@@ -29,8 +29,7 @@ from dataclasses import dataclass
 import tiktoken
 
 # --- Tunables ----------------------------------------------------------------
-# Security docs are dense and table-heavy; 512 tokens keeps a control/section
-# mostly whole while staying well under any embedding model's input window.
+# 512 tokens keeps a control/section mostly whole, well under any embed window.
 CHUNK_MAX_TOKENS = 512
 CHUNK_OVERLAP_TOKENS = 64          # overlap carried between packed chunks
 FIXED_SIZE_TOKENS = 512            # baseline window (same cap, for a fair compare)

@@ -80,8 +80,7 @@ def score_deterministic(answer: dict, case: dict) -> DetScore:
         facts_present = None
 
     passed = found and (source_cited is not False) and (facts_present is not False)
-    # Require at least one positive signal so an empty "found" with no citation
-    # and no facts does not pass by vacuous Nones.
+    # Require a positive signal so a vacuous all-None answer does not pass.
     if source_cited is None and facts_present is None:
         passed = found
     return DetScore(source_cited=source_cited, facts_present=facts_present,

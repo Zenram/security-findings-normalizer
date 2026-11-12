@@ -50,11 +50,8 @@ RESULTS_DIR = EVALS_DIR / "results"
 KINDS_MIN = 2                 # each kind needs at least this many cases
 TOLERANCE = 0.07              # gate allows a metric to drop this much (1/23 ≈ 0.043)
 LOWER_IS_BETTER = {"false_abstain"}
-# Metrics the gate ignores. `faithful` is reported as a DIAGNOSTIC only: the
-# current faithfulness prompt marks paraphrased summary sentences as unsupported
-# even when the content is in the cited context (verified by manual inspection),
-# so it measures prompt strictness more than real unfaithfulness. A miscalibrated
-# metric must not gate the build; it stays visible in the report with a caveat.
+# `faithful` is a DIAGNOSTIC only (excluded from the gate): the current prompt
+# under-reports faithfulness, so it must not block the build. See REPORT_PART2 §8.
 GATE_IGNORE = {"faithful"}
 
 
@@ -67,10 +64,8 @@ def load_testset() -> list[dict]:
 def lint(cases: list[dict]) -> list[str]:
     problems: list[str] = []
     seen_ids: set[str] = set()
-    # Validate expected_sources against the built corpus when it is available.
-    # If chunks.jsonl is not present yet (e.g. lint run before ingest), skip the
-    # source-existence check rather than crashing — lint must still check the
-    # rest of the testset. The CI workflow runs ingest before lint anyway.
+    # Check expected_sources against the corpus when built; skip that one check
+    # (don't crash) if chunks.jsonl isn't present yet. CI ingests before lint.
     try:
         valid_sources: set[str] | None = {c["source"] for c in load_chunks()}
     except FileNotFoundError:
@@ -151,11 +146,9 @@ def gate(metrics: dict, baseline: dict) -> list[str]:
                 failures.append(f"{key}: {cur:.2f} worse than baseline {base_val:.2f} (lower is better)")
         elif cur < base_val - TOLERANCE:
             failures.append(f"{key}: {cur:.2f} below baseline {base_val:.2f}")
-    # NOTE: we deliberately do NOT gate on exact per-case regressions. LLM output
-    # varies run-to-run even at temperature 0 (documented in Part 1 REPORT §9), so
-    # individual cases (e.g. q01/q02) flip between pass/fail across runs. Gating on
-    # them would make CI flaky. The gate uses aggregate metrics with a tolerance
-    # instead — a real quality drop moves the aggregate; noise does not.
+    # Deliberately no per-case regression gating: LLM output varies run-to-run
+    # even at temp 0 (REPORT_PART1 §9), so cases flip and would make CI flaky.
+    # The gate uses aggregate metrics with a tolerance instead.
     return failures
 
 

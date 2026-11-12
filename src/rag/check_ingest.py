@@ -65,8 +65,7 @@ def main() -> int:
     empties = sum(1 for c in chunks if not c["text"].strip())
     check("no empty chunks", empties == 0, f"{empties} empty")
 
-    # 6. Size cap enforced on windowed prose (records are atomic and exempt:
-    #    an alert row is never split, so a long alert may exceed the cap).
+    # 6. Size cap enforced on windowed prose (CSV records are atomic, exempt).
     oversized = [c["chunk_id"] for c in chunks
                  if c["strategy"] != "record" and c["n_tokens"] > MAX_TOKENS_ALLOWED]
     check(f"no prose chunk over {MAX_TOKENS_ALLOWED} tokens", not oversized,
